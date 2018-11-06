@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4EC5FA3F21917DB6002E4723 /* OverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC5FA3E21917DB6002E4723 /* OverviewViewController.swift */; };
+		4EC5FA41219180D4002E4723 /* LocationOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC5FA40219180D4002E4723 /* LocationOverview.swift */; };
+		4EC5FA43219181B7002E4723 /* LocationOverviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC5FA42219181B7002E4723 /* LocationOverviewTableViewCell.swift */; };
 		D11A4F10219167E300286879 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A4F0F219167E300286879 /* AppDelegate.swift */; };
 		D11A4F12219167E300286879 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A4F11219167E300286879 /* ViewController.swift */; };
 		D11A4F15219167E300286879 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D11A4F13219167E300286879 /* Main.storyboard */; };
@@ -17,6 +19,8 @@
 
 /* Begin PBXFileReference section */
 		4EC5FA3E21917DB6002E4723 /* OverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewController.swift; sourceTree = "<group>"; };
+		4EC5FA40219180D4002E4723 /* LocationOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationOverview.swift; sourceTree = "<group>"; };
+		4EC5FA42219181B7002E4723 /* LocationOverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationOverviewTableViewCell.swift; sourceTree = "<group>"; };
 		D11A4F0C219167E300286879 /* BetterWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BetterWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D11A4F0F219167E300286879 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D11A4F11219167E300286879 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +67,8 @@
 				D11A4F18219167E400286879 /* LaunchScreen.storyboard */,
 				D11A4F1B219167E400286879 /* Info.plist */,
 				4EC5FA3E21917DB6002E4723 /* OverviewViewController.swift */,
+				4EC5FA40219180D4002E4723 /* LocationOverview.swift */,
+				4EC5FA42219181B7002E4723 /* LocationOverviewTableViewCell.swift */,
 			);
 			path = BetterWeather;
 			sourceTree = "<group>";
@@ -139,7 +145,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D11A4F12219167E300286879 /* ViewController.swift in Sources */,
+				4EC5FA41219180D4002E4723 /* LocationOverview.swift in Sources */,
 				D11A4F10219167E300286879 /* AppDelegate.swift in Sources */,
+				4EC5FA43219181B7002E4723 /* LocationOverviewTableViewCell.swift in Sources */,
 				4EC5FA3F21917DB6002E4723 /* OverviewViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
