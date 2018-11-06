@@ -7,5 +7,16 @@
 //
 
 class LocationOverview {
-
+    
+    init(name: String, temperature: Int, weather: String) {
+        self.name = name
+        self.temperature = temperature
+        self.weather = weather
+    }
+    
+    var name: String
+    
+    var temperature: Int
+    
+    var weather: String
 }
