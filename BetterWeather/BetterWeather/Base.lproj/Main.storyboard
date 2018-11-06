@@ -13,17 +13,49 @@
         <scene sceneID="kV2-ZJ-D3K">
             <objects>
                 <tableViewController id="OVc-Ok-HOY" customClass="OverviewViewController" customModule="BetterWeather" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="qoK-fs-dRP" customClass="Over">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="qoK-fs-dRP" customClass="Over">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="8yg-WL-1aa" customClass="LocationOverviewTableViewCell" customModule="BetterWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8yg-WL-1aa" id="svb-Bk-GPc">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jönköping" textAlignment="natural" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eSq-Sd-s78">
+                                            <rect key="frame" x="6" y="6" width="187.5" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16°C" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Kb-qk-9MF">
+                                            <rect key="frame" x="209" y="0.0" width="150" height="89.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="54"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8bs-4Y-G8d">
+                                            <rect key="frame" x="6" y="33" width="50.5" height="50.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="8bs-4Y-G8d" secondAttribute="height" multiplier="1:1" id="O80-OS-Vcv"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="eSq-Sd-s78" firstAttribute="width" secondItem="svb-Bk-GPc" secondAttribute="width" multiplier="0.5" id="10r-uL-hEv"/>
+                                        <constraint firstAttribute="bottom" secondItem="8bs-4Y-G8d" secondAttribute="bottom" constant="6" id="2IJ-l1-C3C"/>
+                                        <constraint firstItem="eSq-Sd-s78" firstAttribute="top" secondItem="svb-Bk-GPc" secondAttribute="top" constant="6" id="GK8-dV-dHN"/>
+                                        <constraint firstAttribute="trailing" secondItem="9Kb-qk-9MF" secondAttribute="trailing" constant="16" id="QnG-ZS-Lgp"/>
+                                        <constraint firstItem="9Kb-qk-9MF" firstAttribute="height" secondItem="svb-Bk-GPc" secondAttribute="height" id="UoQ-7c-TXk"/>
+                                        <constraint firstItem="8bs-4Y-G8d" firstAttribute="top" secondItem="eSq-Sd-s78" secondAttribute="bottom" constant="6" id="WWa-2F-miz"/>
+                                        <constraint firstItem="9Kb-qk-9MF" firstAttribute="width" secondItem="svb-Bk-GPc" secondAttribute="width" multiplier="0.4" id="iyH-Up-2Be"/>
+                                        <constraint firstItem="8bs-4Y-G8d" firstAttribute="leading" secondItem="svb-Bk-GPc" secondAttribute="leading" constant="6" id="nVg-eu-5ad"/>
+                                        <constraint firstItem="eSq-Sd-s78" firstAttribute="leading" secondItem="svb-Bk-GPc" secondAttribute="leading" constant="6" id="oMj-Fh-GV4"/>
+                                        <constraint firstItem="9Kb-qk-9MF" firstAttribute="centerY" secondItem="svb-Bk-GPc" secondAttribute="centerY" id="smr-WK-PvJ"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -36,7 +68,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FDQ-zx-UOO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-791" y="153"/>
+            <point key="canvasLocation" x="-791.20000000000005" y="152.47376311844079"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZDC-bl-CHd">
