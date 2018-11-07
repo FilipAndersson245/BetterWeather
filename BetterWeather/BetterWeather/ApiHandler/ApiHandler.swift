@@ -8,7 +8,36 @@
 
 import Foundation
 
-
+enum WeatherTypes: Int {
+    case ClearSky = 1
+    case NearlyClearSky = 2
+    case VariableCloudiness = 3
+    case HalfclearSky = 4
+    case CloudySky = 5
+    case Overcast = 6
+    case Fog = 7
+    case LightRainShowers = 8
+    case ModerateRainShowers = 9
+    case HeavyRainShowers = 10
+    case Thunderstorm = 11
+    case LightSleetShowers = 12
+    case ModerateSleetShowers = 13
+    case HeavySleetShowers = 14
+    case LightSnowShowers = 15
+    case ModerateSnowShowers = 16
+    case HeavySnowShowers = 17
+    case LightRain = 18
+    case ModerateRain = 19
+    case HeavyRain = 20
+    case Thunder = 21
+    case LightSleet = 22
+    case ModerateSleet = 23
+    case HeavySleet = 24
+    case LightSnowfall = 25
+    case ModerateSnowfall = 26
+    case HeavySnowfall = 27
+    
+}
 
 class ApiHandler {
     
