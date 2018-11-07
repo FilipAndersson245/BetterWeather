@@ -39,12 +39,27 @@ enum WeatherTypes: Int {
     
 }
 
+struct Weather {
+    let weatherType:WeatherTypes // Enum 1-27
+    let temperatur: Float
+    let windDirection: Int // Degree
+    let windSpeed: Float
+    let relativHumidity: Int // 0-100
+    let airPressure: Float
+    let HorizontalVisibility: Float
+}
+
 class ApiHandler {
     
     public enum ApiHandlerErrors: Error {
         case NonHandledDataTypeError
         case FailedToFetch
         case InvalidUrl
+    }
+    
+    private func jsonToWeather() -> Weather {
+        let weather = Weather(weatherType: <#T##WeatherTypes#>, temperatur: <#T##Float#>, windDirection: <#T##Int#>, windSpeed: <#T##Float#>, relativHumidity: <#T##Int#>, airPressure: <#T##Float#>, HorizontalVisibility: <#T##Float#>)
+        return weather
     }
     
     private func fetch(lon: Float, lat: Float) throws  {
