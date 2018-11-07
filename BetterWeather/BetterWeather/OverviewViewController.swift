@@ -11,8 +11,10 @@ import UIKit
 class OverviewViewController: UITableViewController {
 
     var locations = [LocationOverview]()
+    var currentLocation: LocationOverview? = nil
     
     private func loadSampleLocations() {
+        currentLocation = LocationOverview(name:"New York", temperature:12, weather:"cloudy")
         let location1 = LocationOverview(name:"Huskvarna", temperature:20, weather:"sunny")
         let location2 = LocationOverview(name:"Stockholm", temperature:1, weather:"rainy")
         let location3 = LocationOverview(name: "Göteborg", temperature: -3, weather: "cloudy")
@@ -34,21 +36,38 @@ class OverviewViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return locations.count
+        return locations.count + (currentLocation != nil ? 1 : 0)
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "favoriteLocationCell"
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? LocationOverviewTableViewCell else {
-            fatalError("The dequeued cell is not an instance of LocationOverviewTableViewCell.")
+        print(indexPath.row)
+        if (indexPath.row == 0 && currentLocation != nil) {
+            print("aa")
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "currentLocationCell", for: indexPath) as? LocationOverviewTableViewCell else {
+                fatalError("The dequeued cell is not an instance of LocationOverviewTableViewCell.")
+            }
+            
+            let location = currentLocation!
+            
+            cell.locationLabel.text = location.name
+            cell.temperatureLabel.text = String(location.temperature)
+            //TODO weather image
+            return cell
         }
-
-        let location = locations[indexPath.row]
-        
-        cell.locationLabel.text = location.name
-        cell.temperatureLabel.text = String(location.temperature)
-        //TODO weather image
-        return cell
+        else {
+            print("bb")
+            let cellIdentifier = "favoriteLocationCell"
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? LocationOverviewTableViewCell else {
+                fatalError("The dequeued cell is not an instance of LocationOverviewTableViewCell.")
+            }
+            
+            let location = locations[indexPath.row - (currentLocation != nil ? 1 : 0)]
+            
+            cell.locationLabel.text = location.name
+            cell.temperatureLabel.text = String(location.temperature)
+            //TODO weather image
+            return cell
+        }
     }
     
 
