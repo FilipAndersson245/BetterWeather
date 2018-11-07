@@ -18,8 +18,30 @@ class ApiHandler {
         case InvalidUrl
     }
     
-    private func fetch() {
-    
+    private func fetch(lon: Float, lat: Float) throws  {
+        let template = "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/%.4f/lat/%.4f/data.json"
+        let urlsString = String(format: template, lon, lat)
+        guard let baseUrl = URL(string: urlsString) else {
+            print("Error invalid url")
+            throw ApiHandlerErrors.InvalidUrl
+        }
+        let task = URLSession.shared.dataTask(with: baseUrl) {
+            (data, response, error)	in
+                guard let dataResponse = data,
+                    error == nil else {
+                        print(error?.localizedDescription ?? "Response Error")
+                        return
+                    }
+                do {
+                    //here dataResponse received from a network request
+                    let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: [])
+                    print(jsonResponse) //Response result
+                } catch let parsingError {
+                    print("Error", parsingError)
+                }
+            
+        }
+        task.resume()
     }
     
     private static func jsonToDB() {
