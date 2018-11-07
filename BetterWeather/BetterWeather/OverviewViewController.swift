@@ -40,9 +40,7 @@ class OverviewViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print(indexPath.row)
         if (indexPath.row == 0 && currentLocation != nil) {
-            print("aa")
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "currentLocationCell", for: indexPath) as? LocationOverviewTableViewCell else {
                 fatalError("The dequeued cell is not an instance of LocationOverviewTableViewCell.")
             }
@@ -55,7 +53,6 @@ class OverviewViewController: UITableViewController {
             return cell
         }
         else {
-            print("bb")
             let cellIdentifier = "favoriteLocationCell"
             guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? LocationOverviewTableViewCell else {
                 fatalError("The dequeued cell is not an instance of LocationOverviewTableViewCell.")

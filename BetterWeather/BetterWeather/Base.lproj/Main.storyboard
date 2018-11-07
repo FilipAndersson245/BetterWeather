@@ -13,7 +13,7 @@
         <scene sceneID="kV2-ZJ-D3K">
             <objects>
                 <tableViewController id="OVc-Ok-HOY" customClass="OverviewViewController" customModule="BetterWeather" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="qoK-fs-dRP">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="qoK-fs-dRP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -32,33 +32,34 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="weather-icon-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="PWN-V0-GLe">
-                                            <rect key="frame" x="6" y="33" width="90.5" height="90.5"/>
+                                            <rect key="frame" x="6" y="42" width="81.5" height="81.5"/>
                                             <constraints>
+                                                <constraint firstAttribute="height" constant="81.5" id="a2T-Gy-ckT"/>
                                                 <constraint firstAttribute="width" secondItem="PWN-V0-GLe" secondAttribute="height" multiplier="1:1" id="qeW-o0-rWc"/>
                                             </constraints>
                                         </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" semanticContentAttribute="spatial" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location" translatesAutoresizingMaskIntoConstraints="NO" id="qbO-2q-bKQ">
-                                            <rect key="frame" x="6" y="6" width="21" height="21"/>
+                                            <rect key="frame" x="6" y="6" width="30" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="qbO-2q-bKQ" secondAttribute="height" multiplier="1:1" id="edr-Yd-old"/>
-                                                <constraint firstAttribute="height" constant="21" id="h3q-iw-Qta"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jönköping" textAlignment="natural" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jWA-mS-Ce1">
-                                            <rect key="frame" x="33" y="6" width="187.5" height="21"/>
+                                            <rect key="frame" x="36" y="6" width="187.5" height="30"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="Yhz-YL-O0H"/>
+                                                <constraint firstAttribute="height" constant="30" id="it1-uc-Aoz"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="PWN-V0-GLe" firstAttribute="top" secondItem="qbO-2q-bKQ" secondAttribute="bottom" constant="6" id="9Nj-hi-Vhr"/>
+                                        <constraint firstItem="qbO-2q-bKQ" firstAttribute="height" secondItem="jWA-mS-Ce1" secondAttribute="height" id="Hp4-Rl-60o"/>
                                         <constraint firstItem="jWA-mS-Ce1" firstAttribute="top" secondItem="JF6-l5-yZ5" secondAttribute="top" constant="6" id="I18-L4-3PX"/>
                                         <constraint firstItem="qbO-2q-bKQ" firstAttribute="leading" secondItem="JF6-l5-yZ5" secondAttribute="leading" constant="6" id="Ie5-mY-SLq"/>
-                                        <constraint firstItem="jWA-mS-Ce1" firstAttribute="leading" secondItem="qbO-2q-bKQ" secondAttribute="trailing" constant="6" id="Ixn-6M-Q62"/>
+                                        <constraint firstItem="jWA-mS-Ce1" firstAttribute="leading" secondItem="qbO-2q-bKQ" secondAttribute="trailing" id="Ixn-6M-Q62"/>
                                         <constraint firstAttribute="bottom" secondItem="PWN-V0-GLe" secondAttribute="bottom" constant="6" id="RbM-pT-AuL"/>
                                         <constraint firstItem="jWA-mS-Ce1" firstAttribute="width" secondItem="JF6-l5-yZ5" secondAttribute="width" multiplier="0.5" id="X4c-Kr-lZC"/>
                                         <constraint firstItem="acU-9l-GLS" firstAttribute="centerY" secondItem="JF6-l5-yZ5" secondAttribute="centerY" id="Z96-6Q-D2h"/>
@@ -76,7 +77,7 @@
                                     <outlet property="weatherImage" destination="PWN-V0-GLe" id="quu-3L-ICH"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="favoriteLocationCell" id="8yg-WL-1aa" customClass="LocationOverviewTableViewCell" customModule="BetterWeather" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="favoriteLocationCell" rowHeight="90" id="8yg-WL-1aa" customClass="LocationOverviewTableViewCell" customModule="BetterWeather" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="158" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8yg-WL-1aa" id="svb-Bk-GPc">
@@ -102,6 +103,7 @@
                                             <rect key="frame" x="6" y="32" width="51.5" height="51.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="8bs-4Y-G8d" secondAttribute="height" multiplier="1:1" id="O80-OS-Vcv"/>
+                                                <constraint firstAttribute="height" constant="51.5" id="oWT-HL-Iji"/>
                                             </constraints>
                                         </imageView>
                                     </subviews>
