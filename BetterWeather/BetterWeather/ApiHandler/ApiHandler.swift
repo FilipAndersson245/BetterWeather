@@ -11,6 +11,11 @@ import Foundation
 
 
 class ApiHandler {
+    
+    public enum ModelErrors: Error {
+        case NonHandledDataTypeError
+    }
+    
     private func fetch() {
     
     }
@@ -35,7 +40,13 @@ class ApiHandler {
         
     }
     
-    public static func foo<T>(_ lon: Float, _ lat: Float) {
+    public static func foo<T>(_ lon: Float, _ lat: Float, type: T.Type) throws ->T  {
         
+        switch type {
+        case is String.Type: //This should be our model that is yet to be implemented
+            return "" as! T
+        default:
+            throw ModelErrors.NonHandledDataTypeError
+        }
     }
 }
