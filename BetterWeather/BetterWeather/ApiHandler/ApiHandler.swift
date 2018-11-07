@@ -12,8 +12,10 @@ import Foundation
 
 class ApiHandler {
     
-    public enum ModelErrors: Error {
+    public enum ApiHandlerErrors: Error {
         case NonHandledDataTypeError
+        case FailedToFetch
+        case InvalidUrl
     }
     
     private func fetch() {
@@ -46,7 +48,7 @@ class ApiHandler {
         case is String.Type: //This should be our model that is yet to be implemented
             return "" as! T
         default:
-            throw ModelErrors.NonHandledDataTypeError
+            throw ApiHandlerErrors.NonHandledDataTypeError
         }
     }
 }
