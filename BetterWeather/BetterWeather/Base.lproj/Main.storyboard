@@ -13,12 +13,12 @@
         <scene sceneID="kV2-ZJ-D3K">
             <objects>
                 <tableViewController id="OVc-Ok-HOY" customClass="OverviewViewController" customModule="BetterWeather" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="qoK-fs-dRP" customClass="Over">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="qoK-fs-dRP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="8yg-WL-1aa" customClass="LocationOverviewTableViewCell" customModule="BetterWeather" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="favoriteLocationCell" id="8yg-WL-1aa" customClass="LocationOverviewTableViewCell" customModule="BetterWeather" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8yg-WL-1aa" id="svb-Bk-GPc">
@@ -57,6 +57,11 @@
                                         <constraint firstItem="9Kb-qk-9MF" firstAttribute="centerY" secondItem="svb-Bk-GPc" secondAttribute="centerY" id="smr-WK-PvJ"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="locationLabel" destination="eSq-Sd-s78" id="fvz-So-J0A"/>
+                                    <outlet property="temperatureLabel" destination="9Kb-qk-9MF" id="VoS-YD-brw"/>
+                                    <outlet property="weatherImage" destination="8bs-4Y-G8d" id="QMU-RG-2hm"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

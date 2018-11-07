@@ -10,37 +10,47 @@ import UIKit
 
 class OverviewViewController: UITableViewController {
 
+    var locations = [LocationOverview]()
+    
+    private func loadSampleLocations() {
+        let location1 = LocationOverview(name:"Huskvarna", temperature:20, weather:"sunny")
+        let location2 = LocationOverview(name:"Stockholm", temperature:1, weather:"rainy")
+        let location3 = LocationOverview(name: "Göteborg", temperature: -3, weather: "cloudy")
+        locations += [location1, location2, location3]
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        loadSampleLocations()
+        
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return locations.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cellIdentifier = "favoriteLocationCell"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? LocationOverviewTableViewCell else {
+            fatalError("The dequeued cell is not an instance of LocationOverviewTableViewCell.")
+        }
 
-        // Configure the cell...
-
+        let location = locations[indexPath.row]
+        
+        cell.locationLabel.text = location.name
+        cell.temperatureLabel.text = String(location.temperature)
+        //TODO weather image
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
