@@ -57,10 +57,10 @@ class ApiHandler {
         case InvalidUrl
     }
     
-    private func jsonToWeather() -> Weather {
+   /* private func jsonToWeather() -> Weather {
         let weather = Weather(weatherType: <#T##WeatherTypes#>, temperatur: <#T##Float#>, windDirection: <#T##Int#>, windSpeed: <#T##Float#>, relativHumidity: <#T##Int#>, airPressure: <#T##Float#>, HorizontalVisibility: <#T##Float#>)
         return weather
-    }
+    }*/
     
     private func fetch(lon: Float, lat: Float) throws  {
         let template = "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/%.4f/lat/%.4f/data.json"
