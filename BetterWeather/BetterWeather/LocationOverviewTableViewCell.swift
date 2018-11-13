@@ -11,8 +11,8 @@ import UIKit
 class LocationOverviewTableViewCell: UITableViewCell {
 
     @IBOutlet weak var locationLabel: UILabel!
-    @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var weatherImage: UIImageView!
+    @IBOutlet weak var temperatureLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
