@@ -40,3 +40,25 @@ weather data for that day. The data in this view will be presented by hour.
 ### Search view:  
 The user can search for new locations to be added to the favourite list. These
 locations will be displayed dynamically as the user enters letters in the search field.  
+
+# Misc documentation
+
+## Class for data objects
+
+```
+locationData = [ LocationData ]
+
+class LocationData
+{
+    name: huskvarna
+    days: [ DayData ]
+}
+
+
+class DayData
+{
+    date: wednesday
+    avgWeather: {}
+    hours: [ HourData ]
+}
+```
