@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -132,11 +133,50 @@
                             <outlet property="delegate" destination="OVc-Ok-HOY" id="eCv-oW-z7D"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="BetterWeather" id="Ild-g6-emw"/>
+                    <navigationItem key="navigationItem" title="BetterWeather" id="Ild-g6-emw">
+                        <barButtonItem key="rightBarButtonItem" title="Add Location" id="LOv-0o-xmW">
+                            <connections>
+                                <segue destination="tUX-aw-NyE" kind="show" id="5VP-w4-p1S"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FDQ-zx-UOO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-791.20000000000005" y="152.47376311844079"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="FpM-mf-np5">
+            <objects>
+                <viewController id="tUX-aw-NyE" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nly-Kp-AAG">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Z3d-Rm-Ofl">
+                                <rect key="frame" x="0.0" y="120" width="375" height="547"/>
+                            </mapView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="tsR-pA-Y5g">
+                                <rect key="frame" x="0.0" y="64" width="375" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Z3d-Rm-Ofl" firstAttribute="leading" secondItem="zyH-jY-zu9" secondAttribute="leading" id="7Fp-NB-9mZ"/>
+                            <constraint firstItem="tsR-pA-Y5g" firstAttribute="trailing" secondItem="zyH-jY-zu9" secondAttribute="trailing" id="Fof-jR-biO"/>
+                            <constraint firstItem="zyH-jY-zu9" firstAttribute="bottom" secondItem="Z3d-Rm-Ofl" secondAttribute="bottom" id="JWX-EJ-Uyz"/>
+                            <constraint firstItem="tsR-pA-Y5g" firstAttribute="top" secondItem="zyH-jY-zu9" secondAttribute="top" id="Knw-M9-gO3"/>
+                            <constraint firstItem="zyH-jY-zu9" firstAttribute="trailing" secondItem="Z3d-Rm-Ofl" secondAttribute="trailing" id="W2g-go-jQW"/>
+                            <constraint firstItem="Z3d-Rm-Ofl" firstAttribute="top" secondItem="tsR-pA-Y5g" secondAttribute="bottom" id="WVH-ri-uKR"/>
+                            <constraint firstItem="tsR-pA-Y5g" firstAttribute="leading" secondItem="zyH-jY-zu9" secondAttribute="leading" id="pME-rV-JIe"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="zyH-jY-zu9"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hHm-Jz-AYa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-791" y="1003"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZDC-bl-CHd">
