@@ -62,3 +62,16 @@ class DayData
     hours: [ HourData ]
 }
 ```
+
+## SQL Tables
+
+```
+WEATHERDATA:
+LAT:    LONG:   TIME:           TEMP:   WEATHER:    WIND:
+13231   41423   34823948230     16      2           21
+
+
+FAVORITES:
+NAME:       LAT:    LONG:
+Huskvarna   13231   41423
+```
