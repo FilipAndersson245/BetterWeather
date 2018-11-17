@@ -27,7 +27,20 @@ class OverviewViewController: UITableViewController {
                     Weather(weatherType: .Thunder, temperatur: -9.3)
                 ])
             ])
-        let location1 = Location(name: "New York", latitude: 21.324, longitude: 32.24124, days: [
+        let location1 = Location(name: "Huskvarna", latitude: 21.324, longitude: 32.24124, days: [
+            Day(date: "Monday", averageWeather: Weather(weatherType: .ModerateSleetShowers, temperatur: 20.3), hours:
+                [
+                    Weather(weatherType: .Fog, temperatur: 21),
+                    Weather(weatherType: .ClearSky, temperatur: 21.9)
+                ]),
+            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10), hours:
+                [
+                    Weather(weatherType: .HeavySleet, temperatur: 2),
+                    Weather(weatherType: .Overcast, temperatur: -1.3),
+                    Weather(weatherType: .Thunder, temperatur: -9.3)
+                ])
+            ])
+        let location2 = Location(name: "Jönköping", latitude: 21.324, longitude: 32.24124, days: [
             Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3), hours:
                 [
                     Weather(weatherType: .Fog, temperatur: 21),
@@ -40,20 +53,7 @@ class OverviewViewController: UITableViewController {
                     Weather(weatherType: .Thunder, temperatur: -9.3)
                 ])
             ])
-        let location2 = Location(name: "New York", latitude: 21.324, longitude: 32.24124, days: [
-            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3), hours:
-                [
-                    Weather(weatherType: .Fog, temperatur: 21),
-                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9)
-                ]),
-            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10), hours:
-                [
-                    Weather(weatherType: .HeavySleet, temperatur: 2),
-                    Weather(weatherType: .Overcast, temperatur: -1.3),
-                    Weather(weatherType: .Thunder, temperatur: -9.3)
-                ])
-            ])
-        let location3 = Location(name: "New York", latitude: 21.324, longitude: 32.24124, days: [
+        let location3 = Location(name: "Asdsg", latitude: 21.324, longitude: 32.24124, days: [
             Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3), hours:
                 [
                     Weather(weatherType: .Fog, temperatur: 21),
