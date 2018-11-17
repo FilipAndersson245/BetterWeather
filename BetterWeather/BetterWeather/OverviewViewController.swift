@@ -44,7 +44,7 @@ class OverviewViewController: UITableViewController {
         let location1 = Location(name: "Huskvarna", latitude: 21.324, longitude: 32.24124, days: [
             Day(date: "Monday", averageWeather: Weather(weatherType: .ModerateSleetShowers, temperatur: 20.3), hours:
                 [
-                    Weather(weatherType: .Fog, temperatur: 21),
+                    Weather(weatherType: .ClearSky, temperatur: 25),
                     Weather(weatherType: .ClearSky, temperatur: 21.9)
                 ]),
             Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10), hours:
@@ -57,7 +57,7 @@ class OverviewViewController: UITableViewController {
         let location2 = Location(name: "Jönköping", latitude: 21.324, longitude: 32.24124, days: [
             Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3), hours:
                 [
-                    Weather(weatherType: .Fog, temperatur: 21),
+                    Weather(weatherType: .Thunder, temperatur: 5),
                     Weather(weatherType: .HeavySnowfall, temperatur: 21.9)
                 ]),
             Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10), hours:
@@ -70,7 +70,7 @@ class OverviewViewController: UITableViewController {
         let location3 = Location(name: "Asdsg", latitude: 21.324, longitude: 32.24124, days: [
             Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3), hours:
                 [
-                    Weather(weatherType: .Fog, temperatur: 21),
+                    Weather(weatherType: .CloudySky, temperatur: 10),
                     Weather(weatherType: .HeavySnowfall, temperatur: 21.9)
                 ]),
             Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10), hours:
