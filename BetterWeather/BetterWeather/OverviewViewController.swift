@@ -9,6 +9,20 @@
 import UIKit
 
 class OverviewViewController: UITableViewController {
+    
+    // Maybe move out parsing later
+    let weatherImages: [String: [Int]] = [
+        "clear": [1,2],
+        "half clear": [3,4],
+        "cloudy": [5,6],
+        "fog": [7],
+        "light rain": [8, 18],
+        "moderate rain": [9, 19],
+        "heavy rain": [10, 20],
+        "thunder": [11, 21],
+        "sleet": [12, 13, 14, 22, 23, 24],
+        "snow": [15, 16, 17, 25, 26, 27]
+    ]
 
     var locations = [Location]()
     var currentLocation: Location? = nil
@@ -88,31 +102,25 @@ class OverviewViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let location: Location
+        let cell: LocationOverviewTableViewCell?
         if (indexPath.row == 0 && currentLocation != nil) {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "currentLocationCell", for: indexPath) as? LocationOverviewTableViewCell else {
-                fatalError("The dequeued cell is not an instance of LocationOverviewTableViewCell.")
-            }
-            
-            let location = currentLocation!
-            
-            cell.locationLabel.text = location.name
-            cell.temperatureLabel.text = String(location.days[0].hours[0].temperatur.rounded()) // Get current hour of current day
-            //TODO weather image
-            return cell
+            cell = tableView.dequeueReusableCell(withIdentifier: "currentLocationCell", for: indexPath) as? LocationOverviewTableViewCell
+            location = currentLocation!
         }
         else {
-            let cellIdentifier = "favoriteLocationCell"
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? LocationOverviewTableViewCell else {
-                fatalError("The dequeued cell is not an instance of LocationOverviewTableViewCell.")
-            }
-            
-            let location = locations[indexPath.row - (currentLocation != nil ? 1 : 0)]
-            
-            cell.locationLabel.text = location.name
-            cell.temperatureLabel.text = String(location.days[0].hours[0].temperatur.rounded()) // Get current hour of current day  //TODO: Maybe change to another hour
-            //TODO weather image
-            return cell
+            cell = tableView.dequeueReusableCell(withIdentifier: "favoriteLocationCell", for: indexPath) as? LocationOverviewTableViewCell
+            location = locations[indexPath.row - (currentLocation != nil ? 1 : 0)]
         }
+        
+        cell!.locationLabel.text = location.name
+        cell!.temperatureLabel.text = String(location.days[0].hours[0].temperatur)
+        let weatherImageName = weatherImages
+            .filter { $0.1.contains(location.days[0].hours[0].weatherType.rawValue) }
+            .first!.0
+        cell!.weatherImage.image = UIImage(named: weatherImageName + ".png")
+        
+        return cell!
     }
     
 
