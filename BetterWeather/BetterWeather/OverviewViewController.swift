@@ -10,7 +10,7 @@ import UIKit
 
 class OverviewViewController: UITableViewController {
     
-    // Maybe move out parsing later
+    // TODO: Maybe move out parsing later
     let weatherImages: [String: [Int]] = [
         "clear": [1,2],
         "half clear": [3,4],
@@ -114,7 +114,9 @@ class OverviewViewController: UITableViewController {
         }
         
         cell!.locationLabel.text = location.name
-        cell!.temperatureLabel.text = String(location.days[0].hours[0].temperatur)
+        cell!.temperatureLabel.text = String(Int(round(location.days[0].hours[0].temperatur)))
+        
+        // TODO: Maybe move out parsing later
         let weatherImageName = weatherImages
             .filter { $0.1.contains(location.days[0].hours[0].weatherType.rawValue) }
             .first!.0
