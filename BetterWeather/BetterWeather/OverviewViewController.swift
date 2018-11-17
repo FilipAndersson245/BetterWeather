@@ -10,14 +10,62 @@ import UIKit
 
 class OverviewViewController: UITableViewController {
 
-    var locations = [LocationOverview]()
-    var currentLocation: LocationOverview? = nil
+    var locations = [Location]()
+    var currentLocation: Location? = nil
     
     private func loadSampleLocations() {
-        currentLocation = LocationOverview(name:"New York", temperature:12, weather:"cloudy")
-        let location1 = LocationOverview(name:"Huskvarna", temperature:20, weather:"sunny")
-        let location2 = LocationOverview(name:"Stockholm", temperature:1, weather:"rainy")
-        let location3 = LocationOverview(name: "Göteborg", temperature: -3, weather: "cloudy")
+        currentLocation = Location(name: "New York", latitude: 21.324, longitude: 32.24124, days: [
+            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3), hours:
+                [
+                    Weather(weatherType: .Fog, temperatur: 21),
+                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9)
+                ]),
+            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10), hours:
+                [
+                    Weather(weatherType: .HeavySleet, temperatur: 2),
+                    Weather(weatherType: .Overcast, temperatur: -1.3),
+                    Weather(weatherType: .Thunder, temperatur: -9.3)
+                ])
+            ])
+        let location1 = Location(name: "New York", latitude: 21.324, longitude: 32.24124, days: [
+            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3), hours:
+                [
+                    Weather(weatherType: .Fog, temperatur: 21),
+                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9)
+                ]),
+            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10), hours:
+                [
+                    Weather(weatherType: .HeavySleet, temperatur: 2),
+                    Weather(weatherType: .Overcast, temperatur: -1.3),
+                    Weather(weatherType: .Thunder, temperatur: -9.3)
+                ])
+            ])
+        let location2 = Location(name: "New York", latitude: 21.324, longitude: 32.24124, days: [
+            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3), hours:
+                [
+                    Weather(weatherType: .Fog, temperatur: 21),
+                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9)
+                ]),
+            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10), hours:
+                [
+                    Weather(weatherType: .HeavySleet, temperatur: 2),
+                    Weather(weatherType: .Overcast, temperatur: -1.3),
+                    Weather(weatherType: .Thunder, temperatur: -9.3)
+                ])
+            ])
+        let location3 = Location(name: "New York", latitude: 21.324, longitude: 32.24124, days: [
+            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3), hours:
+                [
+                    Weather(weatherType: .Fog, temperatur: 21),
+                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9)
+                ]),
+            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10), hours:
+                [
+                    Weather(weatherType: .HeavySleet, temperatur: 2),
+                    Weather(weatherType: .Overcast, temperatur: -1.3),
+                    Weather(weatherType: .Thunder, temperatur: -9.3)
+                ])
+            ])
         locations += [location1, location2, location3]
     }
     
@@ -48,7 +96,7 @@ class OverviewViewController: UITableViewController {
             let location = currentLocation!
             
             cell.locationLabel.text = location.name
-            cell.temperatureLabel.text = String(location.temperature)
+            cell.temperatureLabel.text = String(location.days[0].hours[0].temperatur.rounded()) // Get current hour of current day
             //TODO weather image
             return cell
         }
@@ -61,7 +109,7 @@ class OverviewViewController: UITableViewController {
             let location = locations[indexPath.row - (currentLocation != nil ? 1 : 0)]
             
             cell.locationLabel.text = location.name
-            cell.temperatureLabel.text = String(location.temperature)
+            cell.temperatureLabel.text = String(location.days[0].hours[0].temperatur.rounded()) // Get current hour of current day  //TODO: Maybe change to another hour
             //TODO weather image
             return cell
         }
