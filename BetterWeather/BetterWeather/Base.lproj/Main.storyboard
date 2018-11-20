@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="currentLocationCell" rowHeight="130" id="wWQ-4a-9oW" customClass="LocationOverviewTableViewCell" customModule="BetterWeather" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="currentLocationCell" rowHeight="130" id="wWQ-4a-9oW" customClass="WeatherTableViewCell" customModule="BetterWeather" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="130"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wWQ-4a-9oW" id="JF6-l5-yZ5">
@@ -94,12 +94,12 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="locationLabel" destination="jWA-mS-Ce1" id="IEl-ce-9ip"/>
                                     <outlet property="temperatureLabel" destination="uUX-fh-qRQ" id="a14-vB-95Q"/>
+                                    <outlet property="title" destination="jWA-mS-Ce1" id="IEl-ce-9ip"/>
                                     <outlet property="weatherImage" destination="PWN-V0-GLe" id="quu-3L-ICH"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="favoriteLocationCell" rowHeight="90" id="8yg-WL-1aa" customClass="LocationOverviewTableViewCell" customModule="BetterWeather" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="favoriteLocationCell" rowHeight="90" id="8yg-WL-1aa" customClass="WeatherTableViewCell" customModule="BetterWeather" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="158" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8yg-WL-1aa" id="svb-Bk-GPc">
@@ -165,8 +165,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="locationLabel" destination="eSq-Sd-s78" id="fvz-So-J0A"/>
                                     <outlet property="temperatureLabel" destination="jic-66-2gD" id="7no-9L-b8Y"/>
+                                    <outlet property="title" destination="eSq-Sd-s78" id="fvz-So-J0A"/>
                                     <outlet property="weatherImage" destination="8bs-4Y-G8d" id="QMU-RG-2hm"/>
                                     <segue destination="WDL-Te-cNm" kind="show" id="snV-dY-DiX"/>
                                 </connections>
@@ -192,7 +192,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="dayCell" rowHeight="90" id="3kg-H3-lrO" customClass="LocationOverviewTableViewCell" customModule="BetterWeather" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="dayCell" rowHeight="90" id="3kg-H3-lrO" customClass="WeatherTableViewCell" customModule="BetterWeather" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3kg-H3-lrO" id="b4S-XP-fi7">
@@ -258,8 +258,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="locationLabel" destination="sQw-5Q-LAR" id="Hh0-91-TS1"/>
                                     <outlet property="temperatureLabel" destination="gOd-Dj-4sI" id="Akj-p6-xv2"/>
+                                    <outlet property="title" destination="sQw-5Q-LAR" id="Hh0-91-TS1"/>
                                     <outlet property="weatherImage" destination="kjB-0a-4rR" id="nVy-OH-Yzq"/>
                                 </connections>
                             </tableViewCell>

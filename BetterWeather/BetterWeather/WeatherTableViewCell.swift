@@ -1,5 +1,5 @@
 //
-//  LocationOverviewTableViewCell.swift
+//  WeatherTableViewCell.swift
 //  BetterWeather
 //
 //  Created by Simon Arvidsson on 2018-11-06.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class LocationOverviewTableViewCell: UITableViewCell {
+class WeatherTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var title: UILabel!
     @IBOutlet weak var weatherImage: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     

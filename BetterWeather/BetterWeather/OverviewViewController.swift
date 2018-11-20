@@ -103,17 +103,17 @@ class OverviewViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let location: Location
-        let cell: LocationOverviewTableViewCell?
+        let cell: WeatherTableViewCell?
         if (indexPath.row == 0 && currentLocation != nil) {
-            cell = tableView.dequeueReusableCell(withIdentifier: "currentLocationCell", for: indexPath) as? LocationOverviewTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "currentLocationCell", for: indexPath) as? WeatherTableViewCell
             location = currentLocation!
         }
         else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "favoriteLocationCell", for: indexPath) as? LocationOverviewTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "favoriteLocationCell", for: indexPath) as? WeatherTableViewCell
             location = locations[indexPath.row - (currentLocation != nil ? 1 : 0)]
         }
         
-        cell!.locationLabel.text = location.name
+        cell!.title.text = location.name
         cell!.temperatureLabel.text = String(Int(round(location.days[0].hours[0].temperatur)))
         
         // TODO: Maybe move out parsing later
