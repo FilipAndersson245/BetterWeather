@@ -23,6 +23,10 @@ class OverviewViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let dbHandler = DatabaseHandler() //temporary
+        dbHandler.createDB() //temporary
+        
         loadSampleLocations()
         
     }
