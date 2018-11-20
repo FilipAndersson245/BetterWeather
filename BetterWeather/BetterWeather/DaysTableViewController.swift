@@ -41,7 +41,7 @@ class DaysTableViewController: UITableViewController {
         
         cell!.title.text = day.date
         cell!.temperatureLabel.text = String(Int(round(day.averageWeather.temperatur)))
-        cell!.weatherImage.image = UIImage(named: "clear" + ".png")   // TODO: replace with real image name
+        cell!.setImage(day.averageWeather.weatherType)
         
 
         return cell!
