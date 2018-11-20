@@ -9,20 +9,6 @@
 import UIKit
 
 class OverviewViewController: UITableViewController {
-    
-    // TODO: Maybe move out parsing later
-    let weatherImages: [String: [Int]] = [
-        "clear": [1,2],
-        "half clear": [3,4],
-        "cloudy": [5,6],
-        "fog": [7],
-        "light rain": [8, 18],
-        "moderate rain": [9, 19],
-        "heavy rain": [10, 20],
-        "thunder": [11, 21],
-        "sleet": [12, 13, 14, 22, 23, 24],
-        "snow": [15, 16, 17, 25, 26, 27]
-    ]
 
     var locations = [Location]()
     var currentLocation: Location? = nil
@@ -115,12 +101,7 @@ class OverviewViewController: UITableViewController {
         
         cell!.title.text = location.name
         cell!.temperatureLabel.text = String(Int(round(location.days[0].hours[0].temperatur)))
-        
-        // TODO: Maybe move out parsing later
-        let weatherImageName = weatherImages
-            .filter { $0.1.contains(location.days[0].hours[0].weatherType.rawValue) }
-            .first!.0
-        cell!.weatherImage.image = UIImage(named: weatherImageName + ".png")
+        cell!.setImage(location.days[0].hours[0].weatherType)
         
         return cell!
     }
