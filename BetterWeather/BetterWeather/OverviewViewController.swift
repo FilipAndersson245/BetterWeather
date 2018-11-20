@@ -25,6 +25,11 @@ class OverviewViewController: UITableViewController {
         super.viewDidLoad()
         loadSampleLocations()
         
+        
+        // DEBUG
+        ApiHandler.foo(16, 58);
+        
+        
     }
 
     // MARK: - Table view data source

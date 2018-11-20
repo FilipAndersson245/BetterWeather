@@ -39,17 +39,6 @@ enum WeatherTypes: Int {
     
 }
 
-struct Weather {
-    let time: String
-    let weatherType:WeatherTypes // Enum 1-27
-    let temperatur: Float
-    let windDirection: Int // Degree
-    let windSpeed: Float
-    let relativHumidity: Int // 0-100
-    let airPressure: Float
-    let HorizontalVisibility: Float
-}
-
 class ApiHandler {
     
     public enum ApiHandlerErrors: Error {
@@ -59,75 +48,30 @@ class ApiHandler {
         case MissingData(String)
     }
     
-    private static func jsonToWeather(jsonData: Dictionary<String, Any>) -> Array<Weather> {
-        var weathers: Array<Weather> = []
-        let listOfWeather = jsonData["timeseries"] as? Array<Dictionary<String, Any>>
-        for weather in listOfWeather! {
-            let time = weather["validTime"] as! String
-            let parameters = weather["parameters"] as? Array<Dictionary<String, Any>>
-            
-            var weatherType:WeatherTypes? // Enum 1-27
-            var temperatur: Float?
-            var windDirection: Int? // Degree
-            var windSpeed: Float?
-            var relativHumidity: Int? // 0-100
-            var airPressure: Float?
-            var HorizontalVisibility: Float?
-            
-            for parameter in parameters! {
-                let values = parameter["values"] as! Array<Any>
-                switch parameter["name"] as! String {
-                case "Wsymb2":
-                    weatherType = values[0] as! WeatherTypes
-                case "Wsymb":
-                    weatherType = values[0] as! WeatherTypes
-                case "t":
-                    temperatur = values[0] as! Float
-                case "wd":
-                    windDirection = values[0] as! Int
-                case "ws":
-                    windSpeed = values[0] as! Float
-                case "r":
-                    relativHumidity = values[0] as! Int
-                case "msl":
-                    airPressure = values[0] as! Float
-                case "vis":
-                    HorizontalVisibility = values[0] as! Float
-                default:
-                    break
-                }
-            }
-            
-            let weatherObj = Weather(time: time, weatherType: weatherType!, temperatur: temperatur!, windDirection: windDirection!, windSpeed: windSpeed!, relativHumidity: relativHumidity!, airPressure: airPressure!, HorizontalVisibility: HorizontalVisibility!)
-            weathers.append(weatherObj)
-        }
-        return weathers
-    }
-    
-    private static func fetch(lon: Float, lat: Float, completionBlock: @escaping (Array<Weather>) -> Void) throws  {
+    private static func fetch(lon: Float, lat: Float, completionBlock: @escaping (Weather) -> Void)  {
         let template = "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/%.4f/lat/%.4f/data.json"
         let urlsString = String(format: template, lon, lat)
+
         guard let baseUrl = URL(string: urlsString) else {
             print("Error invalid url")
-            throw ApiHandlerErrors.InvalidUrl
+            return
         }
         
         let task = URLSession.shared.dataTask(with: baseUrl) {
             (data, response, error)	in
-                guard let dataResponse = data,
+            guard let _ = data,
                     error == nil else {
                         print(error?.localizedDescription ?? "Response Error")
                         return
                     }
                 do {
                     //here dataResponse received from a network request
-                    let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: [])
-                    completionBlock(ApiHandler.jsonToWeather(jsonData: jsonResponse as! Dictionary<String, Any>))
-                    
+                    let weather = try JSONDecoder().decode(Weather.self, from: data!)
+                    completionBlock(weather)
                 } catch let parsingError {
                     print("Error", parsingError)
+                    return
                 }
-            
         }
         task.resume()
     }
@@ -152,17 +96,16 @@ class ApiHandler {
         
     }
     
-    public static func foo<T>(_ lon: Float, _ lat: Float, type: T.Type) throws ->T  {
-        do {
-            let a = try ApiHandler.fetch(lon: lon, lat: lat) {(data) in
-                
+    public static func foo(_ lon: Float, _ lat: Float,completionBlock: @escaping (Weather) -> Void)  {
+            fetch(lon: lon, lat: lat) {(data) in
+                print(data)
+                completionBlock(data)
+//                switch type {
+//                case is String.Type: //This should be our model that is yet to be implemented
+//                    return "" as! T
+//                default:
+//                    throw ApiHandlerErrors.NonHandledDataTypeError
+//                }
             }
-        }
-        switch type {
-        case is String.Type: //This should be our model that is yet to be implemented
-            return "" as! T
-        default:
-            throw ApiHandlerErrors.NonHandledDataTypeError
-        }
     }
 }

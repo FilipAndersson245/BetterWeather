@@ -16,6 +16,10 @@
 		D11A4F17219167E400286879 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D11A4F16219167E400286879 /* Assets.xcassets */; };
 		D11A4F1A219167E400286879 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D11A4F18219167E400286879 /* LaunchScreen.storyboard */; };
 		D11A4F222191937400286879 /* ApiHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A4F212191937400286879 /* ApiHandler.swift */; };
+		D1289FE421A4060B00DC4AEF /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1289FE321A4060B00DC4AEF /* Weather.swift */; };
+		D1289FE621A4064400DC4AEF /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1289FE521A4064400DC4AEF /* Parameter.swift */; };
+		D1289FE821A4072400DC4AEF /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1289FE721A4072400DC4AEF /* Geometry.swift */; };
+		D1289FEA21A4102100DC4AEF /* DataPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1289FE921A4102100DC4AEF /* DataPoints.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +34,10 @@
 		D11A4F19219167E400286879 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D11A4F1B219167E400286879 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D11A4F212191937400286879 /* ApiHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiHandler.swift; sourceTree = "<group>"; };
+		D1289FE321A4060B00DC4AEF /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		D1289FE521A4064400DC4AEF /* Parameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parameter.swift; sourceTree = "<group>"; };
+		D1289FE721A4072400DC4AEF /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
+		D1289FE921A4102100DC4AEF /* DataPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPoints.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +70,7 @@
 		D11A4F0E219167E300286879 /* BetterWeather */ = {
 			isa = PBXGroup;
 			children = (
+				D1289FE121A4050800DC4AEF /* models */,
 				D11A4F232191938200286879 /* ApiHandler */,
 				D11A4F0F219167E300286879 /* AppDelegate.swift */,
 				D11A4F11219167E300286879 /* ViewController.swift */,
@@ -82,6 +91,25 @@
 				D11A4F212191937400286879 /* ApiHandler.swift */,
 			);
 			path = ApiHandler;
+			sourceTree = "<group>";
+		};
+		D1289FE121A4050800DC4AEF /* models */ = {
+			isa = PBXGroup;
+			children = (
+				D1289FE221A4051600DC4AEF /* Api */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		D1289FE221A4051600DC4AEF /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				D1289FE321A4060B00DC4AEF /* Weather.swift */,
+				D1289FE521A4064400DC4AEF /* Parameter.swift */,
+				D1289FE721A4072400DC4AEF /* Geometry.swift */,
+				D1289FE921A4102100DC4AEF /* DataPoints.swift */,
+			);
+			path = Api;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,12 +183,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1289FEA21A4102100DC4AEF /* DataPoints.swift in Sources */,
 				D11A4F12219167E300286879 /* ViewController.swift in Sources */,
 				D11A4F222191937400286879 /* ApiHandler.swift in Sources */,
 				4EC5FA41219180D4002E4723 /* LocationOverview.swift in Sources */,
+				D1289FE621A4064400DC4AEF /* Parameter.swift in Sources */,
 				D11A4F10219167E300286879 /* AppDelegate.swift in Sources */,
 				4EC5FA43219181B7002E4723 /* LocationOverviewTableViewCell.swift in Sources */,
 				4EC5FA3F21917DB6002E4723 /* OverviewViewController.swift in Sources */,
+				D1289FE821A4072400DC4AEF /* Geometry.swift in Sources */,
+				D1289FE421A4060B00DC4AEF /* Weather.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
