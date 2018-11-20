@@ -161,14 +161,23 @@ class OverviewViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "daysSegue", sender: indexPath)
+    }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if let destination = segue.destination as? DaysTableViewController {
+            if let indexPath = sender as? IndexPath {
+                let location = (indexPath.row == 0 && currentLocation != nil) ? currentLocation! : locations[indexPath.row - (currentLocation != nil ? 1 : 0)]
+                destination.days = location.days
+                destination.title = location.name
+            }
+        }
     }
-    */
+    
 
 }

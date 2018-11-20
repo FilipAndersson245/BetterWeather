@@ -168,7 +168,6 @@
                                     <outlet property="temperatureLabel" destination="jic-66-2gD" id="7no-9L-b8Y"/>
                                     <outlet property="title" destination="eSq-Sd-s78" id="fvz-So-J0A"/>
                                     <outlet property="weatherImage" destination="8bs-4Y-G8d" id="QMU-RG-2hm"/>
-                                    <segue destination="WDL-Te-cNm" kind="show" id="snV-dY-DiX"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -178,15 +177,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="BetterWeather" id="Ild-g6-emw"/>
+                    <connections>
+                        <segue destination="WDL-Te-cNm" kind="show" identifier="daysSegue" id="nhl-0N-Wyw"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FDQ-zx-UOO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-791.20000000000005" y="152.47376311844079"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Days Table View Controller-->
         <scene sceneID="Hdy-hY-QXM">
             <objects>
-                <tableViewController id="WDL-Te-cNm" sceneMemberID="viewController">
+                <tableViewController id="WDL-Te-cNm" customClass="DaysTableViewController" customModule="BetterWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="tpP-4m-l3B">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
