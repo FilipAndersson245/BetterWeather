@@ -39,6 +39,36 @@ enum WeatherTypes: Int {
     
 }
 
+<<<<<<< HEAD
+=======
+struct Weather {
+    let weatherType:WeatherTypes // Enum 1-27
+    let temperatur: Float
+    let windDirection: Int? // Degree
+    let windSpeed: Float?
+    let relativHumidity: Int? // 0-100
+    let airPressure: Float?
+    let HorizontalVisibility: Float?
+    
+    init(weatherType:WeatherTypes
+    ,temperatur: Float
+    ,windDirection: Int? = nil
+    , windSpeed: Float? = nil
+    , relativHumidity: Int? = nil
+    , airPressure: Float? = nil
+    , HorizontalVisibility: Float? = nil)
+    {
+        self.weatherType = weatherType
+        self.temperatur = temperatur
+        self.windDirection = windDirection
+        self.windSpeed = windSpeed
+        self.relativHumidity = relativHumidity
+        self.airPressure = airPressure
+        self.HorizontalVisibility = HorizontalVisibility
+    }
+}
+
+>>>>>>> dev
 class ApiHandler {
     
     public enum ApiHandlerErrors: Error {
@@ -48,7 +78,16 @@ class ApiHandler {
         case MissingData(String)
     }
     
+<<<<<<< HEAD
     private static func fetch(lon: Float, lat: Float, completionBlock: @escaping (Weather) -> Void)  {
+=======
+   /* private func jsonToWeather() -> Weather {
+        let weather = Weather(weatherType: <#T##WeatherTypes#>, temperatur: <#T##Float#>, windDirection: <#T##Int#>, windSpeed: <#T##Float#>, relativHumidity: <#T##Int#>, airPressure: <#T##Float#>, HorizontalVisibility: <#T##Float#>)
+        return weather
+    }*/
+    
+    private func fetch(lon: Float, lat: Float) throws  {
+>>>>>>> dev
         let template = "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/%.4f/lat/%.4f/data.json"
         let urlsString = String(format: template, lon, lat)
 
