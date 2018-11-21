@@ -75,7 +75,9 @@ class OverviewViewController: UITableViewController {
         
         
         // DEBUG
-        ApiHandler.foo(16, 58);
+        ApiHandler.foo(16, 58) { data in
+            print(data)
+        };
         
         
     }

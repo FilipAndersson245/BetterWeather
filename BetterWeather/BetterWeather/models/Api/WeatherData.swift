@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Weather: Codable {
+struct WeatherData: Codable {
     let approvedTime: String
     let referenceTime: String
     let geometry: Geometry
