@@ -58,6 +58,7 @@
 		4E80572921A03B6A0071E896 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D1289FE221A4051600DC4AEF /* Api */,
 				4EC5FA40219180D4002E4723 /* Location.swift */,
 				4E80572A21A03DA10071E896 /* Day.swift */,
 			);
@@ -83,7 +84,6 @@
 		D11A4F0E219167E300286879 /* BetterWeather */ = {
 			isa = PBXGroup;
 			children = (
-				D1289FE121A4050800DC4AEF /* models */,
 				4E80572921A03B6A0071E896 /* Models */,
 				D11A4F232191938200286879 /* ApiHandler */,
 				D11A4F0F219167E300286879 /* AppDelegate.swift */,
@@ -105,14 +105,6 @@
 				D11A4F212191937400286879 /* ApiHandler.swift */,
 			);
 			path = ApiHandler;
-			sourceTree = "<group>";
-		};
-		D1289FE121A4050800DC4AEF /* models */ = {
-			isa = PBXGroup;
-			children = (
-				D1289FE221A4051600DC4AEF /* Api */,
-			);
-			path = models;
 			sourceTree = "<group>";
 		};
 		D1289FE221A4051600DC4AEF /* Api */ = {
