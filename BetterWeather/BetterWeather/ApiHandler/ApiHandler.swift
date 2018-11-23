@@ -97,10 +97,28 @@ class ApiHandler {
         
     }
     
-    public static func foo(_ lon: Float, _ lat: Float,completionBlock: @escaping (WeatherData) -> Void)  {
+    public static func foo(_ lon: Float, _ lat: Float,completionBlock: @escaping (Location) -> Void)  {
             fetch(lon: lon, lat: lat) {(data) in
-                print(data)
-                completionBlock(data)
+                for hourWeather in data.timeSeries {
+                    
+                    // Default init values for weather if api misses data in a request.
+                    var type: WeatherTypes = WeatherTypes.ClearSky
+                    var t: Float = 10
+                    for hourWeatherParameter in hourWeather.parameters {
+                        switch hourWeatherParameter.name {
+                        case .t:
+                            t = hourWeatherParameter.values[0]
+                        case .Wsymb2, .Wsymb:
+                            type = WeatherTypes(rawValue: Int(hourWeatherParameter.values[0]))!
+                        default:
+                            break
+                        
+                        }
+                    }
+                    var hour = Weather(weatherType: type, temperatur: t);
+                    
+                }
+                completionBlock(Location(name: "", latitude: 1, longitude: 1, days: []))
 //                switch type {
 //                case is String.Type: //This should be our model that is yet to be implemented
 //                    return "" as! T
