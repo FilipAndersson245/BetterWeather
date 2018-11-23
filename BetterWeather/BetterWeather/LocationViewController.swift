@@ -12,10 +12,17 @@ import MapKit
 class LocationViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var addLocationButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        // Fix addLocationButton styling
+        addLocationButton.layer.cornerRadius = 5
+        addLocationButton.layer.borderWidth = 1
+        addLocationButton.layer.borderColor = self.view.tintColor.cgColor
+        addLocationButton.titleLabel?.textColor = self.view.tintColor
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -56,8 +63,6 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
                 {
                     self.mapView.removeAnnotation(annotation)
                 }
-
-//                self.mapView.removeAnnotation(self.mapView?.annotations as! MKAnnotation)
                 
                 // Getting data
                 let lon = response?.boundingRegion.center.longitude
@@ -69,6 +74,21 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
                 annotation.coordinate = CLLocationCoordinate2DMake(lat!, lon!)
                 self.mapView.addAnnotation(annotation)
                 
+                // Zooming in on location
+                let coordinate:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: lat!, longitude: lon!)
+                let span = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
+                let region = MKCoordinateRegion(center: coordinate, span: span)
+                self.mapView.setRegion(region, animated: true)
+                
+                
+                // Show Add location Button
+                self.addLocationButton.setTitle("Add " + searchBar.text!, for: .normal)
+                self.addLocationButton.titleLabel?.adjustsFontSizeToFitWidth = true
+                self.addLocationButton.isHidden = false
+                
+                
+                
+                // <-------- REMOVE LATER!!!!!!!!!!!!! -------->
                 print(lon)
                 print(lat)
                 
