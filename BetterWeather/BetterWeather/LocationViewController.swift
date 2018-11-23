@@ -24,7 +24,6 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
         
         // Actitity indicator
         let activityIndicator = UIActivityIndicatorView()
-        activityIndicator.style = UIActivityIndicatorView.Style.gray
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.startAnimating()
@@ -42,7 +41,6 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
         let activeSearch = MKLocalSearch(request: searchRequest)
         
         activeSearch.start { (response, error) in
-            
             activityIndicator.stopAnimating()
             UIApplication.shared.endIgnoringInteractionEvents()
             
@@ -53,10 +51,12 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
             }
             else
             {
-                // Remove anotations
-//                let annotations = self.mapView.annotations
-//                self.mapView.removeAnnotation(annotations)
-                
+                let annotations = self.mapView.annotations
+                for annotation in annotations
+                {
+                    self.mapView.removeAnnotation(annotation)
+                }
+
 //                self.mapView.removeAnnotation(self.mapView?.annotations as! MKAnnotation)
                 
                 // Getting data
