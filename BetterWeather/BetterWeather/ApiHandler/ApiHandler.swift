@@ -85,19 +85,8 @@ class ApiHandler {
         
     }
     
-    private static func overviewObject() {
-        
-    }
     
-    private static func dayObject() {
-    
-    }
-    
-    private static func hourObject() {
-        
-    }
-    
-    public static func foo(_ lon: Float, _ lat: Float,completionBlock: @escaping (Location) -> Void)  {
+    public static func location(_ lon: Float, _ lat: Float,completionBlock: @escaping (Location) -> Void)  {
             fetch(lon: lon, lat: lat) {(data) in
                 var day: Array<Weather> = []
                 for hourWeather in data.timeSeries {

@@ -25,6 +25,7 @@
 		D1289FE621A4064400DC4AEF /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1289FE521A4064400DC4AEF /* Parameter.swift */; };
 		D1289FE821A4072400DC4AEF /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1289FE721A4072400DC4AEF /* Geometry.swift */; };
 		D1289FEA21A4102100DC4AEF /* DataPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1289FE921A4102100DC4AEF /* DataPoints.swift */; };
+		D190EED721A85FAD00BE4092 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = D190EED621A85FAD00BE4092 /* Position.swift */; };
 		D1C7913D21A54481002F83F0 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C7913C21A54481002F83F0 /* Weather.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,7 @@
 		D1289FE521A4064400DC4AEF /* Parameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parameter.swift; sourceTree = "<group>"; };
 		D1289FE721A4072400DC4AEF /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
 		D1289FE921A4102100DC4AEF /* DataPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPoints.swift; sourceTree = "<group>"; };
+		D190EED621A85FAD00BE4092 /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		D1C7913C21A54481002F83F0 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Weather.swift; path = BetterWeather/models/Weather.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -70,6 +72,7 @@
 				5786DDF921A83063006C86D4 /* Location.swift */,
 				4E80572A21A03DA10071E896 /* Day.swift */,
 				D1C7913C21A54481002F83F0 /* Weather.swift */,
+				D190EED621A85FAD00BE4092 /* Position.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 				D11A4F12219167E300286879 /* ViewController.swift in Sources */,
 				D1C7913D21A54481002F83F0 /* Weather.swift in Sources */,
 				D11A4F222191937400286879 /* ApiHandler.swift in Sources */,
+				D190EED721A85FAD00BE4092 /* Position.swift in Sources */,
 				D11A4F10219167E300286879 /* AppDelegate.swift in Sources */,
 				4EC5FA43219181B7002E4723 /* WeatherTableViewCell.swift in Sources */,
 				4EC5FA3F21917DB6002E4723 /* OverviewViewController.swift in Sources */,

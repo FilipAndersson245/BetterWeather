@@ -68,15 +68,19 @@ class OverviewViewController: UITableViewController {
             ])
         locations += [location1, location2, location3]
         
-        ApiHandler.foo(16, 58) { data in
-            self.locations.append(data)
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+        let positions: Array<Position> = [Position(17.9777,59.3320,"Stockholm"),Position(10.7216,59.9728,"Oslo"),Position(17.0,58.0,"abc")]
+        let groupQue = DispatchGroup()
+        for position in positions {
+            groupQue.enter()
+            ApiHandler.location(position.lon, position.lat) { data in
+                groupQue.leave()
+                self.locations.append(data)
+                print(position.name)
             }
-            print("1")
-        };
-        print("2")
-        
+        }
+        groupQue.notify(queue: .main) {
+            self.tableView.reloadData()
+        }
     }
     
     override func viewDidLoad() {
