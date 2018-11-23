@@ -67,6 +67,16 @@ class OverviewViewController: UITableViewController {
                 ])
             ])
         locations += [location1, location2, location3]
+        
+        ApiHandler.foo(16, 58) { data in
+            self.locations.append(data)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            print("1")
+        };
+        print("2")
+        
     }
     
     override func viewDidLoad() {
@@ -75,9 +85,7 @@ class OverviewViewController: UITableViewController {
         
         
         // DEBUG
-        ApiHandler.foo(16, 58) { data in
-            print(data)
-        };
+        
         
         
     }

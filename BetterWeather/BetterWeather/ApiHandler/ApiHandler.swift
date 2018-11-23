@@ -99,6 +99,7 @@ class ApiHandler {
     
     public static func foo(_ lon: Float, _ lat: Float,completionBlock: @escaping (Location) -> Void)  {
             fetch(lon: lon, lat: lat) {(data) in
+                var day: Array<Weather> = []
                 for hourWeather in data.timeSeries {
                     
                     // Default init values for weather if api misses data in a request.
@@ -112,13 +113,32 @@ class ApiHandler {
                             type = WeatherTypes(rawValue: Int(hourWeatherParameter.values[0]))!
                         default:
                             break
-                        
                         }
                     }
-                    var hour = Weather(weatherType: type, temperatur: t);
+                    let hour = Weather(weatherType: type, temperatur: t);
+                    day.append(hour)
                     
                 }
-                completionBlock(Location(name: "", latitude: 1, longitude: 1, days: []))
+                
+                let avgTemp = day.reduce(0, { rest,item in
+                    rest + item.temperatur
+                }) / Float(day.count)
+                
+                var avgTypeArr = [WeatherTypes:Int]()
+                day.forEach({
+                    avgTypeArr[$0.weatherType] = (avgTypeArr[$0.weatherType] ?? 0) + 1
+                })
+                guard let (avgType, _) = avgTypeArr.max(by: {$0.value < $1.value}) else {
+                    print("Error while getting the avgType of weather")
+                    return
+                }
+                
+                let date = data.approvedTime
+                let avgWeather = Weather(weatherType: avgType, temperatur: avgTemp)
+                
+                let myDay = Day(date: date, averageWeather: avgWeather, hours: day)
+                
+                completionBlock(Location(name: "faeiaföoguguödv", latitude: 1, longitude: 1, days: [myDay]))
 //                switch type {
 //                case is String.Type: //This should be our model that is yet to be implemented
 //                    return "" as! T
