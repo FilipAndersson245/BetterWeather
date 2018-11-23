@@ -100,7 +100,7 @@ class OverviewViewController: UITableViewController {
         }
         
         cell!.title.text = location.name
-        cell!.temperatureLabel.text = String(Int(round(location.days[0].hours[0].temperatur)))
+        cell!.setTemperature(location.days[0].hours[0].temperatur)
         cell!.setImage(location.days[0].hours[0].weatherType)
         
         return cell!

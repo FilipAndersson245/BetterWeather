@@ -39,7 +39,7 @@ class HoursTableViewController: UITableViewController {
         let hour = hours[indexPath.row]
         
         cell!.title.text = "HOUR_TIME" // TODO: get from model when added
-        cell!.temperatureLabel.text = String(Int(round(hour.temperatur)))
+        cell!.setTemperature(hour.temperatur)
         cell!.setImage(hour.weatherType)
         
         

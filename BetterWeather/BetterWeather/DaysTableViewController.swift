@@ -40,7 +40,7 @@ class DaysTableViewController: UITableViewController {
         let day = days[indexPath.row]
         
         cell!.title.text = day.date
-        cell!.temperatureLabel.text = String(Int(round(day.averageWeather.temperatur)))
+        cell!.setTemperature(day.averageWeather.temperatur)
         cell!.setImage(day.averageWeather.weatherType)
         
 
