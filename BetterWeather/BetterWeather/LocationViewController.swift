@@ -102,5 +102,8 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
         present(searchController, animated: true, completion: nil)
     }
     
+    @IBAction func addLocationButton(_ sender: Any) {
+        // Do stuff when clicked.
+    }
     
 }

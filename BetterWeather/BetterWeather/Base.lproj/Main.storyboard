@@ -305,6 +305,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <state key="normal" title="Add Location"/>
+                                <connections>
+                                    <action selector="addLocationButton:" destination="tUX-aw-NyE" eventType="touchUpInside" id="Fhx-KX-Dez"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
