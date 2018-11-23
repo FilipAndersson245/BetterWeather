@@ -15,55 +15,55 @@ class OverviewViewController: UITableViewController {
     
     private func loadSampleLocations() {
         currentLocation = Location(name: "New York", latitude: 21.324, longitude: 32.24124, days: [
-            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3), hours:
+            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time:"test"), hours:
                 [
-                    Weather(weatherType: .Fog, temperatur: 21),
-                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9)
+                    Weather(weatherType: .Fog, temperatur: 21, time: "test"),
+                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: "test")
                 ]),
-            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10), hours:
+            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: "test"), hours:
                 [
-                    Weather(weatherType: .HeavySleet, temperatur: 2),
-                    Weather(weatherType: .Overcast, temperatur: -1.3),
-                    Weather(weatherType: .Thunder, temperatur: -9.3)
+                    Weather(weatherType: .HeavySleet, temperatur: 2, time: "test"),
+                    Weather(weatherType: .Overcast, temperatur: -1.3, time: "test"),
+                    Weather(weatherType: .Thunder, temperatur: -9.3, time: "test")
                 ])
             ])
         let location1 = Location(name: "Huskvarna", latitude: 21.324, longitude: 32.24124, days: [
-            Day(date: "Monday", averageWeather: Weather(weatherType: .ModerateSleetShowers, temperatur: 20.3), hours:
+            Day(date: "Monday", averageWeather: Weather(weatherType: .ModerateSleetShowers, temperatur: 20.3, time: "test"), hours:
                 [
-                    Weather(weatherType: .ClearSky, temperatur: 25),
-                    Weather(weatherType: .ClearSky, temperatur: 21.9)
+                    Weather(weatherType: .ClearSky, temperatur: 25, time: "test"),
+                    Weather(weatherType: .ClearSky, temperatur: 21.9, time: "test")
                 ]),
-            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10), hours:
+            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: "test"), hours:
                 [
-                    Weather(weatherType: .HeavySleet, temperatur: 2),
-                    Weather(weatherType: .Overcast, temperatur: -1.3),
-                    Weather(weatherType: .Thunder, temperatur: -9.3)
+                    Weather(weatherType: .HeavySleet, temperatur: 2, time: "test"),
+                    Weather(weatherType: .Overcast, temperatur: -1.3, time: "test"),
+                    Weather(weatherType: .Thunder, temperatur: -9.3, time: "test")
                 ])
             ])
         let location2 = Location(name: "Jönköping", latitude: 21.324, longitude: 32.24124, days: [
-            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3), hours:
+            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time: "test"), hours:
                 [
-                    Weather(weatherType: .Thunder, temperatur: 5),
-                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9)
+                    Weather(weatherType: .Thunder, temperatur: 5, time: "test"),
+                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: "test")
                 ]),
-            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10), hours:
+            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: "test"), hours:
                 [
-                    Weather(weatherType: .HeavySleet, temperatur: 2),
-                    Weather(weatherType: .Overcast, temperatur: -1.3),
-                    Weather(weatherType: .Thunder, temperatur: -9.3)
+                    Weather(weatherType: .HeavySleet, temperatur: 2, time: "test"),
+                    Weather(weatherType: .Overcast, temperatur: -1.3, time: "test"),
+                    Weather(weatherType: .Thunder, temperatur: -9.3, time: "test")
                 ])
             ])
         let location3 = Location(name: "Asdsg", latitude: 21.324, longitude: 32.24124, days: [
-            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3), hours:
+            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time: "test"), hours:
                 [
-                    Weather(weatherType: .CloudySky, temperatur: 10),
-                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9)
+                    Weather(weatherType: .CloudySky, temperatur: 10, time: "test"),
+                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: "test")
                 ]),
-            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10), hours:
+            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: "test"), hours:
                 [
-                    Weather(weatherType: .HeavySleet, temperatur: 2),
-                    Weather(weatherType: .Overcast, temperatur: -1.3),
-                    Weather(weatherType: .Thunder, temperatur: -9.3)
+                    Weather(weatherType: .HeavySleet, temperatur: 2, time: "test"),
+                    Weather(weatherType: .Overcast, temperatur: -1.3, time: "test"),
+                    Weather(weatherType: .Thunder, temperatur: -9.3, time: "test")
                 ])
             ])
         locations += [location1, location2, location3]
@@ -115,7 +115,7 @@ class OverviewViewController: UITableViewController {
         }
         
         cell!.title.text = location.name
-        cell!.temperatureLabel.text = String(Int(round(location.days[0].hours[0].temperatur)))
+        cell!.setTemperature(location.days[0].hours[0].temperatur)
         cell!.setImage(location.days[0].hours[0].weatherType)
         
         return cell!

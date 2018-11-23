@@ -115,7 +115,7 @@ class ApiHandler {
                             break
                         }
                     }
-                    let hour = Weather(weatherType: type, temperatur: t);
+                    let hour = Weather(weatherType: type, temperatur: t, time: hourWeather.validTime);
                     day.append(hour)
                     
                 }
@@ -134,7 +134,7 @@ class ApiHandler {
                 }
                 
                 let date = data.approvedTime
-                let avgWeather = Weather(weatherType: avgType, temperatur: avgTemp)
+                let avgWeather = Weather(weatherType: avgType, temperatur: avgTemp, time: "Avg")
                 
                 let myDay = Day(date: date, averageWeather: avgWeather, hours: day)
                 

@@ -31,6 +31,11 @@ class WeatherTableViewCell: UITableViewCell {
         weatherImage.image = UIImage(named: imageName + ".png")
     }
     
+    func setTemperature(_ temperature: Float)
+    {
+        temperatureLabel.text = String(Int(round(temperature)))
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
