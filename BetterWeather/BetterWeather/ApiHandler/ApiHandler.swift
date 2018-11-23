@@ -86,7 +86,7 @@ class ApiHandler {
     }
     
     
-    public static func location(_ lon: Float, _ lat: Float,completionBlock: @escaping (Location) -> Void)  {
+    public static func location(_ lon: Float, _ lat: Float,_ name: String,completionBlock: @escaping (Location) -> Void)  {
             fetch(lon: lon, lat: lat) {(data) in
                 var day: Array<Weather> = []
                 for hourWeather in data.timeSeries {
@@ -127,7 +127,7 @@ class ApiHandler {
                 
                 let myDay = Day(date: date, averageWeather: avgWeather, hours: day)
                 
-                completionBlock(Location(name: "faeiaföoguguödv", latitude: 1, longitude: 1, days: [myDay]))
+                completionBlock(Location(name: name, latitude: 1, longitude: 1, days: [myDay]))
 //                switch type {
 //                case is String.Type: //This should be our model that is yet to be implemented
 //                    return "" as! T

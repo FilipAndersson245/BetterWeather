@@ -40,39 +40,16 @@ class OverviewViewController: UITableViewController {
                     Weather(weatherType: .Thunder, temperatur: -9.3, time: "test")
                 ])
             ])
-        let location2 = Location(name: "Jönköping", latitude: 21.324, longitude: 32.24124, days: [
-            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time: "test"), hours:
-                [
-                    Weather(weatherType: .Thunder, temperatur: 5, time: "test"),
-                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: "test")
-                ]),
-            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: "test"), hours:
-                [
-                    Weather(weatherType: .HeavySleet, temperatur: 2, time: "test"),
-                    Weather(weatherType: .Overcast, temperatur: -1.3, time: "test"),
-                    Weather(weatherType: .Thunder, temperatur: -9.3, time: "test")
-                ])
-            ])
-        let location3 = Location(name: "Asdsg", latitude: 21.324, longitude: 32.24124, days: [
-            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time: "test"), hours:
-                [
-                    Weather(weatherType: .CloudySky, temperatur: 10, time: "test"),
-                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: "test")
-                ]),
-            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: "test"), hours:
-                [
-                    Weather(weatherType: .HeavySleet, temperatur: 2, time: "test"),
-                    Weather(weatherType: .Overcast, temperatur: -1.3, time: "test"),
-                    Weather(weatherType: .Thunder, temperatur: -9.3, time: "test")
-                ])
-            ])
-        locations += [location1, location2, location3]
+        locations += [location1 ]
         
-        let positions: Array<Position> = [Position(17.9777,59.3320,"Stockholm"),Position(10.7216,59.9728,"Oslo"),Position(17.0,58.0,"abc")]
+        let positions: Array<Position> = [Position(17.9777,59.3320,"Stockholm"),
+                                          Position(10.7216,59.9728,"Oslo"),
+                                          Position(14.0988,57.7278,"Jönköping"),
+                                          Position(12.9353,55.5712,"Malmö")]
         let groupQue = DispatchGroup()
         for position in positions {
             groupQue.enter()
-            ApiHandler.location(position.lon, position.lat) { data in
+            ApiHandler.location(position.lon, position.lat, position.name) { data in
                 groupQue.leave()
                 self.locations.append(data)
                 print(position.name)
