@@ -1,16 +1,16 @@
 //
-//  DaysTableViewController.swift
+//  HoursTableViewController.swift
 //  BetterWeather
 //
-//  Created by Simon Arvidsson on 2018-11-20.
+//  Created by Simon Arvidsson on 2018-11-23.
 //  Copyright © 2018 Jonatan Flyckt, Filip Andersson, Simon Arvidson, Marcus Gullstrand. All rights reserved.
 //
 
 import UIKit
 
-class DaysTableViewController: UITableViewController {
+class HoursTableViewController: UITableViewController {
     
-    var days: [Day] = []
+    var hours: [Weather] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,22 +31,20 @@ class DaysTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return days.count
+        return hours.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "dayCell", for: indexPath) as? WeatherTableViewCell
-        let day = days[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "hourCell", for: indexPath) as? WeatherTableViewCell
+        let hour = hours[indexPath.row]
         
-        cell!.title.text = day.date
-        cell!.temperatureLabel.text = String(Int(round(day.averageWeather.temperatur)))
-        cell!.setImage(day.averageWeather.weatherType)
+        cell!.title.text = "HOUR_TIME" // TODO: get from model when added
+        cell!.temperatureLabel.text = String(Int(round(hour.temperatur)))
+        cell!.setImage(hour.weatherType)
         
-
+        
         return cell!
     }
-    
 
     /*
     // Override to support conditional editing of the table view.
@@ -83,21 +81,14 @@ class DaysTableViewController: UITableViewController {
     }
     */
 
+    /*
     // MARK: - Navigation
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "hoursSegue", sender: indexPath)
-    }
-    
+
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? HoursTableViewController {
-            if let indexPath = sender as? IndexPath {
-                let day = days[indexPath.row]
-                destination.hours = day.hours
-                destination.title = day.date
-            }
-        }
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
     }
+    */
 
 }
