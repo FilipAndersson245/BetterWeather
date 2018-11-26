@@ -45,11 +45,9 @@ class DatabaseHandler{
             for day in location.days {
                 for hour in day.hours {
                     //print(hour)
-                    var dateFormatter = ISO8601DateFormatter()
-//                    var dateString = dateFormatter.string(from: hour.time) //Make hour.time into Date type
                     sqlite3_bind_double(stmt, 1, Double(location.latitude))
                     sqlite3_bind_double(stmt, 2, Double(location.longitude))
-  //                  sqlite3_bind_text(stmt, 3, dateString, -1, nil)
+                    sqlite3_bind_double(stmt, 3, hour.time.timeIntervalSince1970)
                     sqlite3_bind_int(stmt, 4, Int32(hour.weatherType.rawValue))
                     sqlite3_bind_double(stmt, 5, Double(hour.temperatur))
                     hour.windDirection != nil ? sqlite3_bind_int(stmt, 6, Int32(hour.windDirection!)) : sqlite3_bind_null(stmt, 6)
