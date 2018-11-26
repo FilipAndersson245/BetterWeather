@@ -39,7 +39,7 @@ class DaysTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "dayCell", for: indexPath) as? WeatherTableViewCell
         let day = days[indexPath.row]
         
-        cell!.title.text = day.date
+        cell!.title.text = day.date.description
         cell!.setTemperature(day.averageWeather.temperatur)
         cell!.setImage(day.averageWeather.weatherType)
         
@@ -95,7 +95,7 @@ class DaysTableViewController: UITableViewController {
             if let indexPath = sender as? IndexPath {
                 let day = days[indexPath.row]
                 destination.hours = day.hours
-                destination.title = day.date
+                destination.title = day.date.description
             }
         }
     }

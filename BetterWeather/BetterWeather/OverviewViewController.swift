@@ -15,55 +15,55 @@ class OverviewViewController: UITableViewController {
     
     private func loadSampleLocations() {
         currentLocation = Location(name: "New York", latitude: 21.324, longitude: 32.24124, days: [
-            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time:"test"), hours:
+            Day(date: Date(), averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time:Date()), hours:
                 [
-                    Weather(weatherType: .Fog, temperatur: 21, time: "test"),
-                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: "test")
+                    Weather(weatherType: .Fog, temperatur: 21, time: Date()),
+                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: Date())
                 ]),
-            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: "test"), hours:
+            Day(date: Date(), averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: Date()), hours:
                 [
-                    Weather(weatherType: .HeavySleet, temperatur: 2, time: "test"),
-                    Weather(weatherType: .Overcast, temperatur: -1.3, time: "test"),
-                    Weather(weatherType: .Thunder, temperatur: -9.3, time: "test")
+                    Weather(weatherType: .HeavySleet, temperatur: 2, time: Date()),
+                    Weather(weatherType: .Overcast, temperatur: -1.3, time: Date()),
+                    Weather(weatherType: .Thunder, temperatur: -9.3, time: Date())
                 ])
             ])
         let location1 = Location(name: "Huskvarna", latitude: 21.324, longitude: 32.24124, days: [
-            Day(date: "Monday", averageWeather: Weather(weatherType: .ModerateSleetShowers, temperatur: 20.3, time: "test"), hours:
+            Day(date: Date(), averageWeather: Weather(weatherType: .ModerateSleetShowers, temperatur: 20.3, time: Date()), hours:
                 [
-                    Weather(weatherType: .ClearSky, temperatur: 25, time: "test"),
-                    Weather(weatherType: .ClearSky, temperatur: 21.9, time: "test")
+                    Weather(weatherType: .ClearSky, temperatur: 25, time: Date()),
+                    Weather(weatherType: .ClearSky, temperatur: 21.9, time: Date())
                 ]),
-            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: "test"), hours:
+            Day(date: Date(), averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: Date()), hours:
                 [
-                    Weather(weatherType: .HeavySleet, temperatur: 2, time: "test"),
-                    Weather(weatherType: .Overcast, temperatur: -1.3, time: "test"),
-                    Weather(weatherType: .Thunder, temperatur: -9.3, time: "test")
+                    Weather(weatherType: .HeavySleet, temperatur: 2, time: Date()),
+                    Weather(weatherType: .Overcast, temperatur: -1.3, time: Date()),
+                    Weather(weatherType: .Thunder, temperatur: -9.3, time: Date())
                 ])
             ])
         let location2 = Location(name: "Jönköping", latitude: 21.324, longitude: 32.24124, days: [
-            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time: "test"), hours:
+            Day(date: Date(), averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time: Date()), hours:
                 [
-                    Weather(weatherType: .Thunder, temperatur: 5, time: "test"),
-                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: "test")
+                    Weather(weatherType: .Thunder, temperatur: 5, time: Date()),
+                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: Date())
                 ]),
-            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: "test"), hours:
+            Day(date: Date(), averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: Date()), hours:
                 [
-                    Weather(weatherType: .HeavySleet, temperatur: 2, time: "test"),
-                    Weather(weatherType: .Overcast, temperatur: -1.3, time: "test"),
-                    Weather(weatherType: .Thunder, temperatur: -9.3, time: "test")
+                    Weather(weatherType: .HeavySleet, temperatur: 2, time: Date()),
+                    Weather(weatherType: .Overcast, temperatur: -1.3, time: Date()),
+                    Weather(weatherType: .Thunder, temperatur: -9.3, time: Date())
                 ])
             ])
         let location3 = Location(name: "Asdsg", latitude: 21.324, longitude: 32.24124, days: [
-            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time: "test"), hours:
+            Day(date: Date(), averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time: Date()), hours:
                 [
-                    Weather(weatherType: .CloudySky, temperatur: 10, time: "test"),
-                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: "test")
+                    Weather(weatherType: .CloudySky, temperatur: 10, time: Date()),
+                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: Date())
                 ]),
-            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: "test"), hours:
+            Day(date: Date(), averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: Date()), hours:
                 [
-                    Weather(weatherType: .HeavySleet, temperatur: 2, time: "test"),
-                    Weather(weatherType: .Overcast, temperatur: -1.3, time: "test"),
-                    Weather(weatherType: .Thunder, temperatur: -9.3, time: "test")
+                    Weather(weatherType: .HeavySleet, temperatur: 2, time: Date()),
+                    Weather(weatherType: .Overcast, temperatur: -1.3, time: Date()),
+                    Weather(weatherType: .Thunder, temperatur: -9.3, time: Date())
                 ])
             ])
         locations += [location1, location2, location3]

@@ -10,13 +10,13 @@ import Foundation
 
 class Day {
     
-    init(date: String, averageWeather: Weather, hours: [ Weather ]) {
+    init(date: Date, averageWeather: Weather, hours: [ Weather ]) {
         self.date = date
         self.averageWeather = averageWeather
         self.hours = hours
     }
     
-    var date: String
+    var date: Date
     
     var averageWeather: Weather
     
