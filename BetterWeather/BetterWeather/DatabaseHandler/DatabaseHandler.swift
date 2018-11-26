@@ -16,8 +16,6 @@ class DatabaseHandler{
     
     var fileName = "database.sqlite"
     
-    var mockSendWeatherData = [1.35, 5.4, 861204, 4, 15.5, 45, 3.5, 4, 3.3444, 1.24]
-    
     public func createDB() {
         print("Inside createDB()")
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(fileName)
@@ -42,27 +40,16 @@ class DatabaseHandler{
             print ("error preparing insert:\(errormessage)")
             return
         }
-/*
-        sqlite3_bind_double(stmt, 1, mockSendWeatherData[0])
-        sqlite3_bind_double(stmt, 2, mockSendWeatherData[1])
-        sqlite3_bind_int(stmt, 3, Int32(mockSendWeatherData[2]))
-        sqlite3_bind_int(stmt, 4, Int32(mockSendWeatherData[3]))
-        sqlite3_bind_double(stmt, 5, mockSendWeatherData[4])
-        sqlite3_bind_int(stmt, 6, Int32(mockSendWeatherData[5]))
-        sqlite3_bind_double(stmt, 7, mockSendWeatherData[6])
-        sqlite3_bind_int(stmt, 8, Int32(mockSendWeatherData[7]))
-        sqlite3_bind_double(stmt, 9, mockSendWeatherData[8])
-        sqlite3_bind_double(stmt, 10, mockSendWeatherData[9])
- */
-
         
         for location in locations {
             for day in location.days {
                 for hour in day.hours {
                     //print(hour)
+                    var dateFormatter = ISO8601DateFormatter()
+//                    var dateString = dateFormatter.string(from: hour.time) //Make hour.time into Date type
                     sqlite3_bind_double(stmt, 1, Double(location.latitude))
                     sqlite3_bind_double(stmt, 2, Double(location.longitude))
-                    sqlite3_bind_text(stmt, 3, hour.time, -1, nil)
+  //                  sqlite3_bind_text(stmt, 3, dateString, -1, nil)
                     sqlite3_bind_int(stmt, 4, Int32(hour.weatherType.rawValue))
                     sqlite3_bind_double(stmt, 5, Double(hour.temperatur))
                     hour.windDirection != nil ? sqlite3_bind_int(stmt, 6, Int32(hour.windDirection!)) : sqlite3_bind_null(stmt, 6)
@@ -71,27 +58,21 @@ class DatabaseHandler{
                     hour.airPressure != nil ? sqlite3_bind_double(stmt, 9, Double(hour.airPressure!)) : sqlite3_bind_null(stmt, 9)
                     hour.HorizontalVisibility != nil ? sqlite3_bind_double(stmt, 10, Double(hour.HorizontalVisibility!)) : sqlite3_bind_null(stmt, 10)
                 }
-                
             }
         }
-        
         
         if sqlite3_step(stmt) != SQLITE_DONE {
             let errormessage = String(cString: sqlite3_errmsg(db)!)
             print("Failed to insert WeatherData: \(errormessage)")
             return
         }
-        
         print("WeatherData saved successfully!")
-        
     }
     
     public func readData() -> Array<Location>?{
         print("Inside readData()")
         let queryString = "SELECT * FROM WeatherData"
         var stmt: OpaquePointer?
-        
-        
         
         if sqlite3_prepare(db, queryString, -1, &stmt, nil) != SQLITE_OK{
             let errormessage = String(cString: sqlite3_errmsg(db)!)
