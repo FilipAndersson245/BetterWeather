@@ -11,6 +11,12 @@ import UIKit
 class DaysTableViewController: UITableViewController {
     
     var days: [Day] = []
+    let dateFormatter : DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: Locale.current.identifier)
+        formatter.dateFormat = "EEEE"
+        return formatter
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +45,7 @@ class DaysTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "dayCell", for: indexPath) as? WeatherTableViewCell
         let day = days[indexPath.row]
         
-        cell!.title.text = day.date.description
+        cell!.title.text = dateFormatter.string(from: day.date)
         cell!.setTemperature(day.averageWeather.temperatur)
         cell!.setImage(day.averageWeather.weatherType)
         
@@ -95,7 +101,7 @@ class DaysTableViewController: UITableViewController {
             if let indexPath = sender as? IndexPath {
                 let day = days[indexPath.row]
                 destination.hours = day.hours
-                destination.title = day.date.description
+                destination.title = dateFormatter.string(from: day.date)
             }
         }
     }

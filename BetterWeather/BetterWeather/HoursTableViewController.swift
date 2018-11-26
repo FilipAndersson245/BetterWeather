@@ -11,6 +11,13 @@ import UIKit
 class HoursTableViewController: UITableViewController {
     
     var hours: [Weather] = []
+    let dateFormatter : DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: Locale.current.identifier)
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        return formatter
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,10 +45,9 @@ class HoursTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "hourCell", for: indexPath) as? WeatherTableViewCell
         let hour = hours[indexPath.row]
         
-        cell!.title.text = hour.time.description
+        cell!.title.text = dateFormatter.string(from: hour.time)
         cell!.setTemperature(hour.temperatur)
         cell!.setImage(hour.weatherType)
-        
         
         return cell!
     }

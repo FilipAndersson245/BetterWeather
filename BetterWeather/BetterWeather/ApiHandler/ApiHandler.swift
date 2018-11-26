@@ -98,9 +98,12 @@ class ApiHandler {
     }
     
     public static func foo(_ lon: Float, _ lat: Float,completionBlock: @escaping (Location) -> Void)  {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        let dateFormatter : DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+            formatter.timeZone = TimeZone(identifier: "UTC")
+            return formatter
+        }()
 
         fetch(lon: lon, lat: lat) {(data) in
             var day: Array<Weather> = []
