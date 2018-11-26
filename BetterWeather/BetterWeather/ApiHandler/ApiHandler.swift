@@ -147,7 +147,7 @@ class ApiHandler {
             let dbHandler = DatabaseHandler()
             dbHandler.createDB()
             var locations = [Location]()
-            locations.append(Location(name: "faeiaföoguguödv", latitude: 1, longitude: 1, days: [myDay]))
+            locations.append(Location(name: "CityName", latitude: lat, longitude: lon, days: [myDay]))
             dbHandler.insertData(locations)
             var readLocations = dbHandler.readData()
 

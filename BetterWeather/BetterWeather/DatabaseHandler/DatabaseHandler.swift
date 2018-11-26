@@ -23,7 +23,9 @@ class DatabaseHandler{
             print("Error opening database.")
         }
         
-        if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS WeatherData (Latitude REAL, Longitude REAL, Date INTEGER, WeatherType INTEGER, Temperature REAL, WindDirection INTEGER, WindSpeed REAL, RelativeHumidity INTEGER, AirPressure REAL, HorizontalVisibility REAL, PRIMARY KEY(Latitude, Longitude, Date))", nil, nil, nil) != SQLITE_OK {
+        
+        
+        if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS WeatherData (Latitude REAL, Longitude INTEGER, Date REAL, WeatherType INTEGER, Temperature REAL, WindDirection INTEGER, WindSpeed REAL, RelativeHumidity INTEGER, AirPressure REAL, HorizontalVisibility REAL, PRIMARY KEY(Latitude, Longitude, Date))", nil, nil, nil) != SQLITE_OK {
             let errormessage = String(cString: sqlite3_errmsg(db)!)
             print("Error creating table: \(errormessage)")
         }
@@ -33,7 +35,7 @@ class DatabaseHandler{
         print("Inside insertData()")
         var stmt: OpaquePointer?
         
-        let queryString = "INSERT INTO WeatherData (Latitude, Longitude, Date, WeatherType, Temperature, WindDirection, WindSpeed, RelativeHumidity, AirPressure, HorizontalVisibility) VALUES (?,?,?,?,?,?,?,?,?,?)"
+        let queryString = "INSERT OR REPLACE INTO WeatherData (Latitude, Longitude, Date, WeatherType, Temperature, WindDirection, WindSpeed, RelativeHumidity, AirPressure, HorizontalVisibility) VALUES (?,?,?,?,?,?,?,?,?,?)"
         
         if sqlite3_prepare(db, queryString, -1, &stmt, nil) !=  SQLITE_OK{
             let errormessage = String(cString: sqlite3_errmsg(db)!)
@@ -44,7 +46,7 @@ class DatabaseHandler{
         for location in locations {
             for day in location.days {
                 for hour in day.hours {
-                    //print(hour)
+                    print (hour.time.timeIntervalSince1970)
                     sqlite3_bind_double(stmt, 1, Double(location.latitude))
                     sqlite3_bind_double(stmt, 2, Double(location.longitude))
                     sqlite3_bind_double(stmt, 3, hour.time.timeIntervalSince1970)
@@ -55,15 +57,18 @@ class DatabaseHandler{
                     hour.relativHumidity != nil ? sqlite3_bind_int(stmt, 8, Int32(hour.relativHumidity!)) : sqlite3_bind_null(stmt, 8)
                     hour.airPressure != nil ? sqlite3_bind_double(stmt, 9, Double(hour.airPressure!)) : sqlite3_bind_null(stmt, 9)
                     hour.HorizontalVisibility != nil ? sqlite3_bind_double(stmt, 10, Double(hour.HorizontalVisibility!)) : sqlite3_bind_null(stmt, 10)
+                    if sqlite3_step(stmt) != SQLITE_DONE {
+                        let errormessage = String(cString: sqlite3_errmsg(db)!)
+                        print("Failed to insert WeatherData: \(errormessage)")
+                        return
+                    }
+                    sqlite3_reset(stmt)
                 }
             }
         }
+        sqlite3_finalize(stmt)
         
-        if sqlite3_step(stmt) != SQLITE_DONE {
-            let errormessage = String(cString: sqlite3_errmsg(db)!)
-            print("Failed to insert WeatherData: \(errormessage)")
-            return
-        }
+        
         print("WeatherData saved successfully!")
     }
     
@@ -81,7 +86,7 @@ class DatabaseHandler{
         while(sqlite3_step(stmt) == SQLITE_ROW) {
             let Latitude = sqlite3_column_double(stmt, 0)
             let Longitude = sqlite3_column_double(stmt, 1)
-            let Date = sqlite3_column_int(stmt, 2)
+            let Date = NSDate(timeIntervalSince1970: sqlite3_column_double(stmt, 2))
             let WeatherType = sqlite3_column_int(stmt, 3)
             let Temperature = sqlite3_column_double(stmt, 4)
             let WindDirection = sqlite3_column_int(stmt, 5)
