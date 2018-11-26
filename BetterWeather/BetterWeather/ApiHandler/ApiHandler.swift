@@ -39,15 +39,6 @@ enum WeatherTypes: Int {
     
 }
 
-struct Weather {
-    let weatherType:WeatherTypes // Enum 1-27
-    let temperatur: Float
-    let windDirection: Int // Degree
-    let windSpeed: Float
-    let relativHumidity: Int // 0-100
-    let airPressure: Float
-    let HorizontalVisibility: Float
-}
 
 class ApiHandler {
     
@@ -55,35 +46,33 @@ class ApiHandler {
         case NonHandledDataTypeError
         case FailedToFetch
         case InvalidUrl
+        case MissingData(String)
     }
     
-   /* private func jsonToWeather() -> Weather {
-        let weather = Weather(weatherType: <#T##WeatherTypes#>, temperatur: <#T##Float#>, windDirection: <#T##Int#>, windSpeed: <#T##Float#>, relativHumidity: <#T##Int#>, airPressure: <#T##Float#>, HorizontalVisibility: <#T##Float#>)
-        return weather
-    }*/
-    
-    private func fetch(lon: Float, lat: Float) throws  {
+    private static func fetch(lon: Float, lat: Float, completionBlock: @escaping (WeatherData) -> Void)  {
         let template = "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/%.4f/lat/%.4f/data.json"
         let urlsString = String(format: template, lon, lat)
+
         guard let baseUrl = URL(string: urlsString) else {
             print("Error invalid url")
-            throw ApiHandlerErrors.InvalidUrl
+            return
         }
+        
         let task = URLSession.shared.dataTask(with: baseUrl) {
             (data, response, error)	in
-                guard let dataResponse = data,
+            guard let _ = data,
                     error == nil else {
                         print(error?.localizedDescription ?? "Response Error")
                         return
                     }
                 do {
                     //here dataResponse received from a network request
-                    let jsonResponse = try JSONSerialization.jsonObject(with: dataResponse, options: [])
-                    print(jsonResponse) //Response result
+                    let weather = try JSONDecoder().decode(WeatherData.self, from: data!)
+                    completionBlock(weather)
                 } catch let parsingError {
                     print("Error", parsingError)
+                    return
                 }
-            
         }
         task.resume()
     }
@@ -108,13 +97,54 @@ class ApiHandler {
         
     }
     
-    public static func foo<T>(_ lon: Float, _ lat: Float, type: T.Type) throws ->T  {
-        
-        switch type {
-        case is String.Type: //This should be our model that is yet to be implemented
-            return "" as! T
-        default:
-            throw ApiHandlerErrors.NonHandledDataTypeError
-        }
+    public static func foo(_ lon: Float, _ lat: Float,completionBlock: @escaping (Location) -> Void)  {
+            fetch(lon: lon, lat: lat) {(data) in
+                var day: Array<Weather> = []
+                for hourWeather in data.timeSeries {
+                    
+                    // Default init values for weather if api misses data in a request.
+                    var type: WeatherTypes = WeatherTypes.ClearSky
+                    var t: Float = 10
+                    for hourWeatherParameter in hourWeather.parameters {
+                        switch hourWeatherParameter.name {
+                        case .t:
+                            t = hourWeatherParameter.values[0]
+                        case .Wsymb2, .Wsymb:
+                            type = WeatherTypes(rawValue: Int(hourWeatherParameter.values[0]))!
+                        default:
+                            break
+                        }
+                    }
+                    let hour = Weather(weatherType: type, temperatur: t, time: hourWeather.validTime);
+                    day.append(hour)
+                    
+                }
+                
+                let avgTemp = day.reduce(0, { rest,item in
+                    rest + item.temperatur
+                }) / Float(day.count)
+                
+                var avgTypeArr = [WeatherTypes:Int]()
+                day.forEach({
+                    avgTypeArr[$0.weatherType] = (avgTypeArr[$0.weatherType] ?? 0) + 1
+                })
+                guard let (avgType, _) = avgTypeArr.max(by: {$0.value < $1.value}) else {
+                    print("Error while getting the avgType of weather")
+                    return
+                }
+                
+                let date = data.approvedTime
+                let avgWeather = Weather(weatherType: avgType, temperatur: avgTemp, time: "Avg")
+                
+                let myDay = Day(date: date, averageWeather: avgWeather, hours: day)
+                
+                completionBlock(Location(name: "faeiaföoguguödv", latitude: 1, longitude: 1, days: [myDay]))
+//                switch type {
+//                case is String.Type: //This should be our model that is yet to be implemented
+//                    return "" as! T
+//                default:
+//                    throw ApiHandlerErrors.NonHandledDataTypeError
+//                }
+            }
     }
 }

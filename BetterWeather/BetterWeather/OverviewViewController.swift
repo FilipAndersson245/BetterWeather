@@ -10,15 +10,73 @@ import UIKit
 
 class OverviewViewController: UITableViewController {
 
-    var locations = [LocationOverview]()
-    var currentLocation: LocationOverview? = nil
+    var locations = [Location]()
+    var currentLocation: Location? = nil
     
     private func loadSampleLocations() {
-        currentLocation = LocationOverview(name:"New York", temperature:12, weather:"cloudy")
-        let location1 = LocationOverview(name:"Huskvarna", temperature:20, weather:"sunny")
-        let location2 = LocationOverview(name:"Stockholm", temperature:1, weather:"rainy")
-        let location3 = LocationOverview(name: "Göteborg", temperature: -3, weather: "cloudy")
+        currentLocation = Location(name: "New York", latitude: 21.324, longitude: 32.24124, days: [
+            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time:"test"), hours:
+                [
+                    Weather(weatherType: .Fog, temperatur: 21, time: "test"),
+                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: "test")
+                ]),
+            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: "test"), hours:
+                [
+                    Weather(weatherType: .HeavySleet, temperatur: 2, time: "test"),
+                    Weather(weatherType: .Overcast, temperatur: -1.3, time: "test"),
+                    Weather(weatherType: .Thunder, temperatur: -9.3, time: "test")
+                ])
+            ])
+        let location1 = Location(name: "Huskvarna", latitude: 21.324, longitude: 32.24124, days: [
+            Day(date: "Monday", averageWeather: Weather(weatherType: .ModerateSleetShowers, temperatur: 20.3, time: "test"), hours:
+                [
+                    Weather(weatherType: .ClearSky, temperatur: 25, time: "test"),
+                    Weather(weatherType: .ClearSky, temperatur: 21.9, time: "test")
+                ]),
+            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: "test"), hours:
+                [
+                    Weather(weatherType: .HeavySleet, temperatur: 2, time: "test"),
+                    Weather(weatherType: .Overcast, temperatur: -1.3, time: "test"),
+                    Weather(weatherType: .Thunder, temperatur: -9.3, time: "test")
+                ])
+            ])
+        let location2 = Location(name: "Jönköping", latitude: 21.324, longitude: 32.24124, days: [
+            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time: "test"), hours:
+                [
+                    Weather(weatherType: .Thunder, temperatur: 5, time: "test"),
+                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: "test")
+                ]),
+            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: "test"), hours:
+                [
+                    Weather(weatherType: .HeavySleet, temperatur: 2, time: "test"),
+                    Weather(weatherType: .Overcast, temperatur: -1.3, time: "test"),
+                    Weather(weatherType: .Thunder, temperatur: -9.3, time: "test")
+                ])
+            ])
+        let location3 = Location(name: "Asdsg", latitude: 21.324, longitude: 32.24124, days: [
+            Day(date: "Monday", averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time: "test"), hours:
+                [
+                    Weather(weatherType: .CloudySky, temperatur: 10, time: "test"),
+                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: "test")
+                ]),
+            Day(date: "Tuesday", averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: "test"), hours:
+                [
+                    Weather(weatherType: .HeavySleet, temperatur: 2, time: "test"),
+                    Weather(weatherType: .Overcast, temperatur: -1.3, time: "test"),
+                    Weather(weatherType: .Thunder, temperatur: -9.3, time: "test")
+                ])
+            ])
         locations += [location1, location2, location3]
+        
+        ApiHandler.foo(16, 58) { data in
+            self.locations.append(data)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            print("1")
+        };
+        print("2")
+        
     }
     
     override func viewDidLoad() {
@@ -30,6 +88,11 @@ class OverviewViewController: UITableViewController {
         dbHandler.readData() //temporary
         
         loadSampleLocations()
+        
+        
+        // DEBUG
+        
+        
         
     }
 
@@ -46,31 +109,22 @@ class OverviewViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let location: Location
+        let cell: WeatherTableViewCell?
         if (indexPath.row == 0 && currentLocation != nil) {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "currentLocationCell", for: indexPath) as? LocationOverviewTableViewCell else {
-                fatalError("The dequeued cell is not an instance of LocationOverviewTableViewCell.")
-            }
-            
-            let location = currentLocation!
-            
-            cell.locationLabel.text = location.name
-            cell.temperatureLabel.text = String(location.temperature)
-            //TODO weather image
-            return cell
+            cell = tableView.dequeueReusableCell(withIdentifier: "currentLocationCell", for: indexPath) as? WeatherTableViewCell
+            location = currentLocation!
         }
         else {
-            let cellIdentifier = "favoriteLocationCell"
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? LocationOverviewTableViewCell else {
-                fatalError("The dequeued cell is not an instance of LocationOverviewTableViewCell.")
-            }
-            
-            let location = locations[indexPath.row - (currentLocation != nil ? 1 : 0)]
-            
-            cell.locationLabel.text = location.name
-            cell.temperatureLabel.text = String(location.temperature)
-            //TODO weather image
-            return cell
+            cell = tableView.dequeueReusableCell(withIdentifier: "favoriteLocationCell", for: indexPath) as? WeatherTableViewCell
+            location = locations[indexPath.row - (currentLocation != nil ? 1 : 0)]
         }
+        
+        cell!.title.text = location.name
+        cell!.setTemperature(location.days[0].hours[0].temperatur)
+        cell!.setImage(location.days[0].hours[0].weatherType)
+        
+        return cell!
     }
     
 
@@ -109,14 +163,23 @@ class OverviewViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "daysSegue", sender: indexPath)
+    }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if let destination = segue.destination as? DaysTableViewController {
+            if let indexPath = sender as? IndexPath {
+                let location = (indexPath.row == 0 && currentLocation != nil) ? currentLocation! : locations[indexPath.row - (currentLocation != nil ? 1 : 0)]
+                destination.days = location.days
+                destination.title = location.name
+            }
+        }
     }
-    */
+    
 
 }
