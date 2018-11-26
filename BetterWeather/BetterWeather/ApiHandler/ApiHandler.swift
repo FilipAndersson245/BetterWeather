@@ -52,7 +52,7 @@ class ApiHandler {
     private static func fetch(lon: Float, lat: Float, completionBlock: @escaping (WeatherData) -> Void)  {
         let template = "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/%.4f/lat/%.4f/data.json"
         let urlsString = String(format: template, lon, lat)
-
+        
         guard let baseUrl = URL(string: urlsString) else {
             print("Error invalid url")
             return
@@ -99,62 +99,65 @@ class ApiHandler {
     
     //Maybe rename foo?
     public static func foo(_ lon: Float, _ lat: Float,completionBlock: @escaping (Location) -> Void)  {
-            fetch(lon: lon, lat: lat) {(data) in
-                var day: Array<Weather> = []
-                for hourWeather in data.timeSeries {
-                    
-                    // Default init values for weather if api misses data in a request.
-                    var type: WeatherTypes = WeatherTypes.ClearSky
-                    var t: Float = 10
-                    for hourWeatherParameter in hourWeather.parameters {
-                        switch hourWeatherParameter.name {
-                        case .t:
-                            t = hourWeatherParameter.values[0]
-                        case .Wsymb2, .Wsymb:
-                            type = WeatherTypes(rawValue: Int(hourWeatherParameter.values[0]))!
-                        default:
-                            break
-                        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+
+        fetch(lon: lon, lat: lat) {(data) in
+            var day: Array<Weather> = []
+            for hourWeather in data.timeSeries {
+                
+                // Default init values for weather if api misses data in a request.
+                var type: WeatherTypes = WeatherTypes.ClearSky
+                var t: Float = 10
+                for hourWeatherParameter in hourWeather.parameters {
+                    switch hourWeatherParameter.name {
+                    case .t:
+                        t = hourWeatherParameter.values[0]
+                    case .Wsymb2, .Wsymb:
+                        type = WeatherTypes(rawValue: Int(hourWeatherParameter.values[0]))!
+                    default:
+                        break
                     }
-                    let hour = Weather(weatherType: type, temperatur: t, time: hourWeather.validTime);
-                    day.append(hour)
-                    
                 }
+                let date = dateFormatter.date(from: hourWeather.validTime)
+                let hour = Weather(weatherType: type, temperatur: t, time: date!);
+                day.append(hour)
                 
-                let avgTemp = day.reduce(0, { rest,item in
-                    rest + item.temperatur
-                }) / Float(day.count)
-                
-                var avgTypeArr = [WeatherTypes:Int]()
-                day.forEach({
-                    avgTypeArr[$0.weatherType] = (avgTypeArr[$0.weatherType] ?? 0) + 1
-                })
-                guard let (avgType, _) = avgTypeArr.max(by: {$0.value < $1.value}) else {
-                    print("Error while getting the avgType of weather")
-                    return
-                }
-                
-                let date = data.approvedTime
-                let avgWeather = Weather(weatherType: avgType, temperatur: avgTemp, time: "Avg")
-                
-                let myDay = Day(date: date, averageWeather: avgWeather, hours: day)
-                
-                let dbHandler = DatabaseHandler()
-                dbHandler.createDB()
-                var locations = [Location]()
-                locations.append(Location(name: "faeiaföoguguödv", latitude: 1, longitude: 1, days: [myDay]))
-                dbHandler.insertData(locations)
-                var readLocations = dbHandler.readData()
-                
-                completionBlock(Location(name: "faeiaföoguguödv", latitude: 1, longitude: 1, days: [myDay]))
+            }
+            
+            let avgTemp = day.reduce(0, { rest,item in
+                rest + item.temperatur
+            }) / Float(day.count)
+            
+            var avgTypeArr = [WeatherTypes:Int]()
+            day.forEach({
+                avgTypeArr[$0.weatherType] = (avgTypeArr[$0.weatherType] ?? 0) + 1
+            })
+            guard let (avgType, _) = avgTypeArr.max(by: {$0.value < $1.value}) else {
+                print("Error while getting the avgType of weather")
+                return
+            }
+            
+            let date = dateFormatter.date(from: data.approvedTime)
+            let avgWeather = Weather(weatherType: avgType, temperatur: avgTemp, time: Date())
+            
+            let myDay = Day(date: date!, averageWeather: avgWeather, hours: day)
+            
+            let dbHandler = DatabaseHandler()
+            dbHandler.createDB()
+            var locations = [Location]()
+            locations.append(Location(name: "faeiaföoguguödv", latitude: 1, longitude: 1, days: [myDay]))
+            dbHandler.insertData(locations)
+            var readLocations = dbHandler.readData()
+
+            completionBlock(Location(name: "faeiaföoguguödv", latitude: 1, longitude: 1, days: [myDay]))
 //                switch type {
 //                case is String.Type: //This should be our model that is yet to be implemented
 //                    return "" as! T
 //                default:
 //                    throw ApiHandlerErrors.NonHandledDataTypeError
 //                }
-            }
-        
-        
+        }
     }
 }

@@ -38,7 +38,7 @@ class HoursTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "hourCell", for: indexPath) as? WeatherTableViewCell
         let hour = hours[indexPath.row]
         
-        cell!.title.text =  hour.time
+        cell!.title.text = hour.time.description
         cell!.setTemperature(hour.temperatur)
         cell!.setImage(hour.weatherType)
         

@@ -9,7 +9,7 @@
 import Foundation
 
 struct Weather {
-    let time: String
+    let time: Date
     let weatherType:WeatherTypes // Enum 1-27
     let temperatur: Float
     let windDirection: Int? // Degree
@@ -20,7 +20,7 @@ struct Weather {
     
     init(weatherType:WeatherTypes
         , temperatur: Float
-        , time: String
+        , time: Date
         , windDirection: Int? = nil
         , windSpeed: Float? = nil
         , relativHumidity: Int? = nil
