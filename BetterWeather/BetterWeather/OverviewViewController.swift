@@ -84,8 +84,8 @@ class OverviewViewController: UITableViewController {
         
         let dbHandler = DatabaseHandler() //temporary
         dbHandler.createDB() //temporary
-        dbHandler.insertData() //temporary
-        dbHandler.readData() //temporary
+        //dbHandler.insertData() //temporary
+        //dbHandler.readData() //temporary
         
         loadSampleLocations()
         

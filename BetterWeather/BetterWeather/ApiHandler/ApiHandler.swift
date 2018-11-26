@@ -97,6 +97,7 @@ class ApiHandler {
         
     }
     
+    //Maybe rename foo?
     public static func foo(_ lon: Float, _ lat: Float,completionBlock: @escaping (Location) -> Void)  {
             fetch(lon: lon, lat: lat) {(data) in
                 var day: Array<Weather> = []
@@ -138,6 +139,13 @@ class ApiHandler {
                 
                 let myDay = Day(date: date, averageWeather: avgWeather, hours: day)
                 
+                let dbHandler = DatabaseHandler()
+                dbHandler.createDB()
+                var locations = [Location]()
+                locations.append(Location(name: "faeiaföoguguödv", latitude: 1, longitude: 1, days: [myDay]))
+                dbHandler.insertData(locations)
+                var readLocations = dbHandler.readData()
+                
                 completionBlock(Location(name: "faeiaföoguguödv", latitude: 1, longitude: 1, days: [myDay]))
 //                switch type {
 //                case is String.Type: //This should be our model that is yet to be implemented
@@ -146,5 +154,7 @@ class ApiHandler {
 //                    throw ApiHandlerErrors.NonHandledDataTypeError
 //                }
             }
+        
+        
     }
 }
