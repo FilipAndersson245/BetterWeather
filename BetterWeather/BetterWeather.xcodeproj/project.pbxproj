@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E0AC8F321AD1FB5003E6D8B /* PhysicalLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0AC8F221AD1FB5003E6D8B /* PhysicalLocationManager.swift */; };
 		4E37863021A7DBD600D975E0 /* HoursTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E37862F21A7DBD600D975E0 /* HoursTableViewController.swift */; };
 		4E80572B21A03DA10071E896 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E80572A21A03DA10071E896 /* Day.swift */; };
 		4E8BA3F921A4094900E7CE59 /* DaysTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8BA3F821A4094900E7CE59 /* DaysTableViewController.swift */; };
@@ -22,6 +23,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E0AC8F221AD1FB5003E6D8B /* PhysicalLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicalLocationManager.swift; sourceTree = "<group>"; };
+		4E0AC8F421AD33A0003E6D8B /* 0810_foinvg9q0_myMap1.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = 0810_foinvg9q0_myMap1.gpx; path = ../../../Downloads/0810_foinvg9q0_myMap1.gpx; sourceTree = "<group>"; };
+		4E0AC8F521AD3628003E6D8B /* 0821_tgqc2235r_myMap1--1-.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "0821_tgqc2235r_myMap1--1-.gpx"; path = "../../../Downloads/0821_tgqc2235r_myMap1--1-.gpx"; sourceTree = "<group>"; };
+		4E0AC8F621AD3765003E6D8B /* 0826_ijcn9cv68_myMap1--2-.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "0826_ijcn9cv68_myMap1--2-.gpx"; path = "../../../Downloads/0826_ijcn9cv68_myMap1--2-.gpx"; sourceTree = "<group>"; };
 		4E37862F21A7DBD600D975E0 /* HoursTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoursTableViewController.swift; sourceTree = "<group>"; };
 		4E80572A21A03DA10071E896 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		4E8BA3F821A4094900E7CE59 /* DaysTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysTableViewController.swift; sourceTree = "<group>"; };
@@ -61,6 +66,9 @@
 		D11A4F03219167E300286879 = {
 			isa = PBXGroup;
 			children = (
+				4E0AC8F621AD3765003E6D8B /* 0826_ijcn9cv68_myMap1--2-.gpx */,
+				4E0AC8F521AD3628003E6D8B /* 0821_tgqc2235r_myMap1--1-.gpx */,
+				4E0AC8F421AD33A0003E6D8B /* 0810_foinvg9q0_myMap1.gpx */,
 				D11A4F0E219167E300286879 /* BetterWeather */,
 				D11A4F0D219167E300286879 /* Products */,
 			);
@@ -89,6 +97,7 @@
 				4EC5FA42219181B7002E4723 /* WeatherTableViewCell.swift */,
 				4E8BA3F821A4094900E7CE59 /* DaysTableViewController.swift */,
 				4E37862F21A7DBD600D975E0 /* HoursTableViewController.swift */,
+				4E0AC8F221AD1FB5003E6D8B /* PhysicalLocationManager.swift */,
 			);
 			path = BetterWeather;
 			sourceTree = "<group>";
@@ -177,6 +186,7 @@
 				D11A4F12219167E300286879 /* ViewController.swift in Sources */,
 				D11A4F222191937400286879 /* ApiHandler.swift in Sources */,
 				4EC5FA41219180D4002E4723 /* Location.swift in Sources */,
+				4E0AC8F321AD1FB5003E6D8B /* PhysicalLocationManager.swift in Sources */,
 				D11A4F10219167E300286879 /* AppDelegate.swift in Sources */,
 				4EC5FA43219181B7002E4723 /* WeatherTableViewCell.swift in Sources */,
 				4EC5FA3F21917DB6002E4723 /* OverviewViewController.swift in Sources */,
