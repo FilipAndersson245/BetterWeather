@@ -14,19 +14,6 @@ class OverviewViewController: UITableViewController {
     var currentLocation: Location? = nil
     
     private func loadSampleLocations() {
-        currentLocation = Location(name: "New York", latitude: 21.324, longitude: 32.24124, days: [
-            Day(date: Date(), averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time:Date()), hours:
-                [
-                    Weather(weatherType: .Fog, temperatur: 21, time: Date()),
-                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: Date())
-                ]),
-            Day(date: Date(), averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: Date()), hours:
-                [
-                    Weather(weatherType: .HeavySleet, temperatur: 2, time: Date()),
-                    Weather(weatherType: .Overcast, temperatur: -1.3, time: Date()),
-                    Weather(weatherType: .Thunder, temperatur: -9.3, time: Date())
-                ])
-            ])
         let location1 = Location(name: "Huskvarna", latitude: 21.324, longitude: 32.24124, days: [
             Day(date: Date(), averageWeather: Weather(weatherType: .ModerateSleetShowers, temperatur: 20.3, time: Date()), hours:
                 [
@@ -82,12 +69,54 @@ class OverviewViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadSampleLocations()
+        loadCurrentLocation()
         
         
         // DEBUG
         
         
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadCurrentLocation()
+        NotificationCenter.default.addObserver(self, selector: #selector(loadCurrentLocation), name: Notification.Name("applicationWillEnterForeground"), object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func loadCurrentLocation()
+    {
+        PhysicalLocationManager.shared.refreshLocation()
+        
+        // TODO: replace with real fetched data
+        if (PhysicalLocationManager.shared.hasLocation()) {
+            currentLocation = Location(name: "New York", latitude: 21.324, longitude: 32.24124, days: [
+                Day(date: Date(), averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time:Date()), hours:
+                    [
+                        Weather(weatherType: .Fog, temperatur: 21, time: Date()),
+                        Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: Date())
+                    ]),
+                Day(date: Date(), averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: Date()), hours:
+                    [
+                        Weather(weatherType: .HeavySleet, temperatur: 2, time: Date()),
+                        Weather(weatherType: .Overcast, temperatur: -1.3, time: Date()),
+                        Weather(weatherType: .Thunder, temperatur: -9.3, time: Date())
+                    ])
+                ])
+        }
+        else
+        {
+            currentLocation = nil
+        }
+        
+        // Perform reload of all data
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 
     // MARK: - Table view data source
