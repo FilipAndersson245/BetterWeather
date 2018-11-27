@@ -83,7 +83,7 @@ class DatabaseHandler{
             return nil
         }
         
-        var readHours = [Weather]()
+        var readHours = [DbWeather]()
         
         while(sqlite3_step(stmt) == SQLITE_ROW) {
             let Latitude = sqlite3_column_double(stmt, 0)
@@ -97,7 +97,7 @@ class DatabaseHandler{
             let AirPressure = sqlite3_column_double(stmt, 8)
             let HorizontalVisibility = sqlite3_column_double(stmt, 9)
             print("WeatherData: \n Latitude: \(Latitude) \n Longitude: \(Longitude) \n Date: \(Date) \n WeatherType: \(WeatherType) \n Temperature: \(Temperature) \n WindDirection: \(WindDirection) \n WindSpeed: \(WindSpeed) \n RelativeHumidity: \(RelativeHumidity) \n AirPressure: \(AirPressure) \n HorizontalVisibility: \(HorizontalVisibility) \n")
-            let hour = Weather(weatherType: WeatherTypes(rawValue: Int(WeatherType))!, temperatur: Float(Temperature), time: Date as Date, windDirection: Int(WindDirection), windSpeed: Float(WindSpeed), relativHumidity: Int(RelativeHumidity), airPressure: Float(AirPressure), HorizontalVisibility: Float(HorizontalVisibility))
+            let hour = DbWeather(weatherType: WeatherTypes(rawValue: Int(WeatherType))!, temperatur: Float(Temperature), time: Date as Date, windDirection: Int(WindDirection), windSpeed: Float(WindSpeed), relativeHumidity: Int(RelativeHumidity), airPressure: Float(AirPressure), HorizontalVisibility: Float(HorizontalVisibility), longitude: Float(Longitude), latitude: Float(Latitude))
             readHours.append(hour)
         }
         print("WeatherData successfully read.")
