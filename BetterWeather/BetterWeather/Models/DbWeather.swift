@@ -12,8 +12,10 @@ struct DbWeather {
     var weather: Weather
     let longitude: Float
     let latitude: Float
+    let name: String
     
-    init( weatherType:WeatherTypes
+    init(name: String
+        , weatherType:WeatherTypes
         , temperatur: Float
         , time: Date
         , windDirection: Int? = nil
@@ -24,6 +26,7 @@ struct DbWeather {
         , longitude: Float
         , latitude: Float)
     {
+        self.name = name
         self.weather = Weather(weatherType: weatherType, temperatur: temperatur, time: time, windDirection: windDirection, windSpeed: windSpeed, relativHumidity: relativeHumidity, airPressure: airPressure, HorizontalVisibility: HorizontalVisibility)
         self.longitude = longitude
         self.latitude = latitude
