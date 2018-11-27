@@ -144,13 +144,26 @@ class ApiHandler {
             
             let myDay = Day(date: date!, averageWeather: avgWeather, hours: day)
             
+            
+            
+            
+            var dbWeathers = [DbWeather]()
+            for hour in myDay.hours{ //TODO: Generalize lon and lat and get correct cityname
+                dbWeathers.append(DbWeather(name: "cityName", weatherType: hour.weatherType, temperatur: hour.temperatur, time: hour.time, windDirection: hour.windDirection, windSpeed: hour.windSpeed, relativeHumidity: hour.relativHumidity, airPressure: hour.airPressure, HorizontalVisibility: hour.HorizontalVisibility, longitude: lon, latitude: lat))
+            }
+            
             let dbHandler = DatabaseHandler()
-            dbHandler.createDataTable()
-            var locations = [Location]()
-            locations.append(Location(name: "CityName", latitude: lat, longitude: lon, days: [myDay]))
-            dbHandler.insertData(locations)
+            dbHandler.insertData(dbWeathers)
             var readLocations = dbHandler.readData()
-
+            
+            
+            //favorite location test
+            let testDate = NSDate()
+            var favorite = DbFavorite(name: "TEST", longitude: 12, latitude: 12, lastUpdate: testDate as Date)
+            dbHandler.addFavoriteLocation(favorite)
+            var favorites = dbHandler.readFavoriteLocations()
+            //end test
+            
             completionBlock(Location(name: "faeiaföoguguödv", latitude: 1, longitude: 1, days: [myDay]))
 //                switch type {
 //                case is String.Type: //This should be our model that is yet to be implemented
