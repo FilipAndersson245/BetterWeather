@@ -44,9 +44,6 @@ class DatabaseHandler{
         }
         
         for location in locations {
-            
-            
-            
             for day in location.days {
                 for hour in day.hours {
                     sqlite3_bind_text(stmt, 1, location.name, -1, nil)
@@ -70,8 +67,6 @@ class DatabaseHandler{
             }
         }
         sqlite3_finalize(stmt)
-        
-        
         print("WeatherData saved successfully!")
     }
     
@@ -109,27 +104,25 @@ class DatabaseHandler{
         var currentReadLocation = Location(name: "", latitude: 0, longitude: 0, days: [Day]())
         for hour in readHours{
             print(hour)
+            if (readLocations.count == 0){
+                print("Appending first location")
+                currentReadLocation = Location(name: hour.name, latitude: hour.latitude, longitude: hour.longitude, days: [Day]())
+                readLocations.append(currentReadLocation)
+            }
             if (hour.latitude != currentReadLocation.latitude && hour.longitude != currentReadLocation.longitude){
                 print("Appending new location")
                 currentReadLocation = Location(name: hour.name, latitude: hour.latitude, longitude: hour.longitude, days: [Day]())
                 readLocations.append(currentReadLocation)
             }
-            print("readLocation time: \(readLocations.last?.days.last?.date) \n hour time: \(hour.weather.time)")
             if (readLocations.last?.days.count == 0){
                 print("Appending first day")
                 readLocations.last?.days.append(Day(date: hour.weather.time, averageWeather: hour.weather, hours: [Weather]()))
-                
-                readLocations.last?.days.last?.hours.append(Weather(weatherType: hour.weather.weatherType, temperatur: hour.weather.temperatur, time: hour.weather.time, windDirection: hour.weather.windDirection, windSpeed: hour.weather.windSpeed, relativHumidity: hour.weather.relativHumidity, airPressure: hour.weather.airPressure, HorizontalVisibility: hour.weather.HorizontalVisibility))
             }
             else if (Calendar.current.compare(readLocations.last!.days.last!.date, to: hour.weather.time, toGranularity: .day) != .orderedSame){
                 print("Appending new day")
                 readLocations.last?.days.append(Day(date: hour.weather.time, averageWeather: hour.weather, hours: [Weather]()))
-                
-                readLocations.last?.days.last?.hours.append(Weather(weatherType: hour.weather.weatherType, temperatur: hour.weather.temperatur, time: hour.weather.time, windDirection: hour.weather.windDirection, windSpeed: hour.weather.windSpeed, relativHumidity: hour.weather.relativHumidity, airPressure: hour.weather.airPressure, HorizontalVisibility: hour.weather.HorizontalVisibility))
             }
-            else{
-                readLocations.last?.days.last?.hours.append(Weather(weatherType: hour.weather.weatherType, temperatur: hour.weather.temperatur, time: hour.weather.time, windDirection: hour.weather.windDirection, windSpeed: hour.weather.windSpeed, relativHumidity: hour.weather.relativHumidity, airPressure: hour.weather.airPressure, HorizontalVisibility: hour.weather.HorizontalVisibility))
-            }
+            readLocations.last?.days.last?.hours.append(Weather(weatherType: hour.weather.weatherType, temperatur: hour.weather.temperatur, time: hour.weather.time, windDirection: hour.weather.windDirection, windSpeed: hour.weather.windSpeed, relativHumidity: hour.weather.relativHumidity, airPressure: hour.weather.airPressure, HorizontalVisibility: hour.weather.HorizontalVisibility))
             
         }
         return readLocations
