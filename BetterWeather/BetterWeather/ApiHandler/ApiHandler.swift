@@ -145,7 +145,7 @@ class ApiHandler {
             let myDay = Day(date: date!, averageWeather: avgWeather, hours: day)
             
             let dbHandler = DatabaseHandler()
-            dbHandler.createDB()
+            dbHandler.createDataTable()
             var locations = [Location]()
             locations.append(Location(name: "CityName", latitude: lat, longitude: lon, days: [myDay]))
             dbHandler.insertData(locations)
