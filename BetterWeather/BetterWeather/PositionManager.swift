@@ -20,7 +20,7 @@ class PositionManager {
     var longitude: Float? = nil
     var latitude: Float? = nil
     
-    var lastTimeRefreshed: Date = Date()
+    var lastTimeRefreshed: Date = Date(timeIntervalSince1970: 0)
     let refreshInterval: Double = 30    // TODO: Currently 30 sec, change and maybe make global(ish)
     
     private init() {
