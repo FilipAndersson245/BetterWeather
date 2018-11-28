@@ -7,3 +7,27 @@
 //
 
 import Foundation
+
+class CentralManager{
+    
+    static let shared = CentralManager()
+    
+    var favoriteLocations = Array<Location>()
+    
+    var currentLocation: Location? = nil
+    
+    func addFavoriteLocation(name: String, longitude: Float, latitude: Float){
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+}
