@@ -14,15 +14,21 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var addLocationButton: UIButton!
     
+    let locationManager = CLLocationManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         // Fix addLocationButton styling
         addLocationButton.layer.cornerRadius = 5
         addLocationButton.layer.borderWidth = 1
         addLocationButton.layer.borderColor = self.view.tintColor.cgColor
         addLocationButton.titleLabel?.textColor = self.view.tintColor
+        
+        // Before use of location
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -64,25 +70,32 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
                     self.mapView.removeAnnotation(annotation)
                 }
                 
-                // Getting data
+                // Creating the coordinate
                 let lon = response?.boundingRegion.center.longitude
                 let lat = response?.boundingRegion.center.latitude
+                let searchedCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: lat!, longitude: lon!)
+                
+                // Create the placemark
+                let placemark: MKPlacemark = (response?.mapItems.first?.placemark)!
+                
+                // <-------- REMOVE LATER!!!!!!!!!!!!! -------->
+                print(placemark.title)
                 
                 // Create annotation
                 let annotation = MKPointAnnotation()
-                annotation.title = searchBar.text
-                annotation.coordinate = CLLocationCoordinate2DMake(lat!, lon!)
+//                annotation.title = searchBar.text
+                annotation.title = placemark.title
+                annotation.coordinate = searchedCoordinate
                 self.mapView.addAnnotation(annotation)
                 
                 // Zooming in on location
-                let coordinate:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: lat!, longitude: lon!)
                 let span = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
-                let region = MKCoordinateRegion(center: coordinate, span: span)
+                let region = MKCoordinateRegion(center: searchedCoordinate, span: span)
                 self.mapView.setRegion(region, animated: true)
                 
                 
                 // Show Add location Button
-                self.addLocationButton.setTitle("Add " + searchBar.text!, for: .normal)
+                self.addLocationButton.setTitle("Add " + placemark.title!, for: .normal)
                 self.addLocationButton.titleLabel?.adjustsFontSizeToFitWidth = true
                 self.addLocationButton.isHidden = false
                 
@@ -105,5 +118,25 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
     @IBAction func addLocationButton(_ sender: Any) {
         // Do stuff when clicked.
     }
+    
+}
+
+extension LocationViewController: CLLocationManagerDelegate {
+    
+//    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+//        if status == .authorizedWhenInUse {
+//            locationManager.requestLocation()
+//        }
+//    }
+//
+//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        if let location = locations.first {
+//            print("location:: (location)")
+//        }
+//    }
+//
+//    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+//        print("error:: (error)")
+//    }
     
 }
