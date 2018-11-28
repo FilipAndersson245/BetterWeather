@@ -15,7 +15,6 @@
 		57099300219AD4C20017A6F9 /* LocationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570992FF219AD4C20017A6F9 /* LocationHandler.swift */; };
 		5721E3F421A3F28800FF8EA0 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5721E3F321A3F28800FF8EA0 /* LocationViewController.swift */; };
 		5786DDFA21A83063006C86D4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786DDF921A83063006C86D4 /* Location.swift */; };
-		57B11FA421AC53D4001B7CEA /* LocationSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B11FA321AC53D4001B7CEA /* LocationSearchTableViewController.swift */; };
 		D11A4F10219167E300286879 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A4F0F219167E300286879 /* AppDelegate.swift */; };
 		D11A4F12219167E300286879 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A4F11219167E300286879 /* ViewController.swift */; };
 		D11A4F15219167E300286879 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D11A4F13219167E300286879 /* Main.storyboard */; };
@@ -38,7 +37,6 @@
 		570992FF219AD4C20017A6F9 /* LocationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHandler.swift; sourceTree = "<group>"; };
 		5721E3F321A3F28800FF8EA0 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		5786DDF921A83063006C86D4 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
-		57B11FA321AC53D4001B7CEA /* LocationSearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchTableViewController.swift; sourceTree = "<group>"; };
 		D11A4F0C219167E300286879 /* BetterWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BetterWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D11A4F0F219167E300286879 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D11A4F11219167E300286879 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -108,7 +106,6 @@
 				4E8BA3F821A4094900E7CE59 /* DaysTableViewController.swift */,
 				4E37862F21A7DBD600D975E0 /* HoursTableViewController.swift */,
 				5721E3F321A3F28800FF8EA0 /* LocationViewController.swift */,
-				57B11FA321AC53D4001B7CEA /* LocationSearchTableViewController.swift */,
 			);
 			path = BetterWeather;
 			sourceTree = "<group>";
@@ -208,7 +205,6 @@
 				D11A4F222191937400286879 /* ApiHandler.swift in Sources */,
 				D1289FE621A4064400DC4AEF /* Parameter.swift in Sources */,
 				4E8BA3F921A4094900E7CE59 /* DaysTableViewController.swift in Sources */,
-				57B11FA421AC53D4001B7CEA /* LocationSearchTableViewController.swift in Sources */,
 				4E80572B21A03DA10071E896 /* Day.swift in Sources */,
 				D11A4F12219167E300286879 /* ViewController.swift in Sources */,
 				D1C7913D21A54481002F83F0 /* Weather.swift in Sources */,
