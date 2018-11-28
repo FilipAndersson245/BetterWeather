@@ -16,6 +16,10 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
     
     let locationManager = CLLocationManager()
     
+    var lon: CLLocationDegrees = 0.0
+    var lat: CLLocationDegrees = 0.0
+    var name: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,19 +75,16 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
                 }
                 
                 // Creating the coordinate
-                let lon = response?.boundingRegion.center.longitude
-                let lat = response?.boundingRegion.center.latitude
-                let searchedCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: lat!, longitude: lon!)
+                self.lon = (response?.boundingRegion.center.longitude)!
+                self.lat = (response?.boundingRegion.center.latitude)!
+                let searchedCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: self.lat, longitude: self.lon)
                 
                 // Create the placemark
                 let placemark: MKPlacemark = (response?.mapItems.first?.placemark)!
-                
-                // <-------- REMOVE LATER!!!!!!!!!!!!! -------->
-                print(placemark.title)
+                self.name = placemark.title!
                 
                 // Create annotation
                 let annotation = MKPointAnnotation()
-//                annotation.title = searchBar.text
                 annotation.title = placemark.title
                 annotation.coordinate = searchedCoordinate
                 self.mapView.addAnnotation(annotation)
@@ -93,18 +94,10 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
                 let region = MKCoordinateRegion(center: searchedCoordinate, span: span)
                 self.mapView.setRegion(region, animated: true)
                 
-                
                 // Show Add location Button
                 self.addLocationButton.setTitle("Add " + placemark.title!, for: .normal)
                 self.addLocationButton.titleLabel?.adjustsFontSizeToFitWidth = true
                 self.addLocationButton.isHidden = false
-                
-                
-                
-                // <-------- REMOVE LATER!!!!!!!!!!!!! -------->
-                print(lon)
-                print(lat)
-                
             }
         }
     }
@@ -116,7 +109,7 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
     }
     
     @IBAction func addLocationButton(_ sender: Any) {
-        // Do stuff when clicked.
+        CentralManager.shared.addFavoriteLocation(name: self.name, longitude: Float(self.lon), latitude: Float(self.lat))
     }
     
 }
