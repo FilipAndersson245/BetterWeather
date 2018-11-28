@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4E0AC8F321AD1FB5003E6D8B /* PhysicalLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0AC8F221AD1FB5003E6D8B /* PhysicalLocationManager.swift */; };
+		4E0AC8F321AD1FB5003E6D8B /* PositionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0AC8F221AD1FB5003E6D8B /* PositionManager.swift */; };
 		4E37863021A7DBD600D975E0 /* HoursTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E37862F21A7DBD600D975E0 /* HoursTableViewController.swift */; };
 		4E80572B21A03DA10071E896 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E80572A21A03DA10071E896 /* Day.swift */; };
 		4E8BA3F921A4094900E7CE59 /* DaysTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8BA3F821A4094900E7CE59 /* DaysTableViewController.swift */; };
@@ -32,7 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4E0AC8F221AD1FB5003E6D8B /* PhysicalLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicalLocationManager.swift; sourceTree = "<group>"; };
+		4E0AC8F221AD1FB5003E6D8B /* PositionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionManager.swift; sourceTree = "<group>"; };
 		4E37862F21A7DBD600D975E0 /* HoursTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoursTableViewController.swift; sourceTree = "<group>"; };
 		4E80572A21A03DA10071E896 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		4E8BA3F821A4094900E7CE59 /* DaysTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysTableViewController.swift; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 				D11A4F16219167E400286879 /* Assets.xcassets */,
 				D11A4F18219167E400286879 /* LaunchScreen.storyboard */,
 				D11A4F1B219167E400286879 /* Info.plist */,
-				4E0AC8F221AD1FB5003E6D8B /* PhysicalLocationManager.swift */,
+				4E0AC8F221AD1FB5003E6D8B /* PositionManager.swift */,
 			);
 			path = BetterWeather;
 			sourceTree = "<group>";
@@ -234,7 +234,7 @@
 				4E80572B21A03DA10071E896 /* Day.swift in Sources */,
 				D1C7913D21A54481002F83F0 /* Weather.swift in Sources */,
 				D11A4F222191937400286879 /* ApiHandler.swift in Sources */,
-				4E0AC8F321AD1FB5003E6D8B /* PhysicalLocationManager.swift in Sources */,
+				4E0AC8F321AD1FB5003E6D8B /* PositionManager.swift in Sources */,
 				75C47A4B21AD644A00BD8CF9 /* DbFavorite.swift in Sources */,
 				D11A4F10219167E300286879 /* AppDelegate.swift in Sources */,
 				4EC5FA43219181B7002E4723 /* WeatherTableViewCell.swift in Sources */,

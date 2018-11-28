@@ -1,5 +1,5 @@
 //
-//  PhysicalLocationManager.swift
+//  PositionManager.swift
 //  BetterWeather
 //
 //  Created by Simon Arvidsson on 2018-11-26.
@@ -9,11 +9,11 @@
 import Foundation
 import CoreLocation
 
-class PhysicalLocationManager {
+class PositionManager {
     
     // MARK: - Properties
     
-    static let shared = PhysicalLocationManager()
+    static let shared = PositionManager()
     
     // MARK: -
     let internalLocationManager = CLLocationManager()
@@ -36,13 +36,13 @@ class PhysicalLocationManager {
         }
     }
     
-    func hasLocation() -> Bool
+    func hasPosition() -> Bool
     {
         return longitude != nil && latitude != nil
     }
     
     
-    func refreshLocation()
+    func refreshPosition()
     {
         // Make sure location is enabled
         if CLLocationManager.locationServicesEnabled() {

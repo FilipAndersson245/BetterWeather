@@ -91,10 +91,10 @@ class OverviewViewController: UITableViewController {
     
     @objc func loadCurrentLocation()
     {
-        PhysicalLocationManager.shared.refreshLocation()
+        PositionManager.shared.refreshPosition()
         
         // TODO: replace with real fetched data
-        if (PhysicalLocationManager.shared.hasLocation()) {
+        if (PositionManager.shared.hasPosition()) {
             currentLocation = Location(name: "New York", latitude: 21.324, longitude: 32.24124, days: [
                 Day(date: Date(), averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time:Date()), hours:
                     [
