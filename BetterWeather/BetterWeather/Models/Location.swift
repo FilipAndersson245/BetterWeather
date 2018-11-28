@@ -25,7 +25,7 @@ class Location {
     
     var days: [ Day ]
     
-    public static func weatherToLocation(weatherArr: Array<DbWeather>) -> Array<Location>{
+    public static func weathersToLocations(weatherArr: Array<DbWeather>) -> Array<Location>{
         var readLocations = [Location]()
         var currentReadLocation = Location(name: "", latitude: 0, longitude: 0, days: [Day]())
         for hour in weatherArr{

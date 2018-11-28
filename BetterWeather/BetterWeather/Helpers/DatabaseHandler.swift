@@ -124,7 +124,7 @@ class DatabaseHandler{
         print("WeatherData saved successfully!")
     }
     
-    public func readData() -> Array<Location>?{
+    public func readData() -> Array<DbWeather>?{
         print("Inside readData()")
         let queryString = "SELECT * FROM WeatherData"
         var stmt: OpaquePointer?
@@ -150,7 +150,7 @@ class DatabaseHandler{
             readHours.append(hour)
         }
         print("WeatherData successfully read.")
-        return Location.weatherToLocation(weatherArr: readHours)
+        return readHours
     }
     
     

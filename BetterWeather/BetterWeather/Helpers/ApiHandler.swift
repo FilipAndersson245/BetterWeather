@@ -97,8 +97,7 @@ class ApiHandler {
         
     }
     
-    //Maybe rename foo?
-    public static func getLocationData(_ lon: Float, _ lat: Float, completionBlock: @escaping (Location) -> Void) -> Array<DbWeather>
+    public static func getLocationData(_ name: String, _ lon: Float, _ lat: Float, completionBlock: @escaping (Array<DbWeather>) -> Void)
     {
         let dateFormatter : DateFormatter = {
             let formatter = DateFormatter()
@@ -107,7 +106,7 @@ class ApiHandler {
             return formatter
         }()
 
-        var dbWeathers = [DbWeather]()
+        
         
         fetch(lon: lon, lat: lat) {(data) in
             var day: Array<Weather> = []
@@ -151,7 +150,7 @@ class ApiHandler {
             let myDay = Day(date: date!, averageWeather: avgWeather, hours: day)
             
             // Adds test data to view, remove later.
-            completionBlock(Location(name: "faeiaföoguguödv", latitude: 1, longitude: 1, days: [myDay]))
+            //completionBlock(Location(name: "faeiaföoguguödv", latitude: 1, longitude: 1, days: [myDay]))
             //                switch type {
             //                case is String.Type: //This should be our model that is yet to be implemented
             //                    return "" as! T
@@ -160,11 +159,13 @@ class ApiHandler {
             //                }
             
             
+            var dbWeathers = [DbWeather]()
             
             for hour in myDay.hours{ //TODO: Generalize lon and lat and get correct cityname
-                dbWeathers.append(DbWeather(name: "cityName", weatherType: hour.weatherType, temperatur: hour.temperatur, time: hour.time, windDirection: hour.windDirection, windSpeed: hour.windSpeed, relativeHumidity: hour.relativHumidity, airPressure: hour.airPressure, HorizontalVisibility: hour.HorizontalVisibility, longitude: lon, latitude: lat))
+                dbWeathers.append(DbWeather(name: name, weatherType: hour.weatherType, temperatur: hour.temperatur, time: hour.time, windDirection: hour.windDirection, windSpeed: hour.windSpeed, relativeHumidity: hour.relativHumidity, airPressure: hour.airPressure, HorizontalVisibility: hour.HorizontalVisibility, longitude: lon, latitude: lat))
             }
             
+            completionBlock(dbWeathers)
             
             
             // Move code below to CentralManager
@@ -182,6 +183,5 @@ class ApiHandler {
             
 
         }
-        return dbWeathers
     }
 }

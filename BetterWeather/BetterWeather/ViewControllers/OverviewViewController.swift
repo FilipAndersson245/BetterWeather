@@ -55,14 +55,14 @@ class OverviewViewController: UITableViewController {
             ])
         locations += [location1, location2, location3]
         
-        ApiHandler.getLocationData(16, 58) { data in
-            self.locations.append(data)
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-            print("1")
-        };
-        print("2")
+//        ApiHandler.getLocationData(16, 58) { data in
+//            self.locations.append(data)
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+//            print("1")
+//        };
+//        print("2")
         
     }
     
@@ -75,6 +75,11 @@ class OverviewViewController: UITableViewController {
         
         // DEBUG
         
+        CentralManager.shared.addFavoriteLocation(name: "test", longitude: 14.158, latitude: 57.781)
+        locations = CentralManager.shared.favoriteLocations
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
         
         
     }
