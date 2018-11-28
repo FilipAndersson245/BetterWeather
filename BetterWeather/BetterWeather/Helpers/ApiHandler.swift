@@ -98,7 +98,8 @@ class ApiHandler {
     }
     
     //Maybe rename foo?
-    public static func foo(_ lon: Float, _ lat: Float,completionBlock: @escaping (Location) -> Void)  {
+    public static func getLocationData(_ lon: Float, _ lat: Float, completionBlock: @escaping (Location) -> Void) -> Array<DbWeather>
+    {
         let dateFormatter : DateFormatter = {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
@@ -106,6 +107,8 @@ class ApiHandler {
             return formatter
         }()
 
+        var dbWeathers = [DbWeather]()
+        
         fetch(lon: lon, lat: lat) {(data) in
             var day: Array<Weather> = []
             for hourWeather in data.timeSeries {
@@ -147,33 +150,38 @@ class ApiHandler {
             
             let myDay = Day(date: date!, averageWeather: avgWeather, hours: day)
             
+            // Adds test data to view, remove later.
+            completionBlock(Location(name: "faeiaföoguguödv", latitude: 1, longitude: 1, days: [myDay]))
+            //                switch type {
+            //                case is String.Type: //This should be our model that is yet to be implemented
+            //                    return "" as! T
+            //                default:
+            //                    throw ApiHandlerErrors.NonHandledDataTypeError
+            //                }
             
             
             
-            var dbWeathers = [DbWeather]()
             for hour in myDay.hours{ //TODO: Generalize lon and lat and get correct cityname
                 dbWeathers.append(DbWeather(name: "cityName", weatherType: hour.weatherType, temperatur: hour.temperatur, time: hour.time, windDirection: hour.windDirection, windSpeed: hour.windSpeed, relativeHumidity: hour.relativHumidity, airPressure: hour.airPressure, HorizontalVisibility: hour.HorizontalVisibility, longitude: lon, latitude: lat))
             }
             
-            let dbHandler = DatabaseHandler()
-            dbHandler.insertData(dbWeathers)
-            var readLocations = dbHandler.readData()
             
             
-            //favorite location test
-            let testDate = NSDate()
-            var favorite = DbFavorite(name: "TEST", longitude: 12, latitude: 12, lastUpdate: testDate as Date)
-            dbHandler.addFavoriteLocation(favorite)
-            var favorites = dbHandler.readFavoriteLocations()
-            //end test
+            // Move code below to CentralManager
+//            let dbHandler = DatabaseHandler()
+//            dbHandler.insertData(dbWeathers)
+//            var readLocations = dbHandler.readData()
+//
+//
+//            //favorite location test
+//            let testDate = NSDate()
+//            var favorite = DbFavorite(name: "TEST", longitude: 12, latitude: 12, lastUpdate: testDate as Date)
+//            dbHandler.addFavoriteLocation(favorite)
+//            var favorites = dbHandler.readFavoriteLocations()
+//            //end test
             
-            completionBlock(Location(name: "faeiaföoguguödv", latitude: 1, longitude: 1, days: [myDay]))
-//                switch type {
-//                case is String.Type: //This should be our model that is yet to be implemented
-//                    return "" as! T
-//                default:
-//                    throw ApiHandlerErrors.NonHandledDataTypeError
-//                }
+
         }
+        return dbWeathers
     }
 }

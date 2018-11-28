@@ -55,7 +55,7 @@ class OverviewViewController: UITableViewController {
             ])
         locations += [location1, location2, location3]
         
-        ApiHandler.foo(16, 58) { data in
+        ApiHandler.getLocationData(16, 58) { data in
             self.locations.append(data)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
