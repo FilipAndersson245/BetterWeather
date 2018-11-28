@@ -20,7 +20,6 @@
 		75C47A4B21AD644A00BD8CF9 /* DbFavorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C47A4A21AD644A00BD8CF9 /* DbFavorite.swift */; };
 		75EAF2FD21AD28FA00747308 /* DbWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EAF2FC21AD28FA00747308 /* DbWeather.swift */; };
 		D11A4F10219167E300286879 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A4F0F219167E300286879 /* AppDelegate.swift */; };
-		D11A4F12219167E300286879 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A4F11219167E300286879 /* ViewController.swift */; };
 		D11A4F15219167E300286879 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D11A4F13219167E300286879 /* Main.storyboard */; };
 		D11A4F17219167E400286879 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D11A4F16219167E400286879 /* Assets.xcassets */; };
 		D11A4F1A219167E400286879 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D11A4F18219167E400286879 /* LaunchScreen.storyboard */; };
@@ -50,7 +49,6 @@
 		75EAF2FC21AD28FA00747308 /* DbWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DbWeather.swift; sourceTree = "<group>"; };
 		D11A4F0C219167E300286879 /* BetterWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BetterWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D11A4F0F219167E300286879 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D11A4F11219167E300286879 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D11A4F14219167E300286879 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D11A4F16219167E400286879 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D11A4F19219167E400286879 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -87,6 +85,18 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		4EC7EC1721AEBCC60090A140 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				4EC5FA3E21917DB6002E4723 /* OverviewViewController.swift */,
+				4EC5FA42219181B7002E4723 /* WeatherTableViewCell.swift */,
+				4E8BA3F821A4094900E7CE59 /* DaysTableViewController.swift */,
+				4E37862F21A7DBD600D975E0 /* HoursTableViewController.swift */,
+				5721E3F321A3F28800FF8EA0 /* LocationViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		75AB88F721ABEBF900702C52 /* DatabaseHandler */ = {
 			isa = PBXGroup;
 			children = (
@@ -117,20 +127,15 @@
 		D11A4F0E219167E300286879 /* BetterWeather */ = {
 			isa = PBXGroup;
 			children = (
+				4EC7EC1721AEBCC60090A140 /* ViewControllers */,
 				75AB88F721ABEBF900702C52 /* DatabaseHandler */,
 				4E80572921A03B6A0071E896 /* Models */,
 				D11A4F232191938200286879 /* ApiHandler */,
 				D11A4F0F219167E300286879 /* AppDelegate.swift */,
-				D11A4F11219167E300286879 /* ViewController.swift */,
 				D11A4F13219167E300286879 /* Main.storyboard */,
 				D11A4F16219167E400286879 /* Assets.xcassets */,
 				D11A4F18219167E400286879 /* LaunchScreen.storyboard */,
 				D11A4F1B219167E400286879 /* Info.plist */,
-				4EC5FA3E21917DB6002E4723 /* OverviewViewController.swift */,
-				4EC5FA42219181B7002E4723 /* WeatherTableViewCell.swift */,
-				4E8BA3F821A4094900E7CE59 /* DaysTableViewController.swift */,
-				4E37862F21A7DBD600D975E0 /* HoursTableViewController.swift */,
-				5721E3F321A3F28800FF8EA0 /* LocationViewController.swift */,
 				4E0AC8F221AD1FB5003E6D8B /* PhysicalLocationManager.swift */,
 			);
 			path = BetterWeather;
@@ -233,7 +238,6 @@
 				75AB88F921ABEBF900702C52 /* DatabaseHandler.swift in Sources */,
 				4E8BA3F921A4094900E7CE59 /* DaysTableViewController.swift in Sources */,
 				4E80572B21A03DA10071E896 /* Day.swift in Sources */,
-				D11A4F12219167E300286879 /* ViewController.swift in Sources */,
 				D1C7913D21A54481002F83F0 /* Weather.swift in Sources */,
 				D11A4F222191937400286879 /* ApiHandler.swift in Sources */,
 				4E0AC8F321AD1FB5003E6D8B /* PhysicalLocationManager.swift in Sources */,
