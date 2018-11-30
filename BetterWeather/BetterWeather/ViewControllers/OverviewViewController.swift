@@ -83,6 +83,22 @@ class OverviewViewController: UITableViewController {
         }
         
         
+        let positions: Array<DbFavorite> = [DbFavorite(name: "Stockholm", longitude: 17.9777, latitude: 59.3320),
+                                            DbFavorite(name: "Oslo", longitude: 10.7216, latitude: 59.9728),
+                                            DbFavorite(name: "Jönköping", longitude: 10.7216, latitude: 59.9728),
+                                            DbFavorite(name: "Malmö", longitude: 12.9353,latitude: 55.5712)]
+        let groupQue = DispatchGroup()
+        for position in positions {
+            groupQue.enter()
+             CentralManager.shared.addFavoriteLocation(name: position.name, longitude: position.longitude,latitude: position.latitude){
+                groupQue.leave()
+            }
+        }
+        groupQue.notify(queue: .main) {
+            self.locations = CentralManager.shared.favoriteLocations
+            self.tableView.reloadData()
+        }
+        
         
     }
     
