@@ -112,6 +112,21 @@ class OverviewViewController: UITableViewController {
         return cell!
     }
     
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.row == 0 &&  indexPath.section == 0 {
+            return false
+        }
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            self.locations.remove(at: indexPath.row - (currentLocation != nil ? 1 : 0))
+            tableView.deleteRows(at: [indexPath], with: .right)
+        }
+    }
+    
 
     /*
     // Override to support conditional editing of the table view.
