@@ -28,6 +28,7 @@
 		D1289FE621A4064400DC4AEF /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1289FE521A4064400DC4AEF /* Parameter.swift */; };
 		D1289FE821A4072400DC4AEF /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1289FE721A4072400DC4AEF /* Geometry.swift */; };
 		D1289FEA21A4102100DC4AEF /* DataPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1289FE921A4102100DC4AEF /* DataPoints.swift */; };
+		D16DAC9421B16D44001EC54B /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16DAC9321B16D44001EC54B /* AnimationHelper.swift */; };
 		D1C7913D21A54481002F83F0 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C7913C21A54481002F83F0 /* Weather.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 		D1289FE521A4064400DC4AEF /* Parameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parameter.swift; sourceTree = "<group>"; };
 		D1289FE721A4072400DC4AEF /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
 		D1289FE921A4102100DC4AEF /* DataPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPoints.swift; sourceTree = "<group>"; };
+		D16DAC9321B16D44001EC54B /* AnimationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
 		D1C7913C21A54481002F83F0 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Weather.swift; path = BetterWeather/models/Weather.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -89,6 +91,7 @@
 				D11A4F212191937400286879 /* ApiHandler.swift */,
 				75AB88F821ABEBF900702C52 /* DatabaseHandler.swift */,
 				7573BEB221AED26A003C0882 /* CentralManager.swift */,
+				D16DAC9321B16D44001EC54B /* AnimationHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 				4E80572B21A03DA10071E896 /* Day.swift in Sources */,
 				D1C7913D21A54481002F83F0 /* Weather.swift in Sources */,
 				D11A4F222191937400286879 /* ApiHandler.swift in Sources */,
+				D16DAC9421B16D44001EC54B /* AnimationHelper.swift in Sources */,
 				4E0AC8F321AD1FB5003E6D8B /* PositionManager.swift in Sources */,
 				75C47A4B21AD644A00BD8CF9 /* DbFavorite.swift in Sources */,
 				D11A4F10219167E300286879 /* AppDelegate.swift in Sources */,
