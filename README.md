@@ -40,6 +40,7 @@ weather data for that day. The data in this view will be presented by hour.
 ### Search view:  
 The user can search for new locations to be added to the favourite list. These
 locations will be displayed dynamically as the user enters letters in the search field.  
+A visual representation will be shown to indicate that the search response is the intended location.
 
 # Misc documentation
 
