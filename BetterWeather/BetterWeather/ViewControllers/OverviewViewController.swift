@@ -14,83 +14,15 @@ class OverviewViewController: UITableViewController {
     var currentLocation: Location? = nil
     
     private func loadSampleLocations() {
-        let location1 = Location(name: "Huskvarna", latitude: 21.324, longitude: 32.24124, days: [
-            Day(date: Date(), averageWeather: Weather(weatherType: .ModerateSleetShowers, temperatur: 20.3, time: Date()), hours:
-                [
-                    Weather(weatherType: .ClearSky, temperatur: 25, time: Date()),
-                    Weather(weatherType: .ClearSky, temperatur: 21.9, time: Date())
-                ]),
-            Day(date: Date(), averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: Date()), hours:
-                [
-                    Weather(weatherType: .HeavySleet, temperatur: 2, time: Date()),
-                    Weather(weatherType: .Overcast, temperatur: -1.3, time: Date()),
-                    Weather(weatherType: .Thunder, temperatur: -9.3, time: Date())
-                ])
-            ])
-        let location2 = Location(name: "Jönköping", latitude: 21.324, longitude: 32.24124, days: [
-            Day(date: Date(), averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time: Date()), hours:
-                [
-                    Weather(weatherType: .Thunder, temperatur: 5, time: Date()),
-                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: Date())
-                ]),
-            Day(date: Date(), averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: Date()), hours:
-                [
-                    Weather(weatherType: .HeavySleet, temperatur: 2, time: Date()),
-                    Weather(weatherType: .Overcast, temperatur: -1.3, time: Date()),
-                    Weather(weatherType: .Thunder, temperatur: -9.3, time: Date())
-                ])
-            ])
-        let location3 = Location(name: "Asdsg", latitude: 21.324, longitude: 32.24124, days: [
-            Day(date: Date(), averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time: Date()), hours:
-                [
-                    Weather(weatherType: .CloudySky, temperatur: 10, time: Date()),
-                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: Date())
-                ]),
-            Day(date: Date(), averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: Date()), hours:
-                [
-                    Weather(weatherType: .HeavySleet, temperatur: 2, time: Date()),
-                    Weather(weatherType: .Overcast, temperatur: -1.3, time: Date()),
-                    Weather(weatherType: .Thunder, temperatur: -9.3, time: Date())
-                ])
-            ])
-        locations += [location1, location2, location3]
-        
-//        ApiHandler.getLocationData(16, 58) { data in
-//            self.locations.append(data)
-//            DispatchQueue.main.async {
-//                self.tableView.reloadData()
-//            }
-//            print("1")
-//        };
-//        print("2")
-        
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-       
-        loadSampleLocations()
-        loadCurrentLocation()
-        
-        
-        // DEBUG
-        
-        CentralManager.shared.addFavoriteLocation(name: "test", longitude: 14.158, latitude: 57.781){
-            self.locations = CentralManager.shared.favoriteLocations
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-        
-        
         let positions: Array<DbFavorite> = [DbFavorite(name: "Stockholm", longitude: 17.9777, latitude: 59.3320),
                                             DbFavorite(name: "Oslo", longitude: 10.7216, latitude: 59.9728),
                                             DbFavorite(name: "Jönköping", longitude: 10.7216, latitude: 59.9728),
                                             DbFavorite(name: "Malmö", longitude: 12.9353,latitude: 55.5712)]
+        
         let groupQue = DispatchGroup()
         for position in positions {
             groupQue.enter()
-             CentralManager.shared.addFavoriteLocation(name: position.name, longitude: position.longitude,latitude: position.latitude){
+            CentralManager.shared.addFavoriteLocation(name: position.name, longitude: position.longitude,latitude: position.latitude){
                 groupQue.leave()
             }
         }
@@ -99,7 +31,13 @@ class OverviewViewController: UITableViewController {
             self.tableView.reloadData()
         }
         
-        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+       
+        loadSampleLocations()
+        loadCurrentLocation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
