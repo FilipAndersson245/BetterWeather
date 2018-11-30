@@ -290,7 +290,7 @@
         <scene sceneID="FpM-mf-np5">
             <objects>
                 <viewController id="tUX-aw-NyE" customClass="LocationViewController" customModule="BetterWeather" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="nly-Kp-AAG" customClass="LocationOverviewTableViewCell" customModule="BetterWeather" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="nly-Kp-AAG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -331,12 +331,56 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addLocationButton" destination="XH2-6e-QIG" id="5fJ-cb-rrG"/>
-                        <outlet property="mapView" destination="Z3d-Rm-Ofl" id="yTQ-0W-SyP"/>
+                        <outlet property="mapMainView" destination="nly-Kp-AAG" id="TMc-lq-hku"/>
+                        <outlet property="mapView" destination="nly-Kp-AAG" id="Rds-pw-nUk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hHm-Jz-AYa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="eSv-7E-kGd">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IrU-pJ-ABo">
+                            <rect key="frame" x="0.0" y="100" width="414" height="762"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <prototypes>
+                                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="gVN-I2-dRf">
+                                    <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gVN-I2-dRf" id="U2S-Gb-yF8">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                    </tableViewCellContentView>
+                                </tableViewCell>
+                                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="OsY-bR-WSQ">
+                                    <rect key="frame" x="0.0" y="72" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OsY-bR-WSQ" id="oBX-PL-ppx">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                    </tableViewCellContentView>
+                                </tableViewCell>
+                            </prototypes>
+                        </tableView>
+                        <searchBar contentMode="redraw" placeholder="Search Location" translatesAutoresizingMaskIntoConstraints="NO" id="goY-0x-hSi">
+                            <rect key="frame" x="0.0" y="44" width="414" height="56"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="goY-0x-hSi" firstAttribute="leading" secondItem="mZg-47-HAX" secondAttribute="leading" id="8ZH-et-h3L"/>
+                        <constraint firstItem="mZg-47-HAX" firstAttribute="bottom" secondItem="IrU-pJ-ABo" secondAttribute="bottom" id="Aie-EB-bFN"/>
+                        <constraint firstItem="IrU-pJ-ABo" firstAttribute="leading" secondItem="mZg-47-HAX" secondAttribute="leading" id="GbY-mk-hX4"/>
+                        <constraint firstItem="IrU-pJ-ABo" firstAttribute="top" secondItem="goY-0x-hSi" secondAttribute="bottom" id="OSD-fD-ch5"/>
+                        <constraint firstItem="goY-0x-hSi" firstAttribute="top" secondItem="mZg-47-HAX" secondAttribute="top" id="VV4-4j-J7j"/>
+                        <constraint firstItem="goY-0x-hSi" firstAttribute="trailing" secondItem="mZg-47-HAX" secondAttribute="trailing" id="eIl-iW-H6i"/>
+                        <constraint firstItem="mZg-47-HAX" firstAttribute="trailing" secondItem="IrU-pJ-ABo" secondAttribute="trailing" id="gKR-XT-Wzb"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="mZg-47-HAX"/>
+                </view>
             </objects>
-            <point key="canvasLocation" x="-791.304347826087" y="1002.4553571428571"/>
+            <point key="canvasLocation" x="-791" y="1474"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZDC-bl-CHd">

@@ -9,30 +9,78 @@
 import UIKit
 import MapKit
 
-class LocationViewController: UIViewController, UISearchBarDelegate {
+class LocationViewController: UIViewController, UISearchBarDelegate, UISearchResultsUpdating, UITableViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var addLocationButton: UIButton!
     
-    let locationManager = CLLocationManager()
+    @IBOutlet var mapMainView: UIView!
+    
+    @IBOutlet var mapSearchSubView: UIView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var resultTable: UITableView!
+    
+    let searchController = UISearchController(searchResultsController: nil)
     
     var lon: CLLocationDegrees = 0.0
     var lat: CLLocationDegrees = 0.0
     var name: String = ""
     
+    var filteredMapItems: [MKMapItem]  = []
+    var unfilteredMapItems: [MKMapItem] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Fix addLocationButton styling
+        // Setuo addLocationButton styling
         addLocationButton.layer.cornerRadius = 5
         addLocationButton.layer.borderWidth = 1
         addLocationButton.layer.borderColor = self.view.tintColor.cgColor
         addLocationButton.titleLabel?.textColor = self.view.tintColor
         
-        // Before use of location
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
+        // Setup for the searchController
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Location"
+//        navigationItem.searchController = searchController
+//        definesPresentationContext = true
+
+        // Setup UITableView for the searchbar
+        mapSearchSubView = UIView.init()
+        self.mapMainView.addSubview(mapSearchSubView)
+//        self.view.addSubview(mapSearchSubView)
+    }
+    
+    func tableView(resultTable: UITableView!, numberOfRowsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    @IBAction func searchButton(_ sender: Any) {
+//        searchController.searchBar.delegate = self
+//        present(searchController, animated: true, completion: nil)
+//        performSegue(withIdentifier: "MapSearchSegue", sender: self)
+        
+//        self.view.addSubview(mapSearchSubView)
+        
+        mapSearchSubView.bringSubviewToFront(mapMainView)
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        filteredMapItems = unfilteredMapItems.filter({( mapItem : MKMapItem) -> Bool in
+            return (mapItem.placemark.title?.lowercased().contains(searchText.lowercased()))!
+        })
+        
+        
+//        tableView.reloadData()
+    }
+    
+    func isFiltering() -> Bool {
+//        return searchController.isActive && !searchBarIsEmpty()
+        return searchController.isActive && (!(searchController.searchBar.text?.isEmpty)!)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -100,12 +148,6 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
                 self.addLocationButton.isHidden = false
             }
         }
-    }
-    
-    @IBAction func searchButton(_ sender: Any) {
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.delegate = self
-        present(searchController, animated: true, completion: nil)
     }
     
     @IBAction func addLocationButton(_ sender: Any) {
