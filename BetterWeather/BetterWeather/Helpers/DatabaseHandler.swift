@@ -43,8 +43,8 @@ class DatabaseHandler{
             return
         }
         sqlite3_bind_text(stmt, 1, favorite.name, -1, nil)
-        sqlite3_bind_double(stmt, 2, Double(favorite.longitude))
-        sqlite3_bind_double(stmt, 3, Double(favorite.latitude))
+        sqlite3_bind_double(stmt, 2, Double(favorite.latitude))
+        sqlite3_bind_double(stmt, 3, Double(favorite.longitude))
         sqlite3_bind_double(stmt, 4, favorite.lastUpdate.timeIntervalSince1970)
         if sqlite3_step(stmt) != SQLITE_DONE {
             let errormessage = String(cString: sqlite3_errmsg(db)!)
@@ -103,26 +103,18 @@ class DatabaseHandler{
             return
         }
         sqlite3_finalize(stmt)
-        print("deleteted")
     }
     
     public func doesFavoriteLocationExist(dbFavorite: DbFavorite) -> Bool{
-        let queryString = "SELECT count(*) FROM FavoriteLocations WHERE (Latitude = ? AND Longitude = ?)"
-        var stmt: OpaquePointer?
-        if sqlite3_prepare(db, queryString, -1, &stmt, nil) != SQLITE_OK{
-            let errormessage = String(cString: sqlite3_errmsg(db)!)
-            print("error in readFavoriteLocation: \(errormessage)")
+        guard let favoriteLocations = readFavoriteLocations() else {
             return false
         }
-        sqlite3_bind_double(stmt, 1, Double(dbFavorite.latitude))
-        sqlite3_bind_double(stmt, 2, Double(dbFavorite.longitude))
-        
-        var count = 0
-        while(sqlite3_step(stmt) == SQLITE_ROW) {
-            count = Int(sqlite3_column_int(stmt, 0))
+        for favorite in favoriteLocations{
+            if (Int(favorite.latitude) == Int(dbFavorite.latitude) && Int(favorite.longitude) == Int(dbFavorite.longitude)){
+                return true
+            }
         }
-        print(count)
-        return count > 0
+        return false
     }
     
     public func removeFavoriteLocation(dbFavorite: DbFavorite){
@@ -141,7 +133,6 @@ class DatabaseHandler{
             return
         }
         sqlite3_finalize(stmt)
-        print("deleteted")
     }
     
     public func insertData(_ dbWeathers: Array<DbWeather>){

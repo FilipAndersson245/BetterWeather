@@ -42,7 +42,7 @@ class PositionManager {
     }
     
     
-    func refreshPosition()
+    func checkWhetherToUpdatePosition()
     {
         // Make sure location is enabled
         if CLLocationManager.locationServicesEnabled() {

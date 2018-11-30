@@ -70,7 +70,7 @@ class OverviewViewController: UITableViewController {
         super.viewDidLoad()
        
         loadSampleLocations()
-        loadCurrentLocation()
+        checkAndReloadAllLocations()
         
         
         // DEBUG
@@ -85,17 +85,19 @@ class OverviewViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadCurrentLocation()
-        NotificationCenter.default.addObserver(self, selector: #selector(loadCurrentLocation), name: Notification.Name("applicationWillEnterForeground"), object: nil)
+        checkAndReloadAllLocations()
+        NotificationCenter.default.addObserver(self, selector: #selector(checkAndReloadAllLocations), name: Notification.Name("applicationWillEnterForeground"), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
     }
     
-    @objc func loadCurrentLocation()
+    @objc func checkAndReloadAllLocations()
     {
-        PositionManager.shared.refreshPosition()
+        CentralManager.shared.checkWhetherToUpdateWeather()
+        
+        PositionManager.shared.checkWhetherToUpdatePosition()
         
         // TODO: replace with real fetched data
         if (PositionManager.shared.hasPosition()) {
