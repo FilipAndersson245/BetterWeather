@@ -75,11 +75,13 @@ class OverviewViewController: UITableViewController {
         
         // DEBUG
         
-        CentralManager.shared.addFavoriteLocation(name: "test", longitude: 14.158, latitude: 57.781)
-        locations = CentralManager.shared.favoriteLocations
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+        CentralManager.shared.addFavoriteLocation(name: "test", longitude: 14.158, latitude: 57.781){
+            self.locations = CentralManager.shared.favoriteLocations
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
+        
         
         
     }

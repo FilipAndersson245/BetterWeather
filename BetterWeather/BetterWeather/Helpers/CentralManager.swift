@@ -22,7 +22,7 @@ class CentralManager{
         populateFavoriteLocations()
     }
     
-    func addFavoriteLocation(name: String, longitude: Float, latitude: Float) {
+    func addFavoriteLocation(name: String, longitude: Float, latitude: Float, completionBlock: @escaping () -> Void) {
         let todayDate = NSDate()
         var favorite = DbFavorite(name: name, longitude: longitude, latitude: latitude, lastUpdate: todayDate as Date)
         self.dbHandler.addFavoriteLocation(favorite)
@@ -33,6 +33,7 @@ class CentralManager{
             dbWeathers in
             self.favoriteLocations.append(Location.weathersToLocations(weatherArr: dbWeathers).first!)
             self.dbHandler.insertData(dbWeathers)
+            completionBlock()
         }
     }
     
@@ -40,7 +41,9 @@ class CentralManager{
         favoriteLocations = Location.weathersToLocations(weatherArr: self.dbHandler.readData() ?? [DbWeather]())
     }
     
-    
+    func checkWhetherToUpdateWeather(){
+        
+    }
     
     
     
