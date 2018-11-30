@@ -14,6 +14,7 @@ class OverviewViewController: UITableViewController {
     var currentLocation: Location? = nil
     
     private func loadSampleLocations() {
+        self.refreshControl?.beginRefreshing()
         let positions: Array<DbFavorite> = [DbFavorite(name: "Stockholm", longitude: 17.9777, latitude: 59.3320),
                                             DbFavorite(name: "Oslo", longitude: 10.7216, latitude: 59.9728),
                                             DbFavorite(name: "Jönköping", longitude: 10.7216, latitude: 59.9728),
@@ -28,6 +29,7 @@ class OverviewViewController: UITableViewController {
         }
         groupQue.notify(queue: .main) {
             self.locations = CentralManager.shared.favoriteLocations
+            self.refreshControl?.endRefreshing()
             self.tableView.reloadData()
         }
         
@@ -35,9 +37,23 @@ class OverviewViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+    
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        self.refreshControl = refreshControl
+        
         loadSampleLocations()
         loadCurrentLocation()
+        
+
+    }
+    
+    @objc func refresh(sender:AnyObject)
+    {
+        // Updating your data here...
+        CentralManager.shared.favoriteLocations = []
+        loadSampleLocations()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -122,6 +138,7 @@ class OverviewViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            // TODO: Maybe call method from centralManager instead
             self.locations.remove(at: indexPath.row - (currentLocation != nil ? 1 : 0))
             tableView.deleteRows(at: [indexPath], with: .right)
         }
