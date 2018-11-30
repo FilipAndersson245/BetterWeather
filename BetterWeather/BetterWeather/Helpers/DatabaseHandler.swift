@@ -87,7 +87,45 @@ class DatabaseHandler{
         }
     }
     
-    public func removeFavoriteLocationData(dbFavorite: DbFavorite){
+    public func removeLocationWeatherData(dbFavorite: DbFavorite){
+        var stmt: OpaquePointer?
+        let queryString = "DELETE FROM WeatherData WHERE (Latitude = ? AND Longitude = ?)"
+        if sqlite3_prepare(db, queryString, -1, &stmt, nil) !=  SQLITE_OK{
+            let errormessage = String(cString: sqlite3_errmsg(db)!)
+            print ("error removing weather data:\(errormessage)")
+            return
+        }
+        sqlite3_bind_double(stmt, 1, Double(dbFavorite.latitude))
+        sqlite3_bind_double(stmt, 2, Double(dbFavorite.longitude))
+        if sqlite3_step(stmt) != SQLITE_DONE {
+            let errormessage = String(cString: sqlite3_errmsg(db)!)
+            print("Failed to remove favoriteData: \(errormessage)")
+            return
+        }
+        sqlite3_finalize(stmt)
+        print("deleteted")
+    }
+    
+    public func doesFavoriteLocationExist(dbFavorite: DbFavorite) -> Bool{
+        let queryString = "SELECT count(*) FROM FavoriteLocations WHERE (Latitude = ? AND Longitude = ?)"
+        var stmt: OpaquePointer?
+        if sqlite3_prepare(db, queryString, -1, &stmt, nil) != SQLITE_OK{
+            let errormessage = String(cString: sqlite3_errmsg(db)!)
+            print("error in readFavoriteLocation: \(errormessage)")
+            return false
+        }
+        sqlite3_bind_double(stmt, 1, Double(dbFavorite.latitude))
+        sqlite3_bind_double(stmt, 2, Double(dbFavorite.longitude))
+        
+        var count = 0
+        while(sqlite3_step(stmt) == SQLITE_ROW) {
+            count = Int(sqlite3_column_int(stmt, 0))
+        }
+        print(count)
+        return count > 0
+    }
+    
+    public func removeFavoriteLocation(dbFavorite: DbFavorite){
         var stmt: OpaquePointer?
         let queryString = "DELETE FROM FavoriteLocations WHERE (Latitude = ? AND Longitude = ?)"
         if sqlite3_prepare(db, queryString, -1, &stmt, nil) !=  SQLITE_OK{

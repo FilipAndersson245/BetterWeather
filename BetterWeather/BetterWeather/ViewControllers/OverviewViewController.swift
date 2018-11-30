@@ -80,19 +80,7 @@ class OverviewViewController: UITableViewController {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-            let dbHandler = DatabaseHandler()
-            var favorite = dbHandler.readFavoriteLocations()?.first
-            print(favorite)
-            dbHandler.removeFavoriteLocationData(dbFavorite: favorite!)
-            var favorite1 = dbHandler.readFavoriteLocations()?.first
-            print(favorite1)
-            
-        }
-        
-        
-        
-        
-        
+        }        
     }
     
     override func viewWillAppear(_ animated: Bool) {

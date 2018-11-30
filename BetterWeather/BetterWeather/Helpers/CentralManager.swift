@@ -26,21 +26,26 @@ class CentralManager{
     
     func addFavoriteLocation(name: String, longitude: Float, latitude: Float, completionBlock: @escaping () -> Void) {
         let todayDate = Date()
-        var favorite = DbFavorite(name: name, longitude: longitude, latitude: latitude, lastUpdate: todayDate)
+        let favorite = DbFavorite(name: name, longitude: longitude, latitude: latitude, lastUpdate: todayDate)
         self.dbHandler.addFavoriteLocation(favorite)
-        var favorites = dbHandler.readFavoriteLocations()
+        sleep(2)
+        let hey = self.dbHandler.doesFavoriteLocationExist(dbFavorite: favorite)
+        
+        print(hey)
         
         // TODO: Check if duplicate (with generalized coordinates)
+        //var hey = dbHandler.doesFavoriteLocationExist(dbFavorite: favorite)
+        
         ApiHandler.getLocationData(name, longitude, latitude){
             dbWeathers in
-            self.favoriteLocations.append(Location.weathersToLocations(weatherArr: dbWeathers).first!)
+            self.favoriteLocations.append(Location.weathersToLocations(dbWeathers).first!)
             self.dbHandler.insertData(dbWeathers)
             completionBlock()
         }
     }
     
     func populateFavoriteLocations(){
-        favoriteLocations = Location.weathersToLocations(weatherArr: self.dbHandler.readData() ?? [DbWeather]())
+        favoriteLocations = Location.weathersToLocations(self.dbHandler.readData() ?? [DbWeather]())
     }
     
     func checkWhetherToUpdateWeather(){
@@ -56,7 +61,22 @@ class CentralManager{
     }
     
     func updateWeather(favoriteToUpdate: DbFavorite){
+        // Requires that favoriteToUpdate exists in favoriteLocations
         // TODO: fetch and update in DB a specified favorite location.
+        
+        ApiHandler.getLocationData(favoriteToUpdate.name, favoriteToUpdate.longitude, favoriteToUpdate.latitude){
+            dbWeathers in
+            
+            // Remove
+            self.dbHandler.removeLocationWeatherData(dbFavorite: favoriteToUpdate)
+            let indexToUpdate = self.favoriteLocations.index(where: {$0.latitude == favoriteToUpdate.latitude && $0.longitude == favoriteToUpdate.longitude})!  // Can always find favorite
+            self.favoriteLocations.remove(at: indexToUpdate)
+            
+            
+            // Insert
+            self.dbHandler.insertData(dbWeathers)
+            self.favoriteLocations.insert(Location.weathersToLocations(dbWeathers).first!, at: indexToUpdate)
+        }
     }
     
     
