@@ -91,6 +91,24 @@ class DatabaseHandler{
         }
     }
     
+    public func removeFavoriteLocationData(location: DbFavorite){
+        createDataTable()
+        var stmt: OpaquePointer?
+        let queryString = "DELETE FROM WeatherData WHERE (Latitude = ? AND Longitude = ?)"
+        if sqlite3_prepare(db, queryString, -1, &stmt, nil) !=  SQLITE_OK{
+            let errormessage = String(cString: sqlite3_errmsg(db)!)
+            print ("error preparing insert:\(errormessage)")
+            return
+        }
+        if sqlite3_step(stmt) != SQLITE_DONE {
+            let errormessage = String(cString: sqlite3_errmsg(db)!)
+            print("Failed to remove WeatherData: \(errormessage)")
+            return
+        }
+        sqlite3_reset(stmt)
+        sqlite3_finalize(stmt)
+    }
+    
     public func insertData(_ dbWeathers: Array<DbWeather>){
         createDataTable() //Maybe change? but this works
         print("Inside insertData()")

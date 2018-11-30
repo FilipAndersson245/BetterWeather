@@ -18,13 +18,15 @@ class CentralManager{
     
     var currentLocation: Location? = nil
     
+    private let refreshInterval: Double = 1800
+    
     init() {
         populateFavoriteLocations()
     }
     
     func addFavoriteLocation(name: String, longitude: Float, latitude: Float, completionBlock: @escaping () -> Void) {
-        let todayDate = NSDate()
-        var favorite = DbFavorite(name: name, longitude: longitude, latitude: latitude, lastUpdate: todayDate as Date)
+        let todayDate = Date()
+        var favorite = DbFavorite(name: name, longitude: longitude, latitude: latitude, lastUpdate: todayDate)
         self.dbHandler.addFavoriteLocation(favorite)
         var favorites = dbHandler.readFavoriteLocations()
         
@@ -42,10 +44,20 @@ class CentralManager{
     }
     
     func checkWhetherToUpdateWeather(){
-        
+        let favoritesFromDb = dbHandler.readFavoriteLocations()
+        if favoritesFromDb == nil{
+            return
+        }
+        for favorite in favoritesFromDb!{
+            if (Date().timeIntervalSince(favorite.lastUpdate) > refreshInterval){
+                updateWeather(favoriteToUpdate: favorite)
+            }
+        }
     }
     
-    
+    func updateWeather(favoriteToUpdate: DbFavorite){
+        // TODO: fetch and update in DB a specified favorite location.
+    }
     
     
     
