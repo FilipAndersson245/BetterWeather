@@ -16,8 +16,12 @@ class DatabaseHandler{
     
     var fileName = "database.sqlite"
     
+    init() {
+        createDataTable()
+        createFavoriteTable()
+    }
+    
     public func createFavoriteTable(){
-        print("Inside createFavoriteDB()")
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(fileName)
         if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
             print("Error opening database.")
@@ -31,12 +35,11 @@ class DatabaseHandler{
     
     public func addFavoriteLocation(_ favorite: DbFavorite){
         createFavoriteTable() //Maybe change? but this works
-        print("Inside addFavoriteLocation")
         var stmt: OpaquePointer?
         let queryString = "INSERT OR REPLACE INTO FavoriteLocations (Name, Latitude, Longitude, LastUpdate) VALUES (?,?,?,?)"
         if sqlite3_prepare(db, queryString, -1, &stmt, nil) !=  SQLITE_OK{
             let errormessage = String(cString: sqlite3_errmsg(db)!)
-            print ("error preparing insert:\(errormessage)")
+            print ("error preparing insertin addFavoriteLocation: \(errormessage)")
             return
         }
         sqlite3_bind_text(stmt, 1, favorite.name, -1, nil)
@@ -45,21 +48,19 @@ class DatabaseHandler{
         sqlite3_bind_double(stmt, 4, favorite.lastUpdate.timeIntervalSince1970)
         if sqlite3_step(stmt) != SQLITE_DONE {
             let errormessage = String(cString: sqlite3_errmsg(db)!)
-            print("Failed to insert WeatherData: \(errormessage)")
+            print("Failed to insert favorite data: \(errormessage)")
             return
         }
         sqlite3_reset(stmt)
         sqlite3_finalize(stmt)
-        print("Favorite location saved successfully!")
     }
     
     public func readFavoriteLocations() -> Array<DbFavorite>?{
-        print("Inside readFavoriteLocation")
         let queryString = "SELECT * FROM FavoriteLocations"
         var stmt: OpaquePointer?
         if sqlite3_prepare(db, queryString, -1, &stmt, nil) != SQLITE_OK{
             let errormessage = String(cString: sqlite3_errmsg(db)!)
-            print("error preparing insert: \(errormessage)")
+            print("error in readFavoriteLocation: \(errormessage)")
             return nil
         }
         var favoriteLocations = [DbFavorite]()
@@ -71,15 +72,10 @@ class DatabaseHandler{
             let favorite = DbFavorite( name: Name, longitude: Float(Longitude), latitude: Float(Latitude), lastUpdate: lastUpdate as Date)
             favoriteLocations.append(favorite)
         }
-        print("Favorite locations successfully read.")
-        for favorite in favoriteLocations{
-            print(favorite)
-        }
         return favoriteLocations
     }
     
     public func createDataTable() {
-        print("Inside createDataTable()")
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(fileName)
         if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
             print("Error opening database.")
@@ -91,32 +87,32 @@ class DatabaseHandler{
         }
     }
     
-    public func removeFavoriteLocationData(location: DbFavorite){
-        createDataTable()
+    public func removeFavoriteLocationData(dbFavorite: DbFavorite){
         var stmt: OpaquePointer?
-        let queryString = "DELETE FROM WeatherData WHERE (Latitude = ? AND Longitude = ?)"
+        let queryString = "DELETE FROM FavoriteLocations WHERE (Latitude = ? AND Longitude = ?)"
         if sqlite3_prepare(db, queryString, -1, &stmt, nil) !=  SQLITE_OK{
             let errormessage = String(cString: sqlite3_errmsg(db)!)
-            print ("error preparing insert:\(errormessage)")
+            print ("error removing favorite location:\(errormessage)")
             return
         }
+        sqlite3_bind_double(stmt, 1, Double(dbFavorite.latitude))
+        sqlite3_bind_double(stmt, 2, Double(dbFavorite.longitude))
         if sqlite3_step(stmt) != SQLITE_DONE {
             let errormessage = String(cString: sqlite3_errmsg(db)!)
-            print("Failed to remove WeatherData: \(errormessage)")
+            print("Failed to remove favoriteData: \(errormessage)")
             return
         }
-        sqlite3_reset(stmt)
         sqlite3_finalize(stmt)
+        print("deleteted")
     }
     
     public func insertData(_ dbWeathers: Array<DbWeather>){
         createDataTable() //Maybe change? but this works
-        print("Inside insertData()")
         var stmt: OpaquePointer?
         let queryString = "INSERT OR REPLACE INTO WeatherData (Name, Latitude, Longitude, Date, WeatherType, Temperature, WindDirection, WindSpeed, RelativeHumidity, AirPressure, HorizontalVisibility) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
         if sqlite3_prepare(db, queryString, -1, &stmt, nil) !=  SQLITE_OK{
             let errormessage = String(cString: sqlite3_errmsg(db)!)
-            print ("error preparing insert:\(errormessage)")
+            print ("error preparing insert data:\(errormessage)")
             return
         }
         for hour in dbWeathers {
@@ -139,16 +135,14 @@ class DatabaseHandler{
             sqlite3_reset(stmt)
         }
         sqlite3_finalize(stmt)
-        print("WeatherData saved successfully!")
     }
     
     public func readData() -> Array<DbWeather>?{
-        print("Inside readData()")
         let queryString = "SELECT * FROM WeatherData"
         var stmt: OpaquePointer?
         if sqlite3_prepare(db, queryString, -1, &stmt, nil) != SQLITE_OK{
             let errormessage = String(cString: sqlite3_errmsg(db)!)
-            print("error preparing insert: \(errormessage)")
+            print("error reading weather data: \(errormessage)")
             return nil
         }
         var readHours = [DbWeather]()
@@ -167,7 +161,6 @@ class DatabaseHandler{
             let hour = DbWeather( name: Name,weatherType: WeatherTypes(rawValue: Int(WeatherType))!, temperatur: Float(Temperature), time: Date as Date, windDirection: Int(WindDirection), windSpeed: Float(WindSpeed), relativeHumidity: Int(RelativeHumidity), airPressure: Float(AirPressure), HorizontalVisibility: Float(HorizontalVisibility), longitude: Float(Longitude), latitude: Float(Latitude))
             readHours.append(hour)
         }
-        print("WeatherData successfully read.")
         return readHours
     }
     
