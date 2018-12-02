@@ -117,6 +117,8 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
     
     @IBAction func addLocationButton(_ sender: Any) {
         // Do stuff when clicked.
+        CentralManager.shared.addFavoriteLocation(name: "test", longitude: 14.158, latitude: 57.781)
+        navigationController?.popViewController(animated:true)
     }
     
 }
