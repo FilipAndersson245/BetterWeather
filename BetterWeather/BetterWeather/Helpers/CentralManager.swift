@@ -84,6 +84,12 @@ class CentralManager{
             self.favoriteLocations.remove(at: indexToUpdate)
             
             
+            // Update FavoriteLocationRefreshTime
+            // TODO: Replace with db function that updates
+            self.dbHandler.removeFavoriteLocation(dbFavorite: favoriteToUpdate)
+            self.dbHandler.addFavoriteLocation(favoriteToUpdate)
+            
+            
             // Insert
             self.dbHandler.insertData(dbWeathers)
             self.favoriteLocations.insert(Location.weathersToLocations(dbWeathers).first!, at: indexToUpdate)
