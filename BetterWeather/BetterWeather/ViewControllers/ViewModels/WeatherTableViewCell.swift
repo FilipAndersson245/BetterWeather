@@ -39,13 +39,7 @@ class WeatherTableViewCell: UITableViewCell {
     }
     
     func animate() {
-        if isRotating {
-            isRotating = false
-            weatherImage.stopRotating()
-        } else {
-            isRotating = true
-            weatherImage.startRotating()
-        }
+        weatherImage.rotate()
     }
     
     
