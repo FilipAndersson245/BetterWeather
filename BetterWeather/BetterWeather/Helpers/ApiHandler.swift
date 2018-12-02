@@ -52,6 +52,7 @@ class ApiHandler {
     private static func fetch(lon: Float, lat: Float, completionBlock: @escaping (WeatherData) -> Void)  {
         let template = "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/%.4f/lat/%.4f/data.json"
         let urlsString = String(format: template, lon, lat)
+        print(urlsString)
         
         guard let baseUrl = URL(string: urlsString) else {
             print("Error invalid url")

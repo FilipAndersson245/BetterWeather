@@ -10,7 +10,8 @@ import UIKit
 
 class DaysTableViewController: UITableViewController {
     
-    var days: [Day] = []
+    var locationIndex: Int!
+    var isCurrentLocation: Bool!
     let dateFormatter : DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: Locale.current.identifier)
@@ -20,30 +21,55 @@ class DaysTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        checkAndReloadAllLocations()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadViewData), name: Notification.Name("reloadViewData"), object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func checkAndReloadAllLocations()
+    {
+        CentralManager.shared.checkWhetherToUpdateWeather()
+        PositionManager.shared.checkWhetherToUpdatePosition()
+    }
+    
+    @objc func reloadViewData()
+    {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
 
     // MARK: - Table view data source
+    
+    private func getDays() -> [Day]
+    {
+        return isCurrentLocation ? CentralManager.shared.currentLocation!.days : CentralManager.shared.favoriteLocations[locationIndex].days
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return days.count
+        return getDays().count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "dayCell", for: indexPath) as? WeatherTableViewCell
-        let day = days[indexPath.row]
+        let day = getDays()[indexPath.row]
         
         cell!.title.text = dateFormatter.string(from: day.date)
         cell!.setTemperature(day.averageWeather.temperatur)
@@ -99,9 +125,10 @@ class DaysTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? HoursTableViewController {
             if let indexPath = sender as? IndexPath {
-                let day = days[indexPath.row]
-                destination.hours = day.hours
-                destination.title = dateFormatter.string(from: day.date)
+                destination.isCurrentLocation = isCurrentLocation
+                destination.locationIndex = locationIndex
+                destination.dayIndex = indexPath.row
+                destination.title = dateFormatter.string(from: getDays()[indexPath.row].date)
             }
         }
     }
