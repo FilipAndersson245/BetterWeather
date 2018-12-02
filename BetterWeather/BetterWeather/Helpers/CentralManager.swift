@@ -24,7 +24,7 @@ class CentralManager{
         populateFavoriteLocations()
     }
     
-    func addFavoriteLocation(name: String, longitude: Float, latitude: Float, completionBlock: @escaping () -> Void) {
+    func addFavoriteLocation(name: String, longitude: Float, latitude: Float) {
         let todayDate = Date()
         let favorite = DbFavorite(name: name, longitude: longitude, latitude: latitude, lastUpdate: todayDate)
         
@@ -36,9 +36,10 @@ class CentralManager{
                 dbWeathers in
                 self.favoriteLocations.append(Location.weathersToLocations(dbWeathers).first!)
                 self.dbHandler.insertData(dbWeathers)
-                completionBlock()
+                NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)
             }
         }
+        // TODO: Add alert that says position already added.
     }
     
     func removeFavoriteLocation(location: Location){
@@ -48,6 +49,7 @@ class CentralManager{
             self.dbHandler.removeLocationWeatherData(dbFavorite: favorite)
             let indexToUpdate = self.favoriteLocations.index(where: {$0.latitude == location.latitude && $0.longitude == location.longitude})!  // Can always find favorite
             self.favoriteLocations.remove(at: indexToUpdate)
+            NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)
         }
     }
     
@@ -55,12 +57,7 @@ class CentralManager{
         favoriteLocations = Location.weathersToLocations(self.dbHandler.readData() ?? [DbWeather]())
     }
     
-    func checkWhetherToUpdateWeather(){
-        print("FAAV LOCC")
-        for location in favoriteLocations{
-            print(location)
-        }
-        
+    func checkWhetherToUpdateWeather(){        
         let favoritesFromDb = dbHandler.readFavoriteLocations()
         if favoritesFromDb == nil{
             return
@@ -93,6 +90,9 @@ class CentralManager{
             // Insert
             self.dbHandler.insertData(dbWeathers)
             self.favoriteLocations.insert(Location.weathersToLocations(dbWeathers).first!, at: indexToUpdate)
+            
+            // Update view
+            NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)
         }
     }
 }
