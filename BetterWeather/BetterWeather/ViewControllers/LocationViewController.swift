@@ -9,9 +9,7 @@
 import UIKit
 import MapKit
 
-//class LocationViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
-//
-class LocationViewController: UIViewController, UISearchBarDelegate {
+class LocationViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var addLocationButton: UIButton!
@@ -22,14 +20,12 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchTable: UITableView!
     
-    var isSearching: Bool = false
-    
-//    let searchController = UISearchController(searchResultsController: nil)
 
     var lon: CLLocationDegrees = 0.0
     var lat: CLLocationDegrees = 0.0
     var locationName: String = ""
     var searchedPlacemark: MKPlacemark? = nil
+    
     var filteredMapItems: [MKMapItem]  = []
 //    var unfilteredMapItems: [MKMapItem] = []
     
@@ -40,6 +36,9 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
         // Set searchbar deligate
         searchBar.showsScopeBar = true
         searchBar.delegate = self
+        
+        // Fix tableView
+        searchTable.tableFooterView = UIView()
         
         // Setuo addLocationButton styling
         addLocationButton.layer.cornerRadius = 5
@@ -54,22 +53,20 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let searchRequest = MKLocalSearch.Request()
-        searchRequest.naturalLanguageQuery = searchBar.text
-
-        let activeSearch = MKLocalSearch(request: searchRequest)
-
-        activeSearch.start { (response, error) in
-
-            // Create the placemark
-            self.filteredMapItems = (response?.mapItems ?? [])!
+        
+        if !(searchBar.text == nil || searchBar.text == "") {
+            let searchRequest = MKLocalSearch.Request()
+            searchRequest.naturalLanguageQuery = searchBar.text
             
-            // DEBUGG ONLY
-//            for mapItem in self.filteredMapItems {
-//                print(mapItem.placemark.title)
-//            }
-//            print("######################################")
+            let activeSearch = MKLocalSearch(request: searchRequest)
             
+            activeSearch.start { (response, error) in
+                
+                // Create the placemark
+                self.filteredMapItems = (response?.mapItems ?? [])!
+                
+                self.searchTable.reloadData()
+            }
         }
     }
 
@@ -105,10 +102,8 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
                 // Create the placemark
                 self.searchedPlacemark = (response?.mapItems.first?.placemark)!
             
-                
                 // Create annotation
                 let annotation = MKPointAnnotation()
-                //                annotation.title = searchBar.text
                 annotation.title = self.searchedPlacemark!.title
                 annotation.coordinate = searchedCoordinate
                 self.mapView.addAnnotation(annotation)
@@ -125,14 +120,6 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
                 self.addLocationButton.setTitle("Add " + self.searchedPlacemark!.locality!, for: .normal)
                 self.addLocationButton.titleLabel?.adjustsFontSizeToFitWidth = true
                 self.addLocationButton.isHidden = false
-                
-                // Change later!!!!!!!!!!!!!!
-//                self.locationName = (self.searchedPlacemark?.locality!)!
-//                self.lon = lon!
-//                self.lat = lat!
-                
-                // REMOVE LATER!!!!!!!!!!!!!!!!!
-
                 
             }
         }
@@ -153,20 +140,37 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
         mapSearchSubView.removeFromSuperview()
     }
     
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return filteredMapItems.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if isSearching {
-//
-//        }
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//
-//    }
+    // #######################################################
+    // #######################################################
+    // #######################################################
+    // TABLE FUNCTIONS
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filteredMapItems.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath) {
+            
+            cell.textLabel?.text = filteredMapItems[indexPath.row].placemark.title
+            
+            return cell
+        }
+        else {
+            return UITableViewCell()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+
+        cell.textLabel?.text = filteredMapItems[indexPath.row].placemark.title
+
+    }
 
     
     
@@ -176,7 +180,6 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
     }
     
     func makeGenerallCoordinates (search: String, coord: CLLocationCoordinate2D) {
-        
         let searchRequest = MKLocalSearch.Request()
         searchRequest.naturalLanguageQuery = search
         searchRequest.region = MKCoordinateRegion(center: coord, latitudinalMeters: CLLocationDistance(exactly: 10000)!, longitudinalMeters: CLLocationDistance(exactly: 10000)!)
