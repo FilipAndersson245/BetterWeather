@@ -85,7 +85,7 @@ class OverviewViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.row == 0 &&  indexPath.section == 0 {
+        if indexPath.row == 0 && CentralManager.shared.currentLocation != nil {
             return false
         }
         return true

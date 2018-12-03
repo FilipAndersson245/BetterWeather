@@ -63,7 +63,7 @@ class ApiHandler {
             (data, response, error)	in
             guard let _ = data,
                     error == nil else {
-                        print(error?.localizedDescription ?? "Response Error")
+                            print(error?.localizedDescription ?? "Response Error")
                         return
                     }
                 do {
