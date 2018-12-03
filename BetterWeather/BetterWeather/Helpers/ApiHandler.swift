@@ -64,38 +64,18 @@ class ApiHandler {
             guard let _ = data,
                     error == nil else {
                             print(error?.localizedDescription ?? "Response Error")
+                            return
+                    }
+                    do {
+                        //here dataResponse received from a network request
+                        let weather = try JSONDecoder().decode(WeatherData.self, from: data!)
+                        completionBlock(weather)
+                    } catch let parsingError {
+                        print("Error", parsingError)
                         return
                     }
-                do {
-                    //here dataResponse received from a network request
-                    let weather = try JSONDecoder().decode(WeatherData.self, from: data!)
-                    completionBlock(weather)
-                } catch let parsingError {
-                    print("Error", parsingError)
-                    return
-                }
         }
         task.resume()
-    }
-    
-    private static func jsonToDB() {
-        
-    }
-    
-    private static func dbToObject() {
-        
-    }
-    
-    private static func overviewObject() {
-        
-    }
-    
-    private static func dayObject() {
-    
-    }
-    
-    private static func hourObject() {
-        
     }
     
     public static func getLocationData(_ name: String, _ lon: Float, _ lat: Float, completionBlock: @escaping (Array<DbWeather>) -> Void)
