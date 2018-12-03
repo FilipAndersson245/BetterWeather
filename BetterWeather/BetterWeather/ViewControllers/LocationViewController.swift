@@ -130,6 +130,10 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
                 self.addLocationButton.titleLabel?.adjustsFontSizeToFitWidth = true
                 self.addLocationButton.isHidden = false
                 
+                // Change later!!!!!!!!!!!!!!
+                self.name = placemark.title!
+                self.lon = lon!
+                self.lat = lat!
                 
                 // <-------- REMOVE LATER!!!!!!!!!!!!! -------->
                 print(lon)
@@ -172,7 +176,8 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
     
     
     @IBAction func addLocationButtonClicked(_ sender: Any) {
-        
+        navigationController?.popViewController(animated: true)
+        CentralManager.shared.addFavoriteLocation(name: self.name, longitude: Float(self.lon), latitude: Float(self.lat))
     }
     
     
