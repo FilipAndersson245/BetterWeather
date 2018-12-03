@@ -20,7 +20,16 @@ class CentralManager{
     
     private let refreshInterval: Double = 1800
     
-    private var isFetching = false
+    private var fetchingQueueGroup = DispatchGroup()
+    private var isFetching = false {
+        didSet {
+            if isFetching {
+                fetchingQueueGroup.enter()
+            } else {
+                fetchingQueueGroup.leave()
+            }
+        }
+    }
     
     init() {
         populateFavoriteLocations()
@@ -128,16 +137,12 @@ class CentralManager{
     }
     
     func getDays(_ isCurrentLocation: Bool, _ locationIndex: Int, completionblock: @escaping ([Day]) -> Void) {
-        if(isFetching) {
-            usleep(0)
-        }
+        fetchingQueueGroup.wait()	
         completionblock(isCurrentLocation ? CentralManager.shared.currentLocation!.days : CentralManager.shared.favoriteLocations[locationIndex].days)
     }
     
     func getHours(_ isCurrentLocation: Bool, _ locationIndex: Int, _ dayIndex: Int, completionblock: @escaping ([Weather]) -> Void) {
-        while(isFetching) {
-            usleep(0)
-        }
+        fetchingQueueGroup.wait()
         completionblock(isCurrentLocation ? CentralManager.shared.currentLocation!.days[dayIndex].hours : CentralManager.shared.favoriteLocations[locationIndex].days[dayIndex].hours)
     }
 }
