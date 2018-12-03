@@ -13,14 +13,10 @@ import MapKit
 //
 class LocationViewController: UIViewController, UISearchBarDelegate {
     
-    
-    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var addLocationButton: UIButton!
     
-    
     @IBOutlet var mapMainView: UIView!
-    
     
     @IBOutlet var mapSearchSubView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -32,8 +28,8 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
 
     var lon: CLLocationDegrees = 0.0
     var lat: CLLocationDegrees = 0.0
-    var name: String = ""
-    
+    var locationName: String = ""
+    var searchedPlacemark: MKPlacemark? = nil
     var filteredMapItems: [MKMapItem]  = []
 //    var unfilteredMapItems: [MKMapItem] = []
     
@@ -107,15 +103,13 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
                 let searchedCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: lat!, longitude: lon!)
                 
                 // Create the placemark
-                let placemark: MKPlacemark = (response?.mapItems.first?.placemark)!
-                
-                // <-------- REMOVE LATER!!!!!!!!!!!!! -------->
-                print(placemark.title)
+                self.searchedPlacemark = (response?.mapItems.first?.placemark)!
+            
                 
                 // Create annotation
                 let annotation = MKPointAnnotation()
                 //                annotation.title = searchBar.text
-                annotation.title = placemark.title
+                annotation.title = self.searchedPlacemark!.title
                 annotation.coordinate = searchedCoordinate
                 self.mapView.addAnnotation(annotation)
                 
@@ -124,20 +118,21 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
                 let region = MKCoordinateRegion(center: searchedCoordinate, span: span)
                 self.mapView.setRegion(region, animated: true)
                 
+                // Make generall coordinate
+                self.makeGenerallCoordinates(search: (self.searchedPlacemark?.locality)!, coord: searchedCoordinate)
                 
                 // Show Add location Button
-                self.addLocationButton.setTitle("Add " + placemark.title!, for: .normal)
+                self.addLocationButton.setTitle("Add " + self.searchedPlacemark!.locality!, for: .normal)
                 self.addLocationButton.titleLabel?.adjustsFontSizeToFitWidth = true
                 self.addLocationButton.isHidden = false
                 
                 // Change later!!!!!!!!!!!!!!
-                self.name = placemark.title!
-                self.lon = lon!
-                self.lat = lat!
+//                self.locationName = (self.searchedPlacemark?.locality!)!
+//                self.lon = lon!
+//                self.lat = lat!
                 
-                // <-------- REMOVE LATER!!!!!!!!!!!!! -------->
-                print(lon)
-                print(lat)
+                // REMOVE LATER!!!!!!!!!!!!!!!!!
+
                 
             }
         }
@@ -177,11 +172,33 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
     
     @IBAction func addLocationButtonClicked(_ sender: Any) {
         navigationController?.popViewController(animated: true)
-        CentralManager.shared.addFavoriteLocation(name: self.name, longitude: Float(self.lon), latitude: Float(self.lat))
+        CentralManager.shared.addFavoriteLocation(name: self.locationName, longitude: Float(self.lon), latitude: Float(self.lat))
+    }
+    
+    func makeGenerallCoordinates (search: String, coord: CLLocationCoordinate2D) {
+        
+        let searchRequest = MKLocalSearch.Request()
+        searchRequest.naturalLanguageQuery = search
+        searchRequest.region = MKCoordinateRegion(center: coord, latitudinalMeters: CLLocationDistance(exactly: 10000)!, longitudinalMeters: CLLocationDistance(exactly: 10000)!)
+        
+        let activeSearch = MKLocalSearch(request: searchRequest)
+        
+        activeSearch.start { (response, error) in
+            
+            if response == nil
+            {
+                // PUT ERROR HANDLING HERE
+                print("ERROR")
+            }
+            else
+            {
+                self.locationName = (self.searchedPlacemark?.locality!)!
+                self.lon = (response?.mapItems.first?.placemark.coordinate.longitude)!
+                self.lat = (response?.mapItems.first?.placemark.coordinate.latitude)!
+            }
+        }
     }
     
     
     
-    
 }
-
