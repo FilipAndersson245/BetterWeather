@@ -70,26 +70,40 @@ class CentralManager{
     }
     
     func updateWeather(favoriteToUpdate: DbFavorite){
-        // Requires that favoriteToUpdate exists in favoriteLocations
+        let indexToUpdate = self.favoriteLocations.index(where: {$0.latitude == favoriteToUpdate.latitude && $0.longitude == favoriteToUpdate.longitude})
+        
+        // First remove old weather data
+        self.dbHandler.removeOldLocationWeatherData()
+        if indexToUpdate != nil {
+            for (dayIndex, day) in favoriteLocations[indexToUpdate!].days.enumerated() {
+                for (hourIndex, hour) in day.hours.enumerated() {
+                    if hour.time.compare(Date()) == .orderedAscending {
+                        day.hours.remove(at: hourIndex)
+                    }
+                }
+                if day.hours.isEmpty {
+                    favoriteLocations[indexToUpdate!].days.remove(at: dayIndex)
+                }
+            }
+        }
+        
+        // Update FavoriteLocationRefreshTime
+        // TODO: Replace with db function that updates
+        self.dbHandler.removeFavoriteLocation(dbFavorite: favoriteToUpdate)
+        self.dbHandler.addFavoriteLocation(favoriteToUpdate)
         
         ApiHandler.getLocationData(favoriteToUpdate.name, favoriteToUpdate.longitude, favoriteToUpdate.latitude){
             dbWeathers in
             
             // Remove
             self.dbHandler.removeLocationWeatherData(dbFavorite: favoriteToUpdate)
-            let indexToUpdate = self.favoriteLocations.index(where: {$0.latitude == favoriteToUpdate.latitude && $0.longitude == favoriteToUpdate.longitude})!  // Can always find favorite
-            self.favoriteLocations.remove(at: indexToUpdate)
-            
-            
-            // Update FavoriteLocationRefreshTime
-            // TODO: Replace with db function that updates
-            self.dbHandler.removeFavoriteLocation(dbFavorite: favoriteToUpdate)
-            self.dbHandler.addFavoriteLocation(favoriteToUpdate)
-            
+            if indexToUpdate != nil {
+                self.favoriteLocations.remove(at: indexToUpdate!)
+            }
             
             // Insert
             self.dbHandler.insertData(dbWeathers)
-            self.favoriteLocations.insert(Location.weathersToLocations(dbWeathers).first!, at: indexToUpdate)
+            self.favoriteLocations.insert(Location.weathersToLocations(dbWeathers).first!, at: indexToUpdate ?? self.favoriteLocations.count)
             
             // Update view
             NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)

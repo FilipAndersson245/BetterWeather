@@ -105,6 +105,23 @@ class DatabaseHandler{
         sqlite3_finalize(stmt)
     }
     
+    public func removeOldLocationWeatherData(){
+        var stmt: OpaquePointer?
+        let queryString = "DELETE FROM WeatherData WHERE (Date <= ?)"
+        if sqlite3_prepare(db, queryString, -1, &stmt, nil) !=  SQLITE_OK{
+            let errormessage = String(cString: sqlite3_errmsg(db)!)
+            print ("error removing weather data:\(errormessage)")
+            return
+        }
+        sqlite3_bind_double(stmt, 1, Double(Date().timeIntervalSince1970))
+        if sqlite3_step(stmt) != SQLITE_DONE {
+            let errormessage = String(cString: sqlite3_errmsg(db)!)
+            print("Failed to remove favoriteData: \(errormessage)")
+            return
+        }
+        sqlite3_finalize(stmt)
+    }
+    
     public func doesFavoriteLocationExist(dbFavorite: DbFavorite) -> Bool{
         guard let favoriteLocations = readFavoriteLocations() else {
             return false
