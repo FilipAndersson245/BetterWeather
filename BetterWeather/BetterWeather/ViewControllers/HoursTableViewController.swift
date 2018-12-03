@@ -10,7 +10,9 @@ import UIKit
 
 class HoursTableViewController: UITableViewController {
     
-    var hours: [Weather] = []
+    var locationIndex: Int!
+    var dayIndex: Int!
+    var isCurrentLocation: Bool!
     let dateFormatter : DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: Locale.current.identifier)
@@ -21,12 +23,34 @@ class HoursTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        checkAndReloadAllLocations()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadViewData), name: Notification.Name("reloadViewData"), object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func checkAndReloadAllLocations()
+    {
+        CentralManager.shared.checkWhetherToUpdateWeather()
+        PositionManager.shared.checkWhetherToUpdatePosition()
+    }
+    
+    @objc func reloadViewData()
+    {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 
     // MARK: - Table view data source
@@ -37,12 +61,31 @@ class HoursTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return hours.count
+        var rowsCount = 0
+        let group = DispatchGroup()
+        group.enter()
+        CentralManager.shared.getHours(isCurrentLocation, locationIndex, dayIndex) {
+            hours in
+            rowsCount = hours.count
+            group.leave()
+        }
+        group.wait()
+        return rowsCount
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "hourCell", for: indexPath) as? WeatherTableViewCell
+        var hours: [Weather] = []
+        
+        let group = DispatchGroup()
+        group.enter()
+        CentralManager.shared.getHours(isCurrentLocation, locationIndex, dayIndex) {
+            gottenHours in
+            hours = gottenHours
+            group.leave()
+        }
+        group.wait()
+        
         let hour = hours[indexPath.row]
         
         cell!.title.text = dateFormatter.string(from: hour.time)

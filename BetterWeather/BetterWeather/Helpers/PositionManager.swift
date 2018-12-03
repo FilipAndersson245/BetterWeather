@@ -33,6 +33,7 @@ class PositionManager {
             // internalLocationManager.delegate = self
             internalLocationManager.desiredAccuracy = kCLLocationAccuracyKilometer
             internalLocationManager.startUpdatingLocation()
+            NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)
         }
     }
     
@@ -41,8 +42,37 @@ class PositionManager {
         return longitude != nil && latitude != nil
     }
     
+    private func getLocationName(completionblock: @escaping (String) -> Void) {
+        CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: Double(latitude!), longitude: Double(longitude!))) {
+            placemarks, error in
+            if error != nil {
+                completionblock("Current Location")
+            } else {
+                completionblock(placemarks!.first!.locality ?? "Current Location")
+            }
+        }
+    }
     
-    func refreshPosition()
+    func updatePositionAndData()
+    {
+        if (PositionManager.shared.hasPosition()) {
+            getLocationName() {
+                name in
+                ApiHandler.getLocationData(name, self.longitude!, self.latitude!) {
+                    dbWeathers in
+                    CentralManager.shared.currentLocation = Location.weathersToLocations(dbWeathers).first!
+                    NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)
+                }
+            }
+        }
+        else
+        {
+            CentralManager.shared.currentLocation = nil
+            NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)
+        }
+    }
+    
+    func checkWhetherToUpdatePosition()
     {
         // Make sure location is enabled
         if CLLocationManager.locationServicesEnabled() {
@@ -57,6 +87,7 @@ class PositionManager {
                     print("Updating location")
                     latitude = Float(Double(coords!.latitude))
                     longitude = Float(Double(coords!.longitude))
+                    updatePositionAndData()
                     lastTimeRefreshed = Date()
                 }
             }

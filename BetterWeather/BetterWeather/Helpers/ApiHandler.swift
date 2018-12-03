@@ -52,6 +52,7 @@ class ApiHandler {
     private static func fetch(lon: Float, lat: Float, completionBlock: @escaping (WeatherData) -> Void)  {
         let template = "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/%.4f/lat/%.4f/data.json"
         let urlsString = String(format: template, lon, lat)
+        print("fetching")
         
         guard let baseUrl = URL(string: urlsString) else {
             print("Error invalid url")
@@ -62,39 +63,19 @@ class ApiHandler {
             (data, response, error)	in
             guard let _ = data,
                     error == nil else {
-                        print(error?.localizedDescription ?? "Response Error")
+                            print(error?.localizedDescription ?? "Response Error")
+                            return
+                    }
+                    do {
+                        //here dataResponse received from a network request
+                        let weather = try JSONDecoder().decode(WeatherData.self, from: data!)
+                        completionBlock(weather)
+                    } catch let parsingError {
+                        print("Error", parsingError)
                         return
                     }
-                do {
-                    //here dataResponse received from a network request
-                    let weather = try JSONDecoder().decode(WeatherData.self, from: data!)
-                    completionBlock(weather)
-                } catch let parsingError {
-                    print("Error", parsingError)
-                    return
-                }
         }
         task.resume()
-    }
-    
-    private static func jsonToDB() {
-        
-    }
-    
-    private static func dbToObject() {
-        
-    }
-    
-    private static func overviewObject() {
-        
-    }
-    
-    private static func dayObject() {
-    
-    }
-    
-    private static func hourObject() {
-        
     }
     
     public static func getLocationData(_ name: String, _ lon: Float, _ lat: Float, completionBlock: @escaping (Array<DbWeather>) -> Void)
@@ -115,20 +96,42 @@ class ApiHandler {
                 // Default init values for weather if api misses data in a request.
                 var type: WeatherTypes = WeatherTypes.ClearSky
                 var t: Float = 10
+                var windDir = 0
+                var windSpeed: Float = 0
+                var relativeHumidity = 0
+                var airPressure: Float = 0
+                var horizontalVis: Float = 0
                 for hourWeatherParameter in hourWeather.parameters {
                     switch hourWeatherParameter.name {
                     case .t:
                         t = hourWeatherParameter.values[0]
                     case .Wsymb2, .Wsymb:
                         type = WeatherTypes(rawValue: Int(hourWeatherParameter.values[0]))!
+                    case .wd:
+                        windDir = Int(hourWeatherParameter.values[0])
+                    case .ws:
+                        windSpeed = hourWeatherParameter.values[0]
+                    case .r:
+                        relativeHumidity = Int(hourWeatherParameter.values[0])
+                    case .msl:
+                        airPressure = hourWeatherParameter.values[0]
+                    case .vis:
+                        horizontalVis = hourWeatherParameter.values[0]
                     default:
                         break
                     }
                 }
                 let date = dateFormatter.date(from: hourWeather.validTime)
-                let hour = Weather(weatherType: type, temperatur: t, time: date!);
+                let hour = Weather(weatherType: type,
+                                   temperatur: t,
+                                   time: date!,
+                                   windDirection: windDir,
+                                   windSpeed: windSpeed,
+                                   relativHumidity: relativeHumidity,
+                                   airPressure: airPressure,
+                                   HorizontalVisibility: horizontalVis
+                                   );
                 day.append(hour)
-                
             }
             
             let avgTemp = day.reduce(0, { rest,item in

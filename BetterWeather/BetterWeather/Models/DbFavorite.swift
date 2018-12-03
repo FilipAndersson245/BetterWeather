@@ -17,11 +17,11 @@ struct DbFavorite {
     init(name: String
         , longitude: Float
         , latitude: Float
-        , lastUpdate: Date)
+        , lastUpdate: Date? = nil)
     {
         self.name = name
         self.longitude = longitude
         self.latitude = latitude
-        self.lastUpdate = lastUpdate
+        self.lastUpdate = lastUpdate ?? Date()
     }
 }

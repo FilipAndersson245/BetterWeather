@@ -14,6 +14,8 @@ class WeatherTableViewCell: UITableViewCell {
     @IBOutlet weak var weatherImage: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     
+    var isRotating = false
+    
     func setImage(_ weatherType: WeatherTypes)
     {
         let imageName = [
@@ -36,14 +38,23 @@ class WeatherTableViewCell: UITableViewCell {
         temperatureLabel.text = String(Int(round(temperature)))
     }
     
+    func animate() {
+        weatherImage.rotate()
+    }
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
+         super.setSelected(selected, animated: animated)
+        if(selected) {
+            animate()
+        }
+        
         // Configure the view for the selected state
     }
 

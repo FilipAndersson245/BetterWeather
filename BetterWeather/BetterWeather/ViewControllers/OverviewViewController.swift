@@ -9,118 +9,45 @@
 import UIKit
 
 class OverviewViewController: UITableViewController {
-
-    var locations = [Location]()
-    var currentLocation: Location? = nil
-    
-    private func loadSampleLocations() {
-        let location1 = Location(name: "Huskvarna", latitude: 21.324, longitude: 32.24124, days: [
-            Day(date: Date(), averageWeather: Weather(weatherType: .ModerateSleetShowers, temperatur: 20.3, time: Date()), hours:
-                [
-                    Weather(weatherType: .ClearSky, temperatur: 25, time: Date()),
-                    Weather(weatherType: .ClearSky, temperatur: 21.9, time: Date())
-                ]),
-            Day(date: Date(), averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: Date()), hours:
-                [
-                    Weather(weatherType: .HeavySleet, temperatur: 2, time: Date()),
-                    Weather(weatherType: .Overcast, temperatur: -1.3, time: Date()),
-                    Weather(weatherType: .Thunder, temperatur: -9.3, time: Date())
-                ])
-            ])
-        let location2 = Location(name: "Jönköping", latitude: 21.324, longitude: 32.24124, days: [
-            Day(date: Date(), averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time: Date()), hours:
-                [
-                    Weather(weatherType: .Thunder, temperatur: 5, time: Date()),
-                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: Date())
-                ]),
-            Day(date: Date(), averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: Date()), hours:
-                [
-                    Weather(weatherType: .HeavySleet, temperatur: 2, time: Date()),
-                    Weather(weatherType: .Overcast, temperatur: -1.3, time: Date()),
-                    Weather(weatherType: .Thunder, temperatur: -9.3, time: Date())
-                ])
-            ])
-        let location3 = Location(name: "Asdsg", latitude: 21.324, longitude: 32.24124, days: [
-            Day(date: Date(), averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time: Date()), hours:
-                [
-                    Weather(weatherType: .CloudySky, temperatur: 10, time: Date()),
-                    Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: Date())
-                ]),
-            Day(date: Date(), averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: Date()), hours:
-                [
-                    Weather(weatherType: .HeavySleet, temperatur: 2, time: Date()),
-                    Weather(weatherType: .Overcast, temperatur: -1.3, time: Date()),
-                    Weather(weatherType: .Thunder, temperatur: -9.3, time: Date())
-                ])
-            ])
-        locations += [location1, location2, location3]
-        
-//        ApiHandler.getLocationData(16, 58) { data in
-//            self.locations.append(data)
-//            DispatchQueue.main.async {
-//                self.tableView.reloadData()
-//            }
-//            print("1")
-//        };
-//        print("2")
-        
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        loadSampleLocations()
-        loadCurrentLocation()
+        checkAndReloadAllLocations()
         
-        
-        // DEBUG
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        self.refreshControl = refreshControl
         
         CentralManager.shared.addFavoriteLocation(name: "test", longitude: 14.158, latitude: 57.781)
-        locations = CentralManager.shared.favoriteLocations
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadCurrentLocation()
-        NotificationCenter.default.addObserver(self, selector: #selector(loadCurrentLocation), name: Notification.Name("applicationWillEnterForeground"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(checkAndReloadAllLocations), name: Notification.Name("applicationWillEnterForeground"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadViewData), name: Notification.Name("reloadViewData"), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
     }
     
-    @objc func loadCurrentLocation()
+    @objc func refresh(sender:AnyObject)
     {
-        PositionManager.shared.refreshPosition()
-        
-        // TODO: replace with real fetched data
-        if (PositionManager.shared.hasPosition()) {
-            currentLocation = Location(name: "New York", latitude: 21.324, longitude: 32.24124, days: [
-                Day(date: Date(), averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time:Date()), hours:
-                    [
-                        Weather(weatherType: .Fog, temperatur: 21, time: Date()),
-                        Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: Date())
-                    ]),
-                Day(date: Date(), averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: Date()), hours:
-                    [
-                        Weather(weatherType: .HeavySleet, temperatur: 2, time: Date()),
-                        Weather(weatherType: .Overcast, temperatur: -1.3, time: Date()),
-                        Weather(weatherType: .Thunder, temperatur: -9.3, time: Date())
-                    ])
-                ])
-        }
-        else
-        {
-            currentLocation = nil
-        }
-        
-        // Perform reload of all data
+        self.refreshControl?.beginRefreshing()
+        PositionManager.shared.updatePositionAndData()
+        CentralManager.shared.updateAllWeathers()
+    }
+    
+    @objc func checkAndReloadAllLocations()
+    {
+        CentralManager.shared.checkWhetherToUpdateWeather()
+        PositionManager.shared.checkWhetherToUpdatePosition()
+    }
+    
+    @objc func reloadViewData()
+    {
         DispatchQueue.main.async {
+            self.refreshControl?.endRefreshing()
             self.tableView.reloadData()
         }
     }
@@ -134,19 +61,19 @@ class OverviewViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return locations.count + (currentLocation != nil ? 1 : 0)
+        return CentralManager.shared.favoriteLocations.count + (CentralManager.shared.currentLocation != nil ? 1 : 0)
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let location: Location
         let cell: WeatherTableViewCell?
-        if (indexPath.row == 0 && currentLocation != nil) {
+        if (indexPath.row == 0 && CentralManager.shared.currentLocation != nil) {
             cell = tableView.dequeueReusableCell(withIdentifier: "currentLocationCell", for: indexPath) as? WeatherTableViewCell
-            location = currentLocation!
+            location = CentralManager.shared.currentLocation!
         }
         else {
             cell = tableView.dequeueReusableCell(withIdentifier: "favoriteLocationCell", for: indexPath) as? WeatherTableViewCell
-            location = locations[indexPath.row - (currentLocation != nil ? 1 : 0)]
+            location = CentralManager.shared.favoriteLocations[indexPath.row - (CentralManager.shared.currentLocation != nil ? 1 : 0)]
         }
         
         cell!.title.text = location.name
@@ -154,6 +81,22 @@ class OverviewViewController: UITableViewController {
         cell!.setImage(location.days[0].hours[0].weatherType)
         
         return cell!
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.row == 0 && CentralManager.shared.currentLocation != nil {
+            return false
+        }
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // TODO: Maybe call method from centralManager instead
+            CentralManager.shared.removeFavoriteLocation(location: CentralManager.shared.favoriteLocations[indexPath.row - (CentralManager.shared.currentLocation != nil ? 1 : 0)])
+            tableView.deleteRows(at: [indexPath], with: .right)
+        }
     }
     
 
@@ -203,9 +146,13 @@ class OverviewViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? DaysTableViewController {
             if let indexPath = sender as? IndexPath {
-                let location = (indexPath.row == 0 && currentLocation != nil) ? currentLocation! : locations[indexPath.row - (currentLocation != nil ? 1 : 0)]
-                destination.days = location.days
-                destination.title = location.name
+                let hasCurrentLocation = CentralManager.shared.currentLocation != nil
+                let locationIndex = indexPath.row - (hasCurrentLocation ? 1 : 0)
+                let isCurrentLocation = (indexPath.row == 0 && hasCurrentLocation)
+                
+                destination.locationIndex = locationIndex
+                destination.isCurrentLocation = isCurrentLocation
+                destination.title = isCurrentLocation ? CentralManager.shared.currentLocation!.name : CentralManager.shared.favoriteLocations[locationIndex].name
             }
         }
     }
