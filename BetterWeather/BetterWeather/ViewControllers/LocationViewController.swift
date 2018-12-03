@@ -9,7 +9,10 @@
 import UIKit
 import MapKit
 
+//class LocationViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
+//
 class LocationViewController: UIViewController, UISearchBarDelegate {
+    
     
     
     @IBOutlet weak var mapView: MKMapView!
@@ -21,20 +24,19 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet var mapSearchSubView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchTable: UITableView!
     
+    var isSearching: Bool = false
     
-    let searchController = UISearchController(searchResultsController: nil)
+//    let searchController = UISearchController(searchResultsController: nil)
 
     var lon: CLLocationDegrees = 0.0
     var lat: CLLocationDegrees = 0.0
     var name: String = ""
     
     var filteredMapItems: [MKMapItem]  = []
-    var unfilteredMapItems: [MKMapItem] = []
+//    var unfilteredMapItems: [MKMapItem] = []
     
-    
-    // Testing Stuff
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +57,28 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
         addSearchView()
     }
     
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let searchRequest = MKLocalSearch.Request()
+        searchRequest.naturalLanguageQuery = searchBar.text
+
+        let activeSearch = MKLocalSearch(request: searchRequest)
+
+        activeSearch.start { (response, error) in
+
+            // Create the placemark
+            self.filteredMapItems = (response?.mapItems ?? [])!
+            
+            // DEBUGG ONLY
+//            for mapItem in self.filteredMapItems {
+//                print(mapItem.placemark.title)
+//            }
+//            print("######################################")
+            
+        }
+    }
+
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // Create search request
         let searchRequest = MKLocalSearch.Request()
         searchRequest.naturalLanguageQuery = searchBar.text
@@ -114,22 +137,38 @@ class LocationViewController: UIViewController, UISearchBarDelegate {
                 
             }
         }
-        
-        
-        
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         removeSearchView()
     }
     
     func addSearchView () {
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
         view.addSubview(mapSearchSubView)
+        
     }
     
     func removeSearchView () {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         mapSearchSubView.removeFromSuperview()
     }
+    
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return filteredMapItems.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        if isSearching {
+//
+//        }
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//
+//
+//    }
+
     
     
     @IBAction func addLocationButtonClicked(_ sender: Any) {

@@ -335,6 +335,7 @@
                         <outlet property="mapSearchSubView" destination="eSv-7E-kGd" id="Kd9-Xd-tv5"/>
                         <outlet property="mapView" destination="Z3d-Rm-Ofl" id="Gy5-La-2B2"/>
                         <outlet property="searchBar" destination="goY-0x-hSi" id="YSK-eN-CKU"/>
+                        <outlet property="searchTable" destination="dIq-zR-sJh" id="1QR-Z4-b0Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hHm-Jz-AYa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -342,16 +343,24 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
-                        <searchBar contentMode="redraw" placeholder="Search Location" translatesAutoresizingMaskIntoConstraints="NO" id="goY-0x-hSi">
+                        <searchBar contentMode="redraw" searchBarStyle="prominent" placeholder="Search Location" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="goY-0x-hSi">
                             <rect key="frame" x="0.0" y="44" width="414" height="56"/>
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dIq-zR-sJh">
+                            <rect key="frame" x="0.0" y="100" width="414" height="762"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </tableView>
                     </subviews>
                     <accessibility key="accessibilityConfiguration" identifier="searchOverlay"/>
                     <constraints>
-                        <constraint firstItem="goY-0x-hSi" firstAttribute="top" secondItem="mZg-47-HAX" secondAttribute="top" id="4yX-CG-c1a"/>
+                        <constraint firstItem="goY-0x-hSi" firstAttribute="top" secondItem="eSv-7E-kGd" secondAttribute="top" constant="44" id="4yX-CG-c1a"/>
+                        <constraint firstItem="dIq-zR-sJh" firstAttribute="top" secondItem="goY-0x-hSi" secondAttribute="bottom" id="GuO-qJ-wIa"/>
                         <constraint firstItem="goY-0x-hSi" firstAttribute="leading" secondItem="mZg-47-HAX" secondAttribute="leading" id="R5E-wk-KYk"/>
                         <constraint firstItem="goY-0x-hSi" firstAttribute="trailing" secondItem="mZg-47-HAX" secondAttribute="trailing" id="Snn-PF-vfo"/>
+                        <constraint firstItem="dIq-zR-sJh" firstAttribute="leading" secondItem="mZg-47-HAX" secondAttribute="leading" id="TmC-zo-gUS"/>
+                        <constraint firstItem="mZg-47-HAX" firstAttribute="bottom" secondItem="dIq-zR-sJh" secondAttribute="bottom" id="eTH-2K-TGK"/>
+                        <constraint firstItem="mZg-47-HAX" firstAttribute="trailing" secondItem="dIq-zR-sJh" secondAttribute="trailing" id="g8o-WG-rbQ"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="mZg-47-HAX"/>
                 </view>
