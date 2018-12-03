@@ -96,19 +96,43 @@ class ApiHandler {
                 // Default init values for weather if api misses data in a request.
                 var type: WeatherTypes = WeatherTypes.ClearSky
                 var t: Float = 10
+                var windDir = 0
+                var windSpeed: Float = 0
+                var relativeHumidity = 0
+                var airPressure: Float = 0
+                var horizontalVis: Float = 0
                 for hourWeatherParameter in hourWeather.parameters {
                     switch hourWeatherParameter.name {
                     case .t:
                         t = hourWeatherParameter.values[0]
                     case .Wsymb2, .Wsymb:
                         type = WeatherTypes(rawValue: Int(hourWeatherParameter.values[0]))!
+                    case .wd:
+                        windDir = Int(hourWeatherParameter.values[0])
+                    case .ws:
+                        windSpeed = hourWeatherParameter.values[0]
+                    case .r:
+                        relativeHumidity = Int(hourWeatherParameter.values[0])
+                    case .msl:
+                        airPressure = hourWeatherParameter.values[0]
+                    case .vis:
+                        horizontalVis = hourWeatherParameter.values[0]
                     default:
                         break
                     }
                 }
                 let date = dateFormatter.date(from: hourWeather.validTime)
-                let hour = Weather(weatherType: type, temperatur: t, time: date!);
+                let hour = Weather(weatherType: type,
+                                   temperatur: t,
+                                   time: date!,
+                                   windDirection: windDir,
+                                   windSpeed: windSpeed,
+                                   relativHumidity: relativeHumidity,
+                                   airPressure: airPressure,
+                                   HorizontalVisibility: horizontalVis
+                                   );
                 day.append(hour)
+                print(hour)
                 
             }
             
