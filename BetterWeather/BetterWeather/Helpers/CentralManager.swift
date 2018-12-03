@@ -42,7 +42,7 @@ class CentralManager{
         // Check if not exists already
         if(!self.dbHandler.doesFavoriteLocationExist(dbFavorite: favorite))
         {
-            self.dbHandler.addFavoriteLocation(favorite)
+            self.dbHandler.addOrUpdateFavoriteLocation(favorite)
             ApiHandler.getLocationData(name, longitude, latitude){
                 dbWeathers in
                 self.favoriteLocations.append(Location.weathersToLocations(dbWeathers).first!)
@@ -75,6 +75,9 @@ class CentralManager{
         }
         for favorite in favoritesFromDb!{
             if (Date().timeIntervalSince(favorite.lastUpdate) > refreshInterval){
+                print(favorite.lastUpdate)
+                print(Date())
+                print("örp")
                 updateWeather(favoriteToUpdate: favorite)
             }
         }
@@ -99,13 +102,10 @@ class CentralManager{
         }
         
         // Update FavoriteLocationRefreshTime
-        // TODO: Replace with db function that updates
-        self.dbHandler.removeFavoriteLocation(dbFavorite: favoriteToUpdate)
-        self.dbHandler.addFavoriteLocation(favoriteToUpdate)
+        self.dbHandler.addOrUpdateFavoriteLocation(DbFavorite(name: favoriteToUpdate.name, longitude: favoriteToUpdate.longitude, latitude: favoriteToUpdate.latitude, lastUpdate: Date()))
         
         ApiHandler.getLocationData(favoriteToUpdate.name, favoriteToUpdate.longitude, favoriteToUpdate.latitude){
             dbWeathers in
-            print("örp")
             self.isFetching = true
             
             // Remove

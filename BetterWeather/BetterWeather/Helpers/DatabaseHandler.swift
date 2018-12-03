@@ -33,7 +33,7 @@ class DatabaseHandler{
         }
     }
     
-    public func addFavoriteLocation(_ favorite: DbFavorite){
+    public func addOrUpdateFavoriteLocation(_ favorite: DbFavorite){
         createFavoriteTable() //Maybe change? but this works
         var stmt: OpaquePointer?
         let queryString = "INSERT OR REPLACE INTO FavoriteLocations (Name, Latitude, Longitude, LastUpdate) VALUES (?,?,?,?)"
