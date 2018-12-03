@@ -52,24 +52,40 @@ class DaysTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-    
-    private func getDays() -> [Day]
-    {
-        return isCurrentLocation ? CentralManager.shared.currentLocation!.days : CentralManager.shared.favoriteLocations[locationIndex].days
-    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return getDays().count
+        var rowsCount = 0
+        
+        let group = DispatchGroup()
+        group.enter()
+        CentralManager.shared.getDays(isCurrentLocation, locationIndex) {
+            days in
+            rowsCount = days.count
+            group.leave()
+        }
+        group.wait()
+        
+        return rowsCount
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "dayCell", for: indexPath) as? WeatherTableViewCell
-        let day = getDays()[indexPath.row]
+        var days: [Day] = []
+        
+        let group = DispatchGroup()
+        group.enter()
+        CentralManager.shared.getDays(isCurrentLocation, locationIndex) {
+            gottenDays in
+            days = gottenDays
+            group.leave()
+        }
+        group.wait()
+        let day = days[indexPath.row]
         
         cell!.title.text = dateFormatter.string(from: day.date)
         cell!.setTemperature(day.averageWeather.temperatur)
@@ -128,7 +144,19 @@ class DaysTableViewController: UITableViewController {
                 destination.isCurrentLocation = isCurrentLocation
                 destination.locationIndex = locationIndex
                 destination.dayIndex = indexPath.row
-                destination.title = dateFormatter.string(from: getDays()[indexPath.row].date)
+                
+                var days: [Day] = []
+                let group = DispatchGroup()
+                group.enter()
+                CentralManager.shared.getDays(isCurrentLocation, locationIndex) {
+                    gottenDays in
+                    days = gottenDays
+                    group.leave()
+                }
+                group.wait()
+                let day = days[indexPath.row]
+                
+                destination.title = dateFormatter.string(from: day.date)
             }
         }
     }

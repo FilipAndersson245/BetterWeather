@@ -20,6 +20,8 @@ class CentralManager{
     
     private let refreshInterval: Double = 1800
     
+    private var isFetching = false
+    
     init() {
         populateFavoriteLocations()
     }
@@ -94,19 +96,23 @@ class CentralManager{
         
         ApiHandler.getLocationData(favoriteToUpdate.name, favoriteToUpdate.longitude, favoriteToUpdate.latitude){
             dbWeathers in
+            print("örp")
+            self.isFetching = true
             
             // Remove
             self.dbHandler.removeLocationWeatherData(dbFavorite: favoriteToUpdate)
             if indexToUpdate != nil {
                 self.favoriteLocations.remove(at: indexToUpdate!)
             }
+            self.favoriteLocations.insert(Location.weathersToLocations(dbWeathers).first!, at: indexToUpdate ?? self.favoriteLocations.count)
             
             // Insert
             self.dbHandler.insertData(dbWeathers)
-            self.favoriteLocations.insert(Location.weathersToLocations(dbWeathers).first!, at: indexToUpdate ?? self.favoriteLocations.count)
+            
             
             // Update view
             NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)
+            self.isFetching = false
         }
     }
     
@@ -119,5 +125,19 @@ class CentralManager{
         for favorite in favoritesFromDb!{
             updateWeather(favoriteToUpdate: favorite)
         }
+    }
+    
+    func getDays(_ isCurrentLocation: Bool, _ locationIndex: Int, completionblock: @escaping ([Day]) -> Void) {
+        if(isFetching) {
+            usleep(0)
+        }
+        completionblock(isCurrentLocation ? CentralManager.shared.currentLocation!.days : CentralManager.shared.favoriteLocations[locationIndex].days)
+    }
+    
+    func getHours(_ isCurrentLocation: Bool, _ locationIndex: Int, _ dayIndex: Int, completionblock: @escaping ([Weather]) -> Void) {
+        while(isFetching) {
+            usleep(0)
+        }
+        completionblock(isCurrentLocation ? CentralManager.shared.currentLocation!.days[dayIndex].hours : CentralManager.shared.favoriteLocations[locationIndex].days[dayIndex].hours)
     }
 }

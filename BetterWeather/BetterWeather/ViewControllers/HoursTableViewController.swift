@@ -52,11 +52,6 @@ class HoursTableViewController: UITableViewController {
             self.tableView.reloadData()
         }
     }
-    
-    private func getHours() -> [Weather]
-    {
-        return isCurrentLocation ? CentralManager.shared.currentLocation!.days[dayIndex].hours : CentralManager.shared.favoriteLocations[locationIndex].days[dayIndex].hours
-    }
 
     // MARK: - Table view data source
 
@@ -66,13 +61,32 @@ class HoursTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return getHours().count
+        var rowsCount = 0
+        let group = DispatchGroup()
+        group.enter()
+        CentralManager.shared.getHours(isCurrentLocation, locationIndex, dayIndex) {
+            hours in
+            rowsCount = hours.count
+            group.leave()
+        }
+        group.wait()
+        return rowsCount
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "hourCell", for: indexPath) as? WeatherTableViewCell
-        let hour = getHours()[indexPath.row]
+        var hours: [Weather] = []
+        
+        let group = DispatchGroup()
+        group.enter()
+        CentralManager.shared.getHours(isCurrentLocation, locationIndex, dayIndex) {
+            gottenHours in
+            hours = gottenHours
+            group.leave()
+        }
+        group.wait()
+        
+        let hour = hours[indexPath.row]
         
         cell!.title.text = dateFormatter.string(from: hour.time)
         cell!.setTemperature(hour.temperatur)
