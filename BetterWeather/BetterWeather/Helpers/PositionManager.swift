@@ -42,29 +42,34 @@ class PositionManager {
         return longitude != nil && latitude != nil
     }
     
+    private func getLocationName(completionblock: @escaping (String) -> Void) {
+        CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: Double(latitude!), longitude: Double(longitude!))) {
+            placemarks, error in
+            if error != nil {
+                completionblock("Current Location")
+            } else {
+                completionblock(placemarks!.first!.locality ?? "Current Location")
+            }
+        }
+    }
+    
     func updatePositionAndData()
     {
-        // TODO: replace with real fetched data
         if (PositionManager.shared.hasPosition()) {
-            CentralManager.shared.currentLocation = Location(name: "New York", latitude: 21.324, longitude: 32.24124, days: [
-                Day(date: Date(), averageWeather: Weather(weatherType: .NearlyClearSky, temperatur: 20.3, time:Date()), hours:
-                    [
-                        Weather(weatherType: .Fog, temperatur: 21, time: Date()),
-                        Weather(weatherType: .HeavySnowfall, temperatur: 21.9, time: Date())
-                    ]),
-                Day(date: Date(), averageWeather: Weather(weatherType: .Thunder, temperatur: -10, time: Date()), hours:
-                    [
-                        Weather(weatherType: .HeavySleet, temperatur: 2, time: Date()),
-                        Weather(weatherType: .Overcast, temperatur: -1.3, time: Date()),
-                        Weather(weatherType: .Thunder, temperatur: -9.3, time: Date())
-                    ])
-                ])
+            getLocationName() {
+                name in
+                ApiHandler.getLocationData(name, self.longitude!, self.latitude!) {
+                    dbWeathers in
+                    CentralManager.shared.currentLocation = Location.weathersToLocations(dbWeathers).first!
+                    NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)
+                }
+            }
         }
         else
         {
             CentralManager.shared.currentLocation = nil
+            NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)
         }
-        NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)
     }
     
     func checkWhetherToUpdatePosition()
