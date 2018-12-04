@@ -33,7 +33,7 @@ class DatabaseHandler{
         }
     }
     
-    public func addFavoriteLocation(_ favorite: DbFavorite){
+    public func addOrUpdateFavoriteLocation(_ favorite: DbFavorite){
         var stmt: OpaquePointer?
         let queryString = "INSERT OR REPLACE INTO FavoriteLocations (Name, Latitude, Longitude, LastUpdate) VALUES (?,?,?,?)"
         if sqlite3_prepare(db, queryString, -1, &stmt, nil) !=  SQLITE_OK{

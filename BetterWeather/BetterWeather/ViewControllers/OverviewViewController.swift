@@ -11,6 +11,8 @@ import UIKit
 class OverviewViewController: UITableViewController {
     
     override func viewDidLoad() {
+        tableView.tableFooterView = UIView()
+
         super.viewDidLoad()
         checkAndReloadAllLocations()
         
