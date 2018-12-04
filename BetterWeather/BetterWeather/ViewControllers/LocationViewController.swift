@@ -46,6 +46,10 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
         
     }
     
+    override func viewDidLayoutSubviews() {
+        mapSearchSubView.frame = self.view.frame
+    }
+    
     @IBAction func searchButton(_ sender: Any) {
         addSearchView()
     }
