@@ -50,6 +50,10 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
         addLocationButton.titleLabel?.textColor = self.view.tintColor
     }
     
+    override func viewDidLayoutSubviews() {
+        mapSearchSubView.frame = self.view.frame
+    }
+    
     @IBAction func searchButton(_ sender: Any) {
         addSearchView()
     }
