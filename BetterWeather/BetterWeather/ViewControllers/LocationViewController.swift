@@ -20,14 +20,12 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchTable: UITableView!
     
-
     var lon: CLLocationDegrees = 0.0
     var lat: CLLocationDegrees = 0.0
     var locationName: String = ""
     var searchedPlacemark: MKPlacemark? = nil
     
     var filteredMapItems: [MKMapItem]  = []
-//    var unfilteredMapItems: [MKMapItem] = []
     
     
     override func viewDidLoad() {
@@ -37,8 +35,9 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
         searchBar.showsScopeBar = true
         searchBar.delegate = self
         
-        // Fix tableView (remove empty cells)
-//        searchTable.tableFooterView = UIView()
+        // Fix tableView
+        searchTable.tableFooterView = UIView()
+        searchTable.backgroundColor = UIColor.clear
         
         // Setuo addLocationButton styling
         addLocationButton.layer.cornerRadius = 5
@@ -65,16 +64,14 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
                 // Create the placemark
                 self.filteredMapItems = (response?.mapItems ?? [])!
                 
-                print("##")
-                print(self.filteredMapItems.count)
-                
-                DispatchQueue.main.async {
-                    self.searchTable.reloadData()
-                }
+                self.searchTable.reloadData()
             }
         }
+        else {
+            filteredMapItems.removeAll()
+            self.searchTable.reloadData()
+        }
     }
-
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // Create search request
@@ -134,16 +131,20 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
         removeSearchView()
     }
     
+    
+    
     func addSearchView () {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.view.addSubview(mapSearchSubView)
-        
-        
+        self.searchBar.becomeFirstResponder()
     }
     
     func removeSearchView () {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         mapSearchSubView.removeFromSuperview()
+        filteredMapItems.removeAll()
+        searchBar.text?.removeAll()
+        self.searchTable.reloadData()
     }
     
     // #######################################################
@@ -156,8 +157,6 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("count")
-        print(filteredMapItems.count)
         return filteredMapItems.count
     }
     
@@ -166,15 +165,62 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
         let cell: SearchResultTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath) as! SearchResultTableViewCell
         cell.title.text = filteredMapItems[indexPath.row].placemark.title
         
-        print("#####")
-        print(filteredMapItems.count)
-        
-        
         return cell
     }
     
-    
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Create search request
+        let searchRequest = MKLocalSearch.Request()
+        searchRequest.naturalLanguageQuery = filteredMapItems[indexPath.row].placemark.title
+        
+        let activeSearch = MKLocalSearch(request: searchRequest)
+        
+        activeSearch.start { (response, error) in
+            self.removeSearchView()
+            
+            if response == nil
+            {
+                // PUT ERROR HANDLING HERE
+                print("ERROR")
+            }
+            else
+            {
+                let annotations = self.mapView.annotations
+                for annotation in annotations
+                {
+                    self.mapView.removeAnnotation(annotation)
+                }
+                
+                // Creating the coordinate
+                let lon = response?.boundingRegion.center.longitude
+                let lat = response?.boundingRegion.center.latitude
+                let searchedCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: lat!, longitude: lon!)
+                
+                // Create the placemark
+                self.searchedPlacemark = (response?.mapItems.first?.placemark)!
+                
+                // Create annotation
+                let annotation = MKPointAnnotation()
+                annotation.title = self.searchedPlacemark!.title
+                annotation.coordinate = searchedCoordinate
+                self.mapView.addAnnotation(annotation)
+                
+                // Zooming in on location
+                let span = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
+                let region = MKCoordinateRegion(center: searchedCoordinate, span: span)
+                self.mapView.setRegion(region, animated: true)
+                
+                // Make generall coordinate
+                self.makeGenerallCoordinates(search: (self.searchedPlacemark?.locality)!, coord: searchedCoordinate)
+                
+                // Show Add location Button
+                self.addLocationButton.setTitle("Add " + self.searchedPlacemark!.locality!, for: .normal)
+                self.addLocationButton.titleLabel?.adjustsFontSizeToFitWidth = true
+                self.addLocationButton.isHidden = false
+                
+            }
+        }
+    }
     
     
     @IBAction func addLocationButtonClicked(_ sender: Any) {

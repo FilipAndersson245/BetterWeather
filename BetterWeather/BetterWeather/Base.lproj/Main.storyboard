@@ -339,7 +339,7 @@
                         <outlet property="mapSearchSubView" destination="eSv-7E-kGd" id="Kd9-Xd-tv5"/>
                         <outlet property="mapView" destination="Z3d-Rm-Ofl" id="Gy5-La-2B2"/>
                         <outlet property="searchBar" destination="goY-0x-hSi" id="YSK-eN-CKU"/>
-                        <outlet property="searchTable" destination="dIq-zR-sJh" id="SjV-wR-EWx"/>
+                        <outlet property="searchTable" destination="dIq-zR-sJh" id="1QR-Z4-b0Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hHm-Jz-AYa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -355,7 +355,7 @@
                             <rect key="frame" x="0.0" y="100" width="414" height="762"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <prototypes>
-                                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationCell" id="HDT-wx-VWf" customClass="SearchResultTableViewCell" customModule="BetterWeather" customModuleProvider="target">
+                                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" indentationWidth="10" reuseIdentifier="LocationCell" id="HDT-wx-VWf" customClass="SearchResultTableViewCell" customModule="BetterWeather" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HDT-wx-VWf" id="1I9-P6-Urw">
@@ -376,11 +376,16 @@
                                             <constraint firstItem="pA0-A8-Rhs" firstAttribute="bottom" secondItem="1I9-P6-Urw" secondAttribute="bottomMargin" id="tFy-sg-waA"/>
                                         </constraints>
                                     </tableViewCellContentView>
+                                    <color key="backgroundColor" white="1" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <connections>
                                         <outlet property="title" destination="pA0-A8-Rhs" id="JJQ-1H-WEB"/>
                                     </connections>
                                 </tableViewCell>
                             </prototypes>
+                            <connections>
+                                <outlet property="dataSource" destination="tUX-aw-NyE" id="Wcn-9C-Ehd"/>
+                                <outlet property="delegate" destination="tUX-aw-NyE" id="kG6-iD-sSl"/>
+                            </connections>
                         </tableView>
                     </subviews>
                     <accessibility key="accessibilityConfiguration" identifier="searchOverlay"/>
