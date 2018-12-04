@@ -33,9 +33,8 @@ class CentralManager{
         var dateComponents = DateComponents()
         dateComponents.calendar = Calendar.current
         dateComponents.timeZone = TimeZone(secondsFromGMT: 60*60*24)
-        dateComponents.weekday = 3
         dateComponents.hour = 14
-        dateComponents.minute = 24
+        dateComponents.minute = 48
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         
         let uuidString = UUID().uuidString
