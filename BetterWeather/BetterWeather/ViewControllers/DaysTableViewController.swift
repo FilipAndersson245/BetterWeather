@@ -10,8 +10,12 @@ import UIKit
 
 class DaysTableViewController: UITableViewController {
     
+    // MARK: - Properties
+    
     var locationIndex: Int!
+    
     var isCurrentLocation: Bool!
+    
     let dateFormatter : DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: Locale.current.identifier)
@@ -19,14 +23,11 @@ class DaysTableViewController: UITableViewController {
         return formatter
     }()
 
+    // MARK: - Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         checkAndReloadAllLocations()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,46 +91,8 @@ class DaysTableViewController: UITableViewController {
         cell!.title.text = dateFormatter.string(from: day.date)
         cell!.setTemperature(day.averageWeather.temperatur)
         cell!.setImage(day.averageWeather.weatherType)
-        
-
         return cell!
     }
-    
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     // MARK: - Navigation
     
@@ -137,7 +100,6 @@ class DaysTableViewController: UITableViewController {
         performSegue(withIdentifier: "hoursSegue", sender: indexPath)
     }
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? HoursTableViewController {
             if let indexPath = sender as? IndexPath {

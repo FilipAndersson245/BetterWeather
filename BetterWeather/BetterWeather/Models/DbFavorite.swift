@@ -9,10 +9,18 @@
 import Foundation
 
 struct DbFavorite {
+    
+    // MARK: - Properties
+    
     let longitude: Float
+    
     let latitude: Float
+    
     let name: String
+    
     let lastUpdate : Date
+    
+    // MARK: - Methods
     
     init(name: String
         , longitude: Float

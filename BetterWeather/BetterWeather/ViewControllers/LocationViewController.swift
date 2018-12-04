@@ -7,43 +7,47 @@
 //
 
 import UIKit
+
 import MapKit
 
 class LocationViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
     
+    // MARK: - Properties
+    
     @IBOutlet weak var mapView: MKMapView!
+    
     @IBOutlet weak var addLocationButton: UIButton!
     
     @IBOutlet var mapMainView: UIView!
     
     @IBOutlet var mapSearchSubView: UIView!
+    
     @IBOutlet weak var searchBar: UISearchBar!
+    
     @IBOutlet weak var searchTable: UITableView!
     
     var lon: CLLocationDegrees = 0.0
+    
     var lat: CLLocationDegrees = 0.0
+    
     var locationName: String = ""
+    
     var searchedPlacemark: MKPlacemark? = nil
     
     var filteredMapItems: [MKMapItem]  = []
     
+    // MARK: - Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Set searchbar deligate
         searchBar.showsScopeBar = true
         searchBar.delegate = self
-        
-        // Fix tableView
         searchTable.tableFooterView = UIView()
         searchTable.backgroundColor = UIColor.clear
-        
-        // Setuo addLocationButton styling
         addLocationButton.layer.cornerRadius = 5
         addLocationButton.layer.borderWidth = 1
         addLocationButton.layer.borderColor = self.view.tintColor.cgColor
         addLocationButton.titleLabel?.textColor = self.view.tintColor
-        
     }
     
     @IBAction func searchButton(_ sender: Any) {
@@ -81,14 +85,10 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
         
         activeSearch.start { (response, error) in
             self.removeSearchView()
-            
-            if response == nil
-            {
-                // PUT ERROR HANDLING HERE
+            if response == nil {
                 print("ERROR")
             }
-            else
-            {
+            else {
                 let annotations = self.mapView.annotations
                 for annotation in annotations
                 {
@@ -146,10 +146,7 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
         self.searchTable.reloadData()
     }
     
-    // #######################################################
-    // #######################################################
-    // #######################################################
-    // TABLE FUNCTIONS
+    // MARK: - Table Functions
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1

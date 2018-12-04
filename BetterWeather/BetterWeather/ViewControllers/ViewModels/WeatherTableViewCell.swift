@@ -11,13 +11,19 @@ import UIKit
 @IBDesignable
 class WeatherTableViewCell: UITableViewCell {
 
+    // MARK: - Properties
     
     @IBOutlet weak var mainView: UIView!
+    
     @IBOutlet weak var title: UILabel!
+    
     @IBOutlet weak var weatherImage: UIImageView!
+    
     @IBOutlet weak var temperatureLabel: UILabel!
     
     var isRotating = false
+    
+    // MARK: - Methods
     
     func setImage(_ weatherType: WeatherTypes)
     {
@@ -47,10 +53,7 @@ class WeatherTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        // Need to set color when setting rest of cell
         self.backgroundColor = UIColor.clear
-        
         var backGroundSelected = UIView()
         backGroundSelected.backgroundColor = UIColor.clear
         self.selectedBackgroundView = backGroundSelected
@@ -61,8 +64,6 @@ class WeatherTableViewCell: UITableViewCell {
         if(selected) {
             animate()
         }
-        
-        // Configure the view for the selected state
     }
 
 }

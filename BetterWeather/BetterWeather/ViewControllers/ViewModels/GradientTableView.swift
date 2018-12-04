@@ -9,8 +9,14 @@
 import UIKit
 
 class GradientTableView: UITableView {
+    
+    // MARK: - Properties
+    
     @IBInspectable var startColor: UIColor = UIColor.clear
+    
     @IBInspectable var endColor: UIColor = UIColor.clear
+    
+    // MARK: - Methods
     
     override func draw(_ rect: CGRect) {
         let gradientBackgroundColors = [startColor.cgColor, endColor.cgColor]
