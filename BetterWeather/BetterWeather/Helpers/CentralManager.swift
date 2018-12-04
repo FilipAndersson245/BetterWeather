@@ -10,6 +10,8 @@ import Foundation
 
 class CentralManager{
     
+    // MARK: - Properties
+    
     static let shared = CentralManager()
     
     let dbHandler = DatabaseHandler()
@@ -22,6 +24,12 @@ class CentralManager{
     
     private let refreshInterval: Double = 1800
     
+    // MARK: - Methods
+    
+    init() {
+        populateFavoriteLocations()
+    }
+    
     private var fetchingQueueGroup = DispatchGroup()
     private var isFetching = false {
         didSet {
@@ -33,15 +41,10 @@ class CentralManager{
         }
     }
     
-    init() {
-        populateFavoriteLocations()
-    }
-    
+    // Adds a specified favorite location to view and local storage
     func addFavoriteLocation(name: String, longitude: Float, latitude: Float) {
         let todayDate = Date()
         let favorite = DbFavorite(name: name, longitude: longitude, latitude: latitude, lastUpdate: todayDate)
-        
-        // Check if not exists already
         if(!self.dbHandler.doesFavoriteLocationExist(dbFavorite: favorite))
         {
             self.dbHandler.addOrUpdateFavoriteLocation(favorite)
@@ -52,15 +55,15 @@ class CentralManager{
                 NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)
             }
         }
-        // TODO: Add alert that says position already added.
     }
     
+    // Removes a specified favorite location from view and local storage
     func removeFavoriteLocation(location: Location){
         let favorite = DbFavorite(name: location.name, longitude: location.longitude, latitude: location.latitude, lastUpdate: Date())
         if(self.dbHandler.doesFavoriteLocationExist(dbFavorite: favorite)){
             self.dbHandler.removeFavoriteLocation(dbFavorite: favorite)
             self.dbHandler.removeLocationWeatherData(dbFavorite: favorite)
-            let indexToUpdate = self.favoriteLocations.index(where: {$0.latitude == location.latitude && $0.longitude == location.longitude})!  // Can always find favorite
+            let indexToUpdate = self.favoriteLocations.index(where: {$0.latitude == location.latitude && $0.longitude == location.longitude})!
             self.favoriteLocations.remove(at: indexToUpdate)
             NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)
         }
@@ -82,9 +85,9 @@ class CentralManager{
         }
     }
     
+    // Removes old weather data and updates the view and local storage with new data for a specified location
     func updateWeather(favoriteToUpdate: DbFavorite){
         let indexToUpdate = self.favoriteLocations.index(where: {$0.latitude == favoriteToUpdate.latitude && $0.longitude == favoriteToUpdate.longitude})
-        // First remove old weather data
         self.dbHandler.removeOldLocationWeatherData()
         if indexToUpdate != nil {
             for (dayIndex, day) in favoriteLocations[indexToUpdate!].days.enumerated() {
@@ -98,26 +101,18 @@ class CentralManager{
                 }
             }
         }
-        
-        // Update FavoriteLocationRefreshTime
         self.dbHandler.addOrUpdateFavoriteLocation(DbFavorite(name: favoriteToUpdate.name, longitude: favoriteToUpdate.longitude, latitude: favoriteToUpdate.latitude, lastUpdate: Date()))
-        
         ApiHandler.getLocationData(favoriteToUpdate.name, favoriteToUpdate.longitude, favoriteToUpdate.latitude){
             dbWeathers in
             self.isFetching = true
-            
-            // Remove
             self.dbHandler.removeLocationWeatherData(dbFavorite: favoriteToUpdate)
             if indexToUpdate != nil {
                 self.favoriteLocations.remove(at: indexToUpdate!)
             }
             self.favoriteLocations.insert(Location.weathersToLocations(dbWeathers).first!, at: indexToUpdate ?? self.favoriteLocations.count)
-            
-            // Insert
             self.dbHandler.insertData(dbWeathers)
             
-            
-            // Update view
+            // Updates view with the new data
             NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)
             self.isFetching = false
         }

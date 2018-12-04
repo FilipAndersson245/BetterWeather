@@ -7,14 +7,18 @@
 //
 
 import Foundation
+
 import SQLite3
 
-
 class DatabaseHandler{
+    
+    // MARK: - Properties
     
     var db: OpaquePointer?
     
     var fileName = "database.sqlite"
+    
+    // MARK: - Methods
     
     init() {
         createDataTable()
@@ -26,13 +30,13 @@ class DatabaseHandler{
         if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
             print("Error opening database.")
         }
-        //sqlite3_exec(db, "DROP TABLE FavoriteLocations;", nil, nil, nil) //needed if db is changed
         if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS FavoriteLocations (Name TEXT, Latitude REAL, Longitude INTEGER, LastUpdate REAL, PRIMARY KEY(Latitude, Longitude))", nil, nil, nil) != SQLITE_OK {
             let errormessage = String(cString: sqlite3_errmsg(db)!)
             print("Error creating table: \(errormessage)")
         }
     }
     
+    // Adds a favorite location to local storage
     public func addOrUpdateFavoriteLocation(_ favorite: DbFavorite){
         var stmt: OpaquePointer?
         let queryString = "INSERT OR REPLACE INTO FavoriteLocations (Name, Latitude, Longitude, LastUpdate) VALUES (?,?,?,?)"
@@ -55,6 +59,7 @@ class DatabaseHandler{
         sqlite3_finalize(stmt)
     }
     
+    // Fetches the favorite locations from local storage
     public func readFavoriteLocations() -> Array<DbFavorite>?{
         let queryString = "SELECT * FROM FavoriteLocations"
         var stmt: OpaquePointer?
@@ -80,13 +85,13 @@ class DatabaseHandler{
         if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
             print("Error opening database.")
         }
-        //sqlite3_exec(db, "DROP TABLE WeatherData;", nil, nil, nil) //needed if db is changed
         if sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS WeatherData (Name TEXT, Latitude REAL, Longitude REAL, Date REAL, WeatherType INTEGER, Temperature REAL, WindDirection INTEGER, WindSpeed REAL, RelativeHumidity INTEGER, AirPressure REAL, HorizontalVisibility REAL, PRIMARY KEY(Latitude, Longitude, Date))", nil, nil, nil) != SQLITE_OK {
             let errormessage = String(cString: sqlite3_errmsg(db)!)
             print("Error creating table: \(errormessage)")
         }
     }
     
+    // Removes all the weather data in local storage for a specified favorite location
     public func removeLocationWeatherData(dbFavorite: DbFavorite){
         var stmt: OpaquePointer?
         let queryString = "DELETE FROM WeatherData WHERE (Latitude = ? AND Longitude = ?)"
@@ -105,6 +110,7 @@ class DatabaseHandler{
         sqlite3_finalize(stmt)
     }
     
+    // Removes outdated weather data in local storage for all locations
     public func removeOldLocationWeatherData(){
         var stmt: OpaquePointer?
         let queryString = "DELETE FROM WeatherData WHERE (Date <= ?)"
@@ -134,6 +140,7 @@ class DatabaseHandler{
         return false
     }
     
+    // Removes a location in local storage from the favorite table
     public func removeFavoriteLocation(dbFavorite: DbFavorite){
         var stmt: OpaquePointer?
         let queryString = "DELETE FROM FavoriteLocations WHERE (Latitude = ? AND Longitude = ?)"
@@ -152,6 +159,7 @@ class DatabaseHandler{
         sqlite3_finalize(stmt)
     }
     
+    // Saves weather data for a location into local storage
     public func insertData(_ dbWeathers: Array<DbWeather>){
         var stmt: OpaquePointer?
         let queryString = "INSERT OR REPLACE INTO WeatherData (Name, Latitude, Longitude, Date, WeatherType, Temperature, WindDirection, WindSpeed, RelativeHumidity, AirPressure, HorizontalVisibility) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
@@ -183,6 +191,7 @@ class DatabaseHandler{
         sqlite3_finalize(stmt)
     }
     
+    // Reads all the weather data for all favorite locations from local storage
     public func readData() -> Array<DbWeather>?{
         let queryString = "SELECT * FROM WeatherData"
         var stmt: OpaquePointer?

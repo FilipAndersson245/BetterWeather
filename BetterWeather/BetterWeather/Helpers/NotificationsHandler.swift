@@ -12,8 +12,10 @@ import UserNotifications
 
 class NotificationsHandler{
     
+    // MARK: - Methods
+    
+    // Adds a push notification for 7 AM every day
     init(){
-        
         let content = UNMutableNotificationContent()
         content.title = "Good Morning!"
         content.body = "Check out today's weather"
@@ -21,12 +23,9 @@ class NotificationsHandler{
         dateComponents.calendar = Calendar.current
         dateComponents.timeZone = TimeZone(secondsFromGMT: 60*60*24)
         dateComponents.hour = 7
-        //dateComponents.minute = 0
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-        
         let uuidString = UUID().uuidString
         let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
-        
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.add(request){
             error in

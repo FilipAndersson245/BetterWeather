@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 import CoreLocation
 
 class PositionManager {
@@ -15,20 +16,20 @@ class PositionManager {
     
     static let shared = PositionManager()
     
-    // MARK: -
     let internalLocationManager = CLLocationManager()
+    
     var longitude: Float? = nil
+    
     var latitude: Float? = nil
     
     var lastTimeRefreshed: Date = Date(timeIntervalSince1970: 0)
-    let refreshInterval: Double = 30    // TODO: Currently 30 sec, change and maybe make global(ish)
+    
+    let refreshInterval: Double = 600
+    
+    // MARK: - Methods
     
     private init() {
-        // Ask for Authorisation from the User.
-        
-        // For use in foreground
         internalLocationManager.requestWhenInUseAuthorization()
-        
         if CLLocationManager.locationServicesEnabled() {
             // internalLocationManager.delegate = self
             internalLocationManager.desiredAccuracy = kCLLocationAccuracyKilometer
