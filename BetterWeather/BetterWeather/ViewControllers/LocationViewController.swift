@@ -37,8 +37,8 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
         searchBar.showsScopeBar = true
         searchBar.delegate = self
         
-        // Fix tableView
-        searchTable.tableFooterView = UIView()
+        // Fix tableView (remove empty cells)
+//        searchTable.tableFooterView = UIView()
         
         // Setuo addLocationButton styling
         addLocationButton.layer.cornerRadius = 5
@@ -65,7 +65,12 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
                 // Create the placemark
                 self.filteredMapItems = (response?.mapItems ?? [])!
                 
-                self.searchTable.reloadData()
+                print("##")
+                print(self.filteredMapItems.count)
+                
+                DispatchQueue.main.async {
+                    self.searchTable.reloadData()
+                }
             }
         }
     }
@@ -131,7 +136,8 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
     
     func addSearchView () {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
-        view.addSubview(mapSearchSubView)
+        self.view.addSubview(mapSearchSubView)
+        
         
     }
     
@@ -150,28 +156,25 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("count")
+        print(filteredMapItems.count)
         return filteredMapItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath) {
-            
-            cell.textLabel?.text = filteredMapItems[indexPath.row].placemark.title
-            
-            return cell
-        }
-        else {
-            return UITableViewCell()
-        }
+        let cell: SearchResultTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath) as! SearchResultTableViewCell
+        cell.title.text = filteredMapItems[indexPath.row].placemark.title
+        
+        print("#####")
+        print(filteredMapItems.count)
+        
+        
+        return cell
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-
-        cell.textLabel?.text = filteredMapItems[indexPath.row].placemark.title
-
-    }
-
+    
+    
     
     
     @IBAction func addLocationButtonClicked(_ sender: Any) {
@@ -205,3 +208,4 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
     
     
 }
+
