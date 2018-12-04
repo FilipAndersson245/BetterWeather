@@ -130,8 +130,6 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
         removeSearchView()
     }
     
-    
-    
     func addSearchView () {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.view.addSubview(mapSearchSubView)

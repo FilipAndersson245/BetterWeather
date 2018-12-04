@@ -9,8 +9,14 @@
 import Foundation
 
 struct DataPoint: Codable {
+    
+    // MARK: - Properties
+    
     let validTime: String
+    
     let parameters: [Parameter]
+    
+    // MARK: - Methods
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)

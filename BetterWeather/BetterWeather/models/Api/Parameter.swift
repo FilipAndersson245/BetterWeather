@@ -9,11 +9,20 @@
 import Foundation
 
 struct Parameter: Codable {
+    
+    // MARK: - Properties
+    
     let name: ParameterNames
+    
     let levelType: String
+    
     let level: Int
+    
     let unit: String
+    
     let values: [Float]
+    
+    // MARK: - Methods
     
     init(from decoder: Decoder) throws {
         let valuesForParameter = try decoder.container(keyedBy: CodingKeys.self)
@@ -25,6 +34,9 @@ struct Parameter: Codable {
     }
 }
 
+// MARK: - Parameter Names enum
+
+// Enum for how data is presented in the SMHI API
 enum ParameterNames: String, Codable {
     case msl
     case t

@@ -10,12 +10,7 @@ import Foundation
 
 class Location {
     
-    init(name: String, latitude: Float, longitude: Float, days: [ Day ]) {
-        self.name = name
-        self.latitude = latitude
-        self.longitude = longitude
-        self.days = days
-    }
+    // MARK: - Properties
     
     var name: String
     
@@ -24,6 +19,15 @@ class Location {
     var longitude: Float
     
     var days: [ Day ]
+    
+    // MARK: - Methods
+    
+    init(name: String, latitude: Float, longitude: Float, days: [ Day ]) {
+        self.name = name
+        self.latitude = latitude
+        self.longitude = longitude
+        self.days = days
+    }
     
     public static func weathersToLocations(_ weatherArr: Array<DbWeather>) -> Array<Location>{
         var readLocations = [Location]()

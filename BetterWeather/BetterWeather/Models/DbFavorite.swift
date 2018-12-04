@@ -8,6 +8,7 @@
 
 import Foundation
 
+//Struct for expressing favorite locations in local storage
 struct DbFavorite {
     
     // MARK: - Properties

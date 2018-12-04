@@ -9,14 +9,32 @@
 import Foundation
 
 struct Weather {
+    
+    // MARK: - Properties
+    
+    var date: Date
+    
+    var averageWeather: Weather
+    
+    var hours: [ Weather ]
+    
     let time: Date
-    let weatherType:WeatherTypes // Enum 1-27
+    
+    let weatherType:WeatherTypes
+    
     let temperatur: Float
-    let windDirection: Int? // Degree
+    
+    let windDirection: Int?
+    
     let windSpeed: Float?
-    let relativHumidity: Int? // 0-100
+    
+    let relativHumidity: Int?
+    
     let airPressure: Float?
+    
     let HorizontalVisibility: Float?
+    
+    // MARK: - Methods
     
     init(weatherType:WeatherTypes
         , temperatur: Float
