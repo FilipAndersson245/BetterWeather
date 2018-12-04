@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     
     //Kanske hänvisa till guiden https://www.raywenderlich.com/584-push-notifications-tutorial-getting-started
-    
+    // https://developer.apple.com/documentation/usernotifications/scheduling_a_notification_locally_from_your_app
     
     func registerForPushNotifications() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge] ) {
