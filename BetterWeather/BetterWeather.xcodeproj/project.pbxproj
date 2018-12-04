@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4E0AC8F321AD1FB5003E6D8B /* PositionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0AC8F221AD1FB5003E6D8B /* PositionManager.swift */; };
 		4E37863021A7DBD600D975E0 /* HoursTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E37862F21A7DBD600D975E0 /* HoursTableViewController.swift */; };
+		4E734E4421B6A64B0007DE37 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E734E4321B6A64B0007DE37 /* GradientView.swift */; };
+		4E734E4621B6AB560007DE37 /* GradientTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E734E4521B6AB560007DE37 /* GradientTableView.swift */; };
 		4E80572B21A03DA10071E896 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E80572A21A03DA10071E896 /* Day.swift */; };
 		4E8BA3F921A4094900E7CE59 /* DaysTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8BA3F821A4094900E7CE59 /* DaysTableViewController.swift */; };
 		4EC5FA3F21917DB6002E4723 /* OverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC5FA3E21917DB6002E4723 /* OverviewViewController.swift */; };
@@ -35,6 +37,8 @@
 /* Begin PBXFileReference section */
 		4E0AC8F221AD1FB5003E6D8B /* PositionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionManager.swift; sourceTree = "<group>"; };
 		4E37862F21A7DBD600D975E0 /* HoursTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoursTableViewController.swift; sourceTree = "<group>"; };
+		4E734E4321B6A64B0007DE37 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		4E734E4521B6AB560007DE37 /* GradientTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientTableView.swift; sourceTree = "<group>"; };
 		4E80572A21A03DA10071E896 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		4E8BA3F821A4094900E7CE59 /* DaysTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysTableViewController.swift; sourceTree = "<group>"; };
 		4EC5FA3E21917DB6002E4723 /* OverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +104,8 @@
 			isa = PBXGroup;
 			children = (
 				4EC5FA42219181B7002E4723 /* WeatherTableViewCell.swift */,
+				4E734E4321B6A64B0007DE37 /* GradientView.swift */,
+				4E734E4521B6AB560007DE37 /* GradientTableView.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -230,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1289FEA21A4102100DC4AEF /* DataPoints.swift in Sources */,
+				4E734E4421B6A64B0007DE37 /* GradientView.swift in Sources */,
 				D11A4F222191937400286879 /* ApiHandler.swift in Sources */,
 				D1289FE621A4064400DC4AEF /* Parameter.swift in Sources */,
 				75AB88F921ABEBF900702C52 /* DatabaseHandler.swift in Sources */,
@@ -239,6 +246,7 @@
 				D11A4F222191937400286879 /* ApiHandler.swift in Sources */,
 				D16DAC9421B16D44001EC54B /* AnimationHelper.swift in Sources */,
 				4E0AC8F321AD1FB5003E6D8B /* PositionManager.swift in Sources */,
+				4E734E4621B6AB560007DE37 /* GradientTableView.swift in Sources */,
 				75C47A4B21AD644A00BD8CF9 /* DbFavorite.swift in Sources */,
 				D11A4F10219167E300286879 /* AppDelegate.swift in Sources */,
 				4EC5FA43219181B7002E4723 /* WeatherTableViewCell.swift in Sources */,
