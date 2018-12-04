@@ -156,7 +156,7 @@ class DaysTableViewController: UITableViewController {
                 group.wait()
                 let day = days[indexPath.row]
                 
-                destination.title = dateFormatter.string(from: day.date)
+                destination.title = String(self.title!) + ", " + dateFormatter.string(from: day.date)
             }
         }
     }
