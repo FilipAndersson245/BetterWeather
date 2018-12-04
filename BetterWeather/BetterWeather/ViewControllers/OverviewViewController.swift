@@ -17,8 +17,6 @@ class OverviewViewController: UITableViewController {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         self.refreshControl = refreshControl
-        
-        CentralManager.shared.addFavoriteLocation(name: "test", longitude: 14.158, latitude: 57.781)
     }
     
     override func viewWillAppear(_ animated: Bool) {

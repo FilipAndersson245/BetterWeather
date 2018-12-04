@@ -82,7 +82,6 @@ class CentralManager{
     
     func updateWeather(favoriteToUpdate: DbFavorite){
         let indexToUpdate = self.favoriteLocations.index(where: {$0.latitude == favoriteToUpdate.latitude && $0.longitude == favoriteToUpdate.longitude})
-        
         // First remove old weather data
         self.dbHandler.removeOldLocationWeatherData()
         if indexToUpdate != nil {
@@ -105,7 +104,6 @@ class CentralManager{
         
         ApiHandler.getLocationData(favoriteToUpdate.name, favoriteToUpdate.longitude, favoriteToUpdate.latitude){
             dbWeathers in
-            print("örp")
             self.isFetching = true
             
             // Remove

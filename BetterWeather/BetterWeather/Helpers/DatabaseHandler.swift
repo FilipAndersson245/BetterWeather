@@ -34,7 +34,6 @@ class DatabaseHandler{
     }
     
     public func addFavoriteLocation(_ favorite: DbFavorite){
-        createFavoriteTable() //Maybe change? but this works
         var stmt: OpaquePointer?
         let queryString = "INSERT OR REPLACE INTO FavoriteLocations (Name, Latitude, Longitude, LastUpdate) VALUES (?,?,?,?)"
         if sqlite3_prepare(db, queryString, -1, &stmt, nil) !=  SQLITE_OK{
@@ -42,7 +41,8 @@ class DatabaseHandler{
             print ("error preparing insertin addFavoriteLocation: \(errormessage)")
             return
         }
-        sqlite3_bind_text(stmt, 1, favorite.name, -1, nil)
+        let name = favorite.name as NSString
+        sqlite3_bind_text(stmt, 1,  name.utf8String, -1, nil)
         sqlite3_bind_double(stmt, 2, Double(favorite.latitude))
         sqlite3_bind_double(stmt, 3, Double(favorite.longitude))
         sqlite3_bind_double(stmt, 4, favorite.lastUpdate.timeIntervalSince1970)
@@ -153,7 +153,6 @@ class DatabaseHandler{
     }
     
     public func insertData(_ dbWeathers: Array<DbWeather>){
-        createDataTable() //Maybe change? but this works
         var stmt: OpaquePointer?
         let queryString = "INSERT OR REPLACE INTO WeatherData (Name, Latitude, Longitude, Date, WeatherType, Temperature, WindDirection, WindSpeed, RelativeHumidity, AirPressure, HorizontalVisibility) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
         if sqlite3_prepare(db, queryString, -1, &stmt, nil) !=  SQLITE_OK{
@@ -162,7 +161,8 @@ class DatabaseHandler{
             return
         }
         for hour in dbWeathers {
-            sqlite3_bind_text(stmt, 1, hour.name, -1, nil)
+            let name = hour.name as NSString
+            sqlite3_bind_text(stmt, 1, name.utf8String, -1, nil)
             sqlite3_bind_double(stmt, 2, Double(hour.latitude))
             sqlite3_bind_double(stmt, 3, Double(hour.longitude))
             sqlite3_bind_double(stmt, 4, hour.weather.time.timeIntervalSince1970)
