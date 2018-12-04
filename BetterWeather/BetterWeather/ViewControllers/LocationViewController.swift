@@ -67,10 +67,7 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
             let activeSearch = MKLocalSearch(request: searchRequest)
             
             activeSearch.start { (response, error) in
-                
-                // Create the placemark
                 self.filteredMapItems = (response?.mapItems ?? [])!
-                
                 self.searchTable.reloadData()
             }
         }
@@ -81,60 +78,14 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        // Create search request
         let searchRequest = MKLocalSearch.Request()
         searchRequest.naturalLanguageQuery = searchBar.text
-        
-        let activeSearch = MKLocalSearch(request: searchRequest)
-        
-        activeSearch.start { (response, error) in
-            self.removeSearchView()
-            if response == nil {
-                print("ERROR")
-            }
-            else {
-                let annotations = self.mapView.annotations
-                for annotation in annotations
-                {
-                    self.mapView.removeAnnotation(annotation)
-                }
-                
-                // Creating the coordinate
-                let lon = response?.boundingRegion.center.longitude
-                let lat = response?.boundingRegion.center.latitude
-                let searchedCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: lat!, longitude: lon!)
-                
-                // Create the placemark
-                self.searchedPlacemark = (response?.mapItems.first?.placemark)!
-            
-                // Create annotation
-                let annotation = MKPointAnnotation()
-                annotation.title = self.searchedPlacemark!.title
-                annotation.coordinate = searchedCoordinate
-                self.mapView.addAnnotation(annotation)
-                
-                // Zooming in on location
-                let span = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
-                let region = MKCoordinateRegion(center: searchedCoordinate, span: span)
-                self.mapView.setRegion(region, animated: true)
-                
-                // Make generall coordinate
-                self.makeGenerallCoordinates(search: (self.searchedPlacemark?.locality)!, coord: searchedCoordinate)
-                
-                // Show Add location Button
-                self.addLocationButton.setTitle("Add " + self.searchedPlacemark!.locality!, for: .normal)
-                self.addLocationButton.titleLabel?.adjustsFontSizeToFitWidth = true
-                self.addLocationButton.isHidden = false
-                
-            }
-        }
+        completeSearch(searchRequest: searchRequest)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         removeSearchView()
     }
-    
-    
     
     func addSearchView () {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
@@ -161,71 +112,52 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell: SearchResultTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath) as! SearchResultTableViewCell
         cell.title.text = filteredMapItems[indexPath.row].placemark.title
-        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Create search request
         let searchRequest = MKLocalSearch.Request()
         searchRequest.naturalLanguageQuery = filteredMapItems[indexPath.row].placemark.title
-        
+        completeSearch(searchRequest: searchRequest)
+    }
+    
+    @IBAction func addLocationButtonClicked(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+        CentralManager.shared.addFavoriteLocation(name: self.locationName, longitude: Float(self.lon), latitude: Float(self.lat))
+    }
+    
+    func completeSearch (searchRequest: MKLocalSearch.Request) {
         let activeSearch = MKLocalSearch(request: searchRequest)
-        
         activeSearch.start { (response, error) in
             self.removeSearchView()
-            
-            if response == nil
-            {
-                // PUT ERROR HANDLING HERE
-                print("ERROR")
-            }
-            else
-            {
+            if response != nil {
                 let annotations = self.mapView.annotations
-                for annotation in annotations
-                {
+                for annotation in annotations {
                     self.mapView.removeAnnotation(annotation)
                 }
                 
-                // Creating the coordinate
                 let lon = response?.boundingRegion.center.longitude
                 let lat = response?.boundingRegion.center.latitude
                 let searchedCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: lat!, longitude: lon!)
                 
-                // Create the placemark
                 self.searchedPlacemark = (response?.mapItems.first?.placemark)!
-                
-                // Create annotation
                 let annotation = MKPointAnnotation()
                 annotation.title = self.searchedPlacemark!.title
                 annotation.coordinate = searchedCoordinate
                 self.mapView.addAnnotation(annotation)
                 
-                // Zooming in on location
                 let span = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
                 let region = MKCoordinateRegion(center: searchedCoordinate, span: span)
                 self.mapView.setRegion(region, animated: true)
-                
-                // Make generall coordinate
                 self.makeGenerallCoordinates(search: (self.searchedPlacemark?.locality)!, coord: searchedCoordinate)
                 
-                // Show Add location Button
                 self.addLocationButton.setTitle("Add " + self.searchedPlacemark!.locality!, for: .normal)
                 self.addLocationButton.titleLabel?.adjustsFontSizeToFitWidth = true
                 self.addLocationButton.isHidden = false
-                
             }
         }
-    }
-    
-    
-    @IBAction func addLocationButtonClicked(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
-        CentralManager.shared.addFavoriteLocation(name: self.locationName, longitude: Float(self.lon), latitude: Float(self.lat))
     }
     
     func makeGenerallCoordinates (search: String, coord: CLLocationCoordinate2D) {
@@ -234,24 +166,13 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
         searchRequest.region = MKCoordinateRegion(center: coord, latitudinalMeters: CLLocationDistance(exactly: 10000)!, longitudinalMeters: CLLocationDistance(exactly: 10000)!)
         
         let activeSearch = MKLocalSearch(request: searchRequest)
-        
         activeSearch.start { (response, error) in
             
-            if response == nil
-            {
-                // PUT ERROR HANDLING HERE
-                print("ERROR")
-            }
-            else
-            {
+            if response != nil {
                 self.locationName = (self.searchedPlacemark?.locality!)!
                 self.lon = (response?.mapItems.first?.placemark.coordinate.longitude)!
                 self.lat = (response?.mapItems.first?.placemark.coordinate.latitude)!
             }
         }
     }
-    
-    
-    
 }
-
