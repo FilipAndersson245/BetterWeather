@@ -8,6 +8,8 @@
 
 import Foundation
 
+import UserNotifications
+
 class CentralManager{
     
     static let shared = CentralManager()
@@ -24,6 +26,29 @@ class CentralManager{
     
     init() {
         populateFavoriteLocations()
+        
+        let content = UNMutableNotificationContent()
+        content.title = "Weather test"
+        content.body = "Check the weather"
+        var dateComponents = DateComponents()
+        dateComponents.calendar = Calendar.current
+        dateComponents.timeZone = TimeZone(secondsFromGMT: 60*60*24)
+        dateComponents.weekday = 3
+        dateComponents.hour = 14
+        dateComponents.minute = 24
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        
+        let uuidString = UUID().uuidString
+        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+        
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.add(request){
+            error in
+            if error != nil {
+                //Handle stuff
+            }
+        }
+        
     }
     
     func addFavoriteLocation(name: String, longitude: Float, latitude: Float) {

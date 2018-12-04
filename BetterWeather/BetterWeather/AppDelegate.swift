@@ -63,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             (settings) in
             print("Notification settings: \(settings)")
             guard settings.authorizationStatus == .authorized else { return }
-            UIApplication.shared.registerForRemoteNotifications()
+            //UIApplication.shared.registerForRemoteNotifications()
         }
     }
     
