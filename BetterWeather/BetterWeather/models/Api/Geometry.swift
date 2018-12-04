@@ -9,8 +9,14 @@
 import Foundation
 
 struct Geometry: Codable {
+    
+    // MARK: - Properties
+    
     let type: String
+    
     let coordinates: [[Float]]
+    
+    // MARK: - Methods
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)

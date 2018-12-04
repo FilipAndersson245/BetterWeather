@@ -8,11 +8,20 @@
 
 import Foundation
 
+//Struct for gathering data from API before sending to local storage
 struct DbWeather {
+    
+    // MARK: - Properties
+    
     var weather: Weather
+    
     let longitude: Float
+    
     let latitude: Float
+    
     let name: String
+    
+    // MARK: - Methods
     
     init(name: String
         , weatherType:WeatherTypes
