@@ -14,6 +14,8 @@ class CentralManager{
     
     let dbHandler = DatabaseHandler()
     
+    let notificationsHandler = NotificationsHandler()
+    
     var favoriteLocations = Array<Location>()
     
     var currentLocation: Location? = nil

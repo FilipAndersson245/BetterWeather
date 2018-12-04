@@ -19,6 +19,7 @@
 		574CC6E421B6647600BE8C0F /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574CC6E321B6647600BE8C0F /* SearchResultTableViewCell.swift */; };
 		5786DDFA21A83063006C86D4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786DDF921A83063006C86D4 /* Location.swift */; };
 		7573BEB321AED26A003C0882 /* CentralManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7573BEB221AED26A003C0882 /* CentralManager.swift */; };
+		758A72F221B5633300664B75 /* NotificationsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758A72F121B5633300664B75 /* NotificationsHandler.swift */; };
 		75AB88F921ABEBF900702C52 /* DatabaseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AB88F821ABEBF900702C52 /* DatabaseHandler.swift */; };
 		75C47A4B21AD644A00BD8CF9 /* DbFavorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C47A4A21AD644A00BD8CF9 /* DbFavorite.swift */; };
 		75EAF2FD21AD28FA00747308 /* DbWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EAF2FC21AD28FA00747308 /* DbWeather.swift */; };
@@ -48,6 +49,8 @@
 		574CC6E321B6647600BE8C0F /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		5786DDF921A83063006C86D4 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		7573BEB221AED26A003C0882 /* CentralManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentralManager.swift; sourceTree = "<group>"; };
+		758A72F121B5633300664B75 /* NotificationsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsHandler.swift; sourceTree = "<group>"; };
+		758A72F321B5774D00664B75 /* BetterWeather.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BetterWeather.entitlements; sourceTree = "<group>"; };
 		75AB88F821ABEBF900702C52 /* DatabaseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseHandler.swift; sourceTree = "<group>"; };
 		75C47A4A21AD644A00BD8CF9 /* DbFavorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DbFavorite.swift; sourceTree = "<group>"; };
 		75EAF2FC21AD28FA00747308 /* DbWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DbWeather.swift; sourceTree = "<group>"; };
@@ -98,6 +101,7 @@
 				75AB88F821ABEBF900702C52 /* DatabaseHandler.swift */,
 				7573BEB221AED26A003C0882 /* CentralManager.swift */,
 				D16DAC9321B16D44001EC54B /* AnimationHelper.swift */,
+				758A72F121B5633300664B75 /* NotificationsHandler.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -144,6 +148,7 @@
 		D11A4F0E219167E300286879 /* BetterWeather */ = {
 			isa = PBXGroup;
 			children = (
+				758A72F321B5774D00664B75 /* BetterWeather.entitlements */,
 				4E8AB0F221AECA6000A06764 /* Helpers */,
 				4EC7EC1721AEBCC60090A140 /* ViewControllers */,
 				4E80572921A03B6A0071E896 /* Models */,
@@ -199,6 +204,11 @@
 				TargetAttributes = {
 					D11A4F0B219167E300286879 = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -256,6 +266,7 @@
 				4EC5FA43219181B7002E4723 /* WeatherTableViewCell.swift in Sources */,
 				4EC5FA3F21917DB6002E4723 /* OverviewViewController.swift in Sources */,
 				D1289FE821A4072400DC4AEF /* Geometry.swift in Sources */,
+				758A72F221B5633300664B75 /* NotificationsHandler.swift in Sources */,
 				D1289FE421A4060B00DC4AEF /* WeatherData.swift in Sources */,
 				4E37863021A7DBD600D975E0 /* HoursTableViewController.swift in Sources */,
 				5786DDFA21A83063006C86D4 /* Location.swift in Sources */,
@@ -407,13 +418,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BetterWeather/BetterWeather.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D9Q7TPS3TX;
 				INFOPLIST_FILE = BetterWeather/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = FAAG.BetterWeather;
+				PRODUCT_BUNDLE_IDENTIFIER = se.ju.TISK18H18.L2A;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -424,13 +437,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BetterWeather/BetterWeather.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D9Q7TPS3TX;
 				INFOPLIST_FILE = BetterWeather/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = FAAG.BetterWeather;
+				PRODUCT_BUNDLE_IDENTIFIER = se.ju.TISK18H18.L2A;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
