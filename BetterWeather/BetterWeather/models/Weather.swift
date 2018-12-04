@@ -12,12 +12,6 @@ struct Weather {
     
     // MARK: - Properties
     
-    var date: Date
-    
-    var averageWeather: Weather
-    
-    var hours: [ Weather ]
-    
     let time: Date
     
     let weatherType:WeatherTypes
