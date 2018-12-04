@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QkR-cl-tYY">
-    <device id="retina6_1" orientation="portrait">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,19 +15,19 @@
             <objects>
                 <tableViewController id="OVc-Ok-HOY" customClass="OverviewViewController" customModule="BetterWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="qoK-fs-dRP" customClass="GradientTableView" customModule="BetterWeather" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="currentLocationCell" rowHeight="130" id="wWQ-4a-9oW" customClass="WeatherTableViewCell" customModule="BetterWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="130"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="130"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wWQ-4a-9oW" id="JF6-l5-yZ5">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="130"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kJZ-SB-unw" userLabel="Main View" customClass="GradientView" customModule="BetterWeather" customModuleProvider="target">
-                                            <rect key="frame" x="6" y="6" width="402" height="124"/>
+                                            <rect key="frame" x="6" y="6" width="363" height="124"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" semanticContentAttribute="spatial" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location" translatesAutoresizingMaskIntoConstraints="NO" id="qbO-2q-bKQ">
                                                     <rect key="frame" x="6" y="6" width="25" height="25"/>
@@ -43,10 +43,10 @@
                                                     </constraints>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nZF-AD-FyJ">
-                                                    <rect key="frame" x="87" y="41.5" width="309" height="41"/>
+                                                    <rect key="frame" x="87" y="41.5" width="270" height="41"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="°C" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olN-oX-tFc">
-                                                            <rect key="frame" x="265" y="0.0" width="44" height="29"/>
+                                                            <rect key="frame" x="226" y="0.0" width="44" height="29"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="29" id="VC8-bA-l5j"/>
                                                             </constraints>
@@ -55,7 +55,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aje-ku-ook">
-                                                            <rect key="frame" x="208" y="0.0" width="57" height="41"/>
+                                                            <rect key="frame" x="169" y="0.0" width="57" height="41"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="54"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -71,7 +71,7 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jönköping" textAlignment="natural" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jWA-mS-Ce1">
-                                                    <rect key="frame" x="31" y="6" width="365" height="25"/>
+                                                    <rect key="frame" x="31" y="6" width="326" height="25"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -125,17 +125,17 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="favoriteLocationCell" rowHeight="90" id="8yg-WL-1aa" customClass="WeatherTableViewCell" customModule="BetterWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="158" width="414" height="90"/>
+                                <rect key="frame" x="0.0" y="158" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8yg-WL-1aa" id="svb-Bk-GPc">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rlt-Xw-VvD" userLabel="Main View" customClass="GradientView" customModule="BetterWeather" customModuleProvider="target">
-                                            <rect key="frame" x="6" y="6" width="402" height="83.5"/>
+                                            <rect key="frame" x="6" y="6" width="363" height="83.5"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jönköping" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eSq-Sd-s78">
-                                                    <rect key="frame" x="6" y="6" width="390" height="20"/>
+                                                    <rect key="frame" x="6" y="6" width="351" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="rZE-c1-BIc"/>
                                                     </constraints>
@@ -151,16 +151,16 @@
                                                     </constraints>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jse-pz-SoS">
-                                                    <rect key="frame" x="57.5" y="21.5" width="338.5" height="41"/>
+                                                    <rect key="frame" x="57.5" y="21.5" width="299.5" height="41"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q42-vF-haZ">
-                                                            <rect key="frame" x="237.5" y="0.0" width="57" height="41"/>
+                                                            <rect key="frame" x="198.5" y="0.0" width="57" height="41"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="54"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="°C" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37L-ow-vIm">
-                                                            <rect key="frame" x="294.5" y="0.0" width="44" height="29"/>
+                                                            <rect key="frame" x="255.5" y="0.0" width="44" height="29"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="29" id="MSw-oc-TOK"/>
                                                             </constraints>
@@ -258,22 +258,22 @@
             <objects>
                 <tableViewController id="WDL-Te-cNm" customClass="DaysTableViewController" customModule="BetterWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="tpP-4m-l3B" customClass="GradientTableView" customModule="BetterWeather" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="dayCell" rowHeight="90" id="Ius-pP-MY0" customClass="WeatherTableViewCell" customModule="BetterWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="90"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ius-pP-MY0" id="ggk-7w-ZoR">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fNu-xE-bPB" userLabel="Main View" customClass="GradientView" customModule="BetterWeather" customModuleProvider="target">
-                                            <rect key="frame" x="6" y="6" width="402" height="83.5"/>
+                                            <rect key="frame" x="6" y="6" width="363" height="83.5"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jönköping" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAh-3W-DlV">
-                                                    <rect key="frame" x="6" y="6" width="390" height="20"/>
+                                                    <rect key="frame" x="6" y="6" width="351" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="hUl-3A-SLo"/>
                                                     </constraints>
@@ -289,16 +289,16 @@
                                                     </constraints>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xhb-1c-Wjo">
-                                                    <rect key="frame" x="57.5" y="21.5" width="338.5" height="41"/>
+                                                    <rect key="frame" x="57.5" y="21.5" width="299.5" height="41"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SIj-17-W7F">
-                                                            <rect key="frame" x="237.5" y="0.0" width="57" height="41"/>
+                                                            <rect key="frame" x="198.5" y="0.0" width="57" height="41"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="54"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="°C" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJh-Jw-0By">
-                                                            <rect key="frame" x="294.5" y="0.0" width="44" height="29"/>
+                                                            <rect key="frame" x="255.5" y="0.0" width="44" height="29"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="29" id="OBG-9e-BhF"/>
                                                             </constraints>
@@ -385,14 +385,14 @@
             <objects>
                 <viewController id="tUX-aw-NyE" customClass="LocationViewController" customModule="BetterWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nly-Kp-AAG">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Z3d-Rm-Ofl">
-                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </mapView>
                             <button hidden="YES" opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XH2-6e-QIG">
-                                <rect key="frame" x="16" y="806" width="382" height="40"/>
+                                <rect key="frame" x="16" y="611" width="343" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="X45-Qc-u1O"/>
@@ -434,26 +434,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hHm-Jz-AYa" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <view contentMode="scaleToFill" id="eSv-7E-kGd">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <rect key="frame" x="0.0" y="0.0" width="441" height="896"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
                         <searchBar contentMode="redraw" searchBarStyle="prominent" placeholder="Search Location" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="goY-0x-hSi">
-                            <rect key="frame" x="0.0" y="44" width="414" height="56"/>
+                            <rect key="frame" x="0.0" y="20" width="441" height="56"/>
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dIq-zR-sJh">
-                            <rect key="frame" x="0.0" y="100" width="414" height="762"/>
+                            <rect key="frame" x="0.0" y="76" width="441" height="820"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <prototypes>
                                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" indentationWidth="10" reuseIdentifier="LocationCell" id="HDT-wx-VWf" customClass="SearchResultTableViewCell" customModule="BetterWeather" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                    <rect key="frame" x="0.0" y="28" width="441" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HDT-wx-VWf" id="1I9-P6-Urw">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="441" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pA0-A8-Rhs">
-                                                <rect key="frame" x="20" y="11" width="374" height="22"/>
+                                                <rect key="frame" x="15" y="31" width="384" height="2"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -480,7 +480,7 @@
                     </subviews>
                     <accessibility key="accessibilityConfiguration" identifier="searchOverlay"/>
                     <constraints>
-                        <constraint firstItem="goY-0x-hSi" firstAttribute="top" secondItem="eSv-7E-kGd" secondAttribute="top" constant="44" id="4yX-CG-c1a"/>
+                        <constraint firstItem="goY-0x-hSi" firstAttribute="top" secondItem="mZg-47-HAX" secondAttribute="top" id="4yX-CG-c1a"/>
                         <constraint firstItem="dIq-zR-sJh" firstAttribute="top" secondItem="goY-0x-hSi" secondAttribute="bottom" id="GuO-qJ-wIa"/>
                         <constraint firstItem="goY-0x-hSi" firstAttribute="leading" secondItem="mZg-47-HAX" secondAttribute="leading" id="R5E-wk-KYk"/>
                         <constraint firstItem="goY-0x-hSi" firstAttribute="trailing" secondItem="mZg-47-HAX" secondAttribute="trailing" id="Snn-PF-vfo"/>
@@ -491,14 +491,14 @@
                     <viewLayoutGuide key="safeArea" id="mZg-47-HAX"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="-791" y="1474"/>
+            <point key="canvasLocation" x="-793" y="1684"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ZDC-bl-CHd">
             <objects>
                 <navigationController id="QkR-cl-tYY" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="DcR-mW-7Vx">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -514,22 +514,22 @@
             <objects>
                 <tableViewController id="YhT-0v-eGs" customClass="HoursTableViewController" customModule="BetterWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="sJR-Ii-cNW" customClass="GradientTableView" customModule="BetterWeather" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="hourCell" rowHeight="90" id="5nq-oE-GtC" customClass="WeatherTableViewCell" customModule="BetterWeather" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="90"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="90"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5nq-oE-GtC" id="IAY-ct-FlP">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vQM-Ca-Ix1" userLabel="Main View" customClass="GradientView" customModule="BetterWeather" customModuleProvider="target">
-                                            <rect key="frame" x="6" y="6" width="402" height="83.5"/>
+                                            <rect key="frame" x="6" y="6" width="363" height="83.5"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jönköping" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85q-fW-cmK">
-                                                    <rect key="frame" x="6" y="6" width="390" height="20"/>
+                                                    <rect key="frame" x="6" y="6" width="351" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="etJ-8u-tDN"/>
                                                     </constraints>
@@ -545,16 +545,16 @@
                                                     </constraints>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xvL-eA-79d">
-                                                    <rect key="frame" x="57.5" y="21.5" width="338.5" height="41"/>
+                                                    <rect key="frame" x="57.5" y="21.5" width="299.5" height="41"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5i5-mw-KYT">
-                                                            <rect key="frame" x="237.5" y="0.0" width="57" height="41"/>
+                                                            <rect key="frame" x="198.5" y="0.0" width="57" height="41"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="54"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="°C" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fGL-fu-FVT">
-                                                            <rect key="frame" x="294.5" y="0.0" width="44" height="29"/>
+                                                            <rect key="frame" x="255.5" y="0.0" width="44" height="29"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="29" id="qkR-Cc-4lU"/>
                                                             </constraints>
