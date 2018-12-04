@@ -27,7 +27,6 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
     
     var filteredMapItems: [MKMapItem]  = []
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
