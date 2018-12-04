@@ -76,6 +76,7 @@ class ApiHandler {
                     do {
                         //here dataResponse received from a network request
                         let weather = try JSONDecoder().decode(WeatherData.self, from: data!)
+                        print("DATA")
                         completionBlock(weather)
                     } catch let parsingError {
                         print("Error", parsingError)

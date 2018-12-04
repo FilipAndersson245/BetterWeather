@@ -48,6 +48,7 @@ class OverviewViewController: UITableViewController {
     {
         DispatchQueue.main.async {
             self.refreshControl?.endRefreshing()
+            print("reloading")
             self.tableView.reloadData()
         }
     }

@@ -10,14 +10,14 @@ import Foundation
 
 import CoreLocation
 
-class PositionManager {
+class PositionManager: NSObject, CLLocationManagerDelegate {
     
     // MARK: - Properties
     
     static let shared = PositionManager()
     
-    let internalLocationManager = CLLocationManager()
-    
+    // MARK: -
+    let locationManager = CLLocationManager()
     var longitude: Float? = nil
     
     var latitude: Float? = nil
@@ -28,14 +28,27 @@ class PositionManager {
     
     // MARK: - Methods
     
-    private init() {
-        internalLocationManager.requestWhenInUseAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            // internalLocationManager.delegate = self
-            internalLocationManager.desiredAccuracy = kCLLocationAccuracyKilometer
-            internalLocationManager.startUpdatingLocation()
+    override private init() {
+        super.init()
+        
+        self.locationManager.requestWhenInUseAuthorization()
+        
+        if (CLLocationManager.locationServicesEnabled())
+        {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+            print("din mamma")
+            updatePositionAndData()
             NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)
+
         }
+    }
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        print("BAJS")
+        print(status)
+        
     }
     
     func hasPosition() -> Bool
@@ -56,11 +69,13 @@ class PositionManager {
     
     func updatePositionAndData()
     {
+        print("in update")
         if (PositionManager.shared.hasPosition()) {
             getLocationName() {
                 name in
                 ApiHandler.getLocationData(name, self.longitude!, self.latitude!) {
                     dbWeathers in
+                    print("fetched weather")
                     CentralManager.shared.currentLocation = Location.weathersToLocations(dbWeathers).first!
                     NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)
                 }
@@ -82,7 +97,7 @@ class PositionManager {
             {
                 latitude = nil
                 longitude = nil
-                let coords = internalLocationManager.location?.coordinate
+                let coords = locationManager.location?.coordinate
                 if(coords != nil)
                 {
                     print("Updating location")
