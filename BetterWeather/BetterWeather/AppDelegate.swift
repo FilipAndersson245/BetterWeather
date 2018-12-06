@@ -44,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge] ) {
             (granted, error) in
             print("Notification permission granted: \(granted)")
+            PositionManager.shared.updatePositionAndData()
         }
     }
     

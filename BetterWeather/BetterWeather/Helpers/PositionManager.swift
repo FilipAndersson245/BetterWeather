@@ -31,7 +31,6 @@ class PositionManager {
     private init() {
         internalLocationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
-            // internalLocationManager.delegate = self
             internalLocationManager.desiredAccuracy = kCLLocationAccuracyKilometer
             internalLocationManager.startUpdatingLocation()
             NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)
@@ -56,6 +55,16 @@ class PositionManager {
     
     func updatePositionAndData()
     {
+        latitude = nil
+        longitude = nil
+        let coords = internalLocationManager.location?.coordinate
+        if(coords != nil)
+        {
+            print("Updating location")
+            latitude = Float(Double(coords!.latitude))
+            longitude = Float(Double(coords!.longitude))
+        }
+            
         if (PositionManager.shared.hasPosition()) {
             getLocationName() {
                 name in
@@ -71,6 +80,7 @@ class PositionManager {
             CentralManager.shared.currentLocation = nil
             NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)
         }
+        lastTimeRefreshed = Date()
     }
     
     func checkWhetherToUpdatePosition()
@@ -80,17 +90,7 @@ class PositionManager {
             // Check if <timeInterval> seconds since last refresh
             if (Date().timeIntervalSince(lastTimeRefreshed) > refreshInterval)
             {
-                latitude = nil
-                longitude = nil
-                let coords = internalLocationManager.location?.coordinate
-                if(coords != nil)
-                {
-                    print("Updating location")
-                    latitude = Float(Double(coords!.latitude))
-                    longitude = Float(Double(coords!.longitude))
-                    updatePositionAndData()
-                    lastTimeRefreshed = Date()
-                }
+                updatePositionAndData()
             }
         }
         else
