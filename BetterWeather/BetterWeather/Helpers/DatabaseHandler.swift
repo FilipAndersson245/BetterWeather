@@ -87,7 +87,7 @@ class DatabaseHandler{
             return false
         }
         for favorite in favoriteLocations{
-            if (Int(favorite.latitude) == Int(dbFavorite.latitude) && Int(favorite.longitude) == Int(dbFavorite.longitude)){
+            if (favorite.latitude == dbFavorite.latitude && favorite.longitude == dbFavorite.longitude){
                 return true
             }
         }
