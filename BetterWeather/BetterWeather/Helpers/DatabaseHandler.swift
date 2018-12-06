@@ -180,6 +180,7 @@ class DatabaseHandler{
             sqlite3_bind_double(stmt, 4, hour.weather.time.timeIntervalSince1970)
             sqlite3_bind_int(stmt, 5, Int32(hour.weather.weatherType.rawValue))
             sqlite3_bind_double(stmt, 6, Double(hour.weather.temperatur))
+            // Need to cast values, even though it causes warnings
             hour.weather.windDirection != nil ? sqlite3_bind_int(stmt, 7, Int32(hour.weather.windDirection!)) : sqlite3_bind_null(stmt, 7)
             hour.weather.windSpeed != nil ? sqlite3_bind_double(stmt, 8, Double(hour.weather.windDirection!)) : sqlite3_bind_null(stmt, 8)
             hour.weather.relativHumidity != nil ? sqlite3_bind_int(stmt, 9, Int32(hour.weather.relativHumidity!)) : sqlite3_bind_null(stmt, 9)

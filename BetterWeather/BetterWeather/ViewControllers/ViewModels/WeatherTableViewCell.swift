@@ -58,7 +58,7 @@ class WeatherTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.backgroundColor = UIColor.clear
-        var backGroundSelected = UIView()
+        let backGroundSelected = UIView()
         backGroundSelected.backgroundColor = UIColor.clear
         self.selectedBackgroundView = backGroundSelected
     }
