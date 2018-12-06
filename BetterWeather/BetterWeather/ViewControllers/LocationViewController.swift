@@ -128,6 +128,54 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
         CentralManager.shared.addFavoriteLocation(name: self.locationName, longitude: Float(self.lon), latitude: Float(self.lat))
     }
     
+//    func completeSearch (searchRequest: MKLocalSearch.Request) {
+//        let activeSearch = MKLocalSearch(request: searchRequest)
+//        activeSearch.start { (response, error) in
+//            self.removeSearchView()
+//            if response != nil {
+//                let annotations = self.mapView.annotations
+//                for annotation in annotations {
+//                    self.mapView.removeAnnotation(annotation)
+//                }
+//
+//                let lon = response?.boundingRegion.center.longitude
+//                let lat = response?.boundingRegion.center.latitude
+//                let searchedCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: lat!, longitude: lon!)
+//                self.searchedPlacemark = (response?.mapItems.first?.placemark)!
+//
+//                let annotation = MKPointAnnotation()
+//                annotation.title = self.searchedPlacemark!.title
+//                annotation.coordinate = searchedCoordinate
+//                self.mapView.addAnnotation(annotation)
+//
+//                let span = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
+//                let region = MKCoordinateRegion(center: searchedCoordinate, span: span)
+//                self.mapView.setRegion(region, animated: true)
+//                self.makeGenerallCoordinates(search: (self.searchedPlacemark?.locality)!, coord: searchedCoordinate)
+//
+//                self.addLocationButton.setTitle("Add " + self.searchedPlacemark!.locality!, for: .normal)
+//                self.addLocationButton.titleLabel?.adjustsFontSizeToFitWidth = true
+//                self.addLocationButton.isHidden = false
+//            }
+//        }
+//    }
+//
+//    func makeGenerallCoordinates (search: String, coord: CLLocationCoordinate2D) {
+//        let searchRequest = MKLocalSearch.Request()
+//        searchRequest.naturalLanguageQuery = search
+//        searchRequest.region = MKCoordinateRegion(center: coord, latitudinalMeters: CLLocationDistance(exactly: 10000)!, longitudinalMeters: CLLocationDistance(exactly: 10000)!)
+//
+//        let activeSearch = MKLocalSearch(request: searchRequest)
+//        activeSearch.start { (response, error) in
+//
+//            if response != nil {
+//                self.locationName = (self.searchedPlacemark?.locality!)! != "" || (self.searchedPlacemark?.locality!)! != nil ? (self.searchedPlacemark?.locality!)! : (self.searchedPlacemark?.country!)!
+//                self.lon = (response?.mapItems.first?.placemark.coordinate.longitude)!
+//                self.lat = (response?.mapItems.first?.placemark.coordinate.latitude)!
+//            }
+//        }
+//    }
+    
     func completeSearch (searchRequest: MKLocalSearch.Request) {
         let activeSearch = MKLocalSearch(request: searchRequest)
         activeSearch.start { (response, error) in
@@ -141,8 +189,8 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
                 let lon = response?.boundingRegion.center.longitude
                 let lat = response?.boundingRegion.center.latitude
                 let searchedCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D.init(latitude: lat!, longitude: lon!)
-                
                 self.searchedPlacemark = (response?.mapItems.first?.placemark)!
+                
                 let annotation = MKPointAnnotation()
                 annotation.title = self.searchedPlacemark!.title
                 annotation.coordinate = searchedCoordinate
@@ -151,7 +199,7 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
                 let span = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
                 let region = MKCoordinateRegion(center: searchedCoordinate, span: span)
                 self.mapView.setRegion(region, animated: true)
-                self.makeGenerallCoordinates(search: (self.searchedPlacemark?.locality)!, coord: searchedCoordinate)
+                self.makeGenerallCoordinates(coord: searchedCoordinate)
                 
                 self.addLocationButton.setTitle("Add " + self.searchedPlacemark!.locality!, for: .normal)
                 self.addLocationButton.titleLabel?.adjustsFontSizeToFitWidth = true
@@ -169,7 +217,7 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
         activeSearch.start { (response, error) in
             
             if response != nil {
-                self.locationName = (self.searchedPlacemark?.locality!)!
+                self.locationName = (self.searchedPlacemark?.locality!)! != "" || (self.searchedPlacemark?.locality!)! != nil ? (self.searchedPlacemark?.locality!)! : (self.searchedPlacemark?.country!)!
                 self.lon = (response?.mapItems.first?.placemark.coordinate.longitude)!
                 self.lat = (response?.mapItems.first?.placemark.coordinate.latitude)!
             }
