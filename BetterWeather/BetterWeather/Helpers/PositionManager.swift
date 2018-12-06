@@ -31,7 +31,6 @@ class PositionManager {
     private init() {
         internalLocationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
-            // internalLocationManager.delegate = self
             internalLocationManager.desiredAccuracy = kCLLocationAccuracyKilometer
             internalLocationManager.startUpdatingLocation()
             NotificationCenter.default.post(name: Notification.Name("reloadViewData"), object: nil)
