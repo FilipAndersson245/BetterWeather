@@ -67,6 +67,7 @@
                                                         <constraint firstItem="olN-oX-tFc" firstAttribute="leading" secondItem="Aje-ku-ook" secondAttribute="trailing" id="BZ6-Qm-EyJ"/>
                                                         <constraint firstItem="olN-oX-tFc" firstAttribute="top" secondItem="nZF-AD-FyJ" secondAttribute="top" id="RHV-qg-Dcr"/>
                                                         <constraint firstAttribute="bottom" secondItem="Aje-ku-ook" secondAttribute="bottom" id="erp-TN-R4L"/>
+                                                        <constraint firstItem="Aje-ku-ook" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="nZF-AD-FyJ" secondAttribute="leading" constant="20" symbolic="YES" id="fBl-63-QGO"/>
                                                         <constraint firstAttribute="trailing" secondItem="olN-oX-tFc" secondAttribute="trailing" id="ogL-ga-TdO"/>
                                                         <constraint firstAttribute="height" constant="41" id="qvg-f5-7Vl"/>
                                                     </constraints>
@@ -168,6 +169,7 @@
                                                         <constraint firstItem="37L-ow-vIm" firstAttribute="leading" secondItem="Q42-vF-haZ" secondAttribute="trailing" id="Lqg-W7-5ZW"/>
                                                         <constraint firstItem="Q42-vF-haZ" firstAttribute="top" secondItem="jse-pz-SoS" secondAttribute="top" id="MyJ-hJ-OnV"/>
                                                         <constraint firstAttribute="trailing" secondItem="37L-ow-vIm" secondAttribute="trailing" id="POk-Gf-k6q"/>
+                                                        <constraint firstItem="Q42-vF-haZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jse-pz-SoS" secondAttribute="leading" constant="20" symbolic="YES" id="RiN-q8-Jfh"/>
                                                         <constraint firstItem="37L-ow-vIm" firstAttribute="top" secondItem="jse-pz-SoS" secondAttribute="top" id="gL9-Ok-M6r"/>
                                                     </constraints>
                                                 </view>
@@ -263,7 +265,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fNu-xE-bPB" userLabel="Main View" customClass="GradientView" customModule="BetterWeather" customModuleProvider="target">
-                                            <rect key="frame" x="6" y="6" width="363" height="83.5"/>
+                                            <rect key="frame" x="6" y="6" width="363" height="84"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jönköping" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAh-3W-DlV">
                                                     <rect key="frame" x="6" y="6" width="351" height="20"/>
@@ -281,8 +283,8 @@
                                                         <constraint firstAttribute="width" secondItem="MZJ-bK-Wkz" secondAttribute="height" multiplier="1:1" id="fjp-e8-NzA"/>
                                                     </constraints>
                                                 </imageView>
-                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xhb-1c-Wjo">
-                                                    <rect key="frame" x="57.5" y="21.5" width="299.5" height="41"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xhb-1c-Wjo">
+                                                    <rect key="frame" x="57.5" y="22" width="299.5" height="41"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SIj-17-W7F">
                                                             <rect key="frame" x="198.5" y="0.0" width="57" height="41"/>
@@ -304,6 +306,7 @@
                                                         <constraint firstItem="fJh-Jw-0By" firstAttribute="leading" secondItem="SIj-17-W7F" secondAttribute="trailing" id="8VV-Oi-hbB"/>
                                                         <constraint firstAttribute="height" constant="41" id="V93-D0-afB"/>
                                                         <constraint firstAttribute="bottom" secondItem="SIj-17-W7F" secondAttribute="bottom" id="WiI-bZ-LWL"/>
+                                                        <constraint firstItem="SIj-17-W7F" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Xhb-1c-Wjo" secondAttribute="leading" constant="20" symbolic="YES" id="YgV-du-qAh"/>
                                                         <constraint firstAttribute="trailing" secondItem="fJh-Jw-0By" secondAttribute="trailing" id="cbF-fr-fgB"/>
                                                         <constraint firstItem="fJh-Jw-0By" firstAttribute="top" secondItem="Xhb-1c-Wjo" secondAttribute="top" id="wlg-Tp-x1k"/>
                                                         <constraint firstItem="SIj-17-W7F" firstAttribute="top" secondItem="Xhb-1c-Wjo" secondAttribute="top" id="yY3-B6-DvB"/>
@@ -319,6 +322,7 @@
                                                 <constraint firstItem="Xhb-1c-Wjo" firstAttribute="leading" secondItem="MZJ-bK-Wkz" secondAttribute="trailing" id="bxi-r9-kgu"/>
                                                 <constraint firstItem="rAh-3W-DlV" firstAttribute="leading" secondItem="fNu-xE-bPB" secondAttribute="leading" constant="6" id="e1Z-jC-LWJ"/>
                                                 <constraint firstItem="rAh-3W-DlV" firstAttribute="top" secondItem="fNu-xE-bPB" secondAttribute="top" constant="6" id="gIP-TM-fe6"/>
+                                                <constraint firstItem="Xhb-1c-Wjo" firstAttribute="top" secondItem="fNu-xE-bPB" secondAttribute="top" constant="22" id="mk1-kD-9mq"/>
                                                 <constraint firstItem="MZJ-bK-Wkz" firstAttribute="top" secondItem="rAh-3W-DlV" secondAttribute="bottom" id="oXO-Vz-heb"/>
                                                 <constraint firstAttribute="trailing" secondItem="rAh-3W-DlV" secondAttribute="trailing" constant="6" id="vL5-Lw-fZQ"/>
                                             </constraints>
@@ -561,6 +565,7 @@
                                                         <constraint firstAttribute="bottom" secondItem="5i5-mw-KYT" secondAttribute="bottom" id="GMQ-Gq-QvZ"/>
                                                         <constraint firstItem="5i5-mw-KYT" firstAttribute="top" secondItem="xvL-eA-79d" secondAttribute="top" id="LOd-ej-p2T"/>
                                                         <constraint firstItem="fGL-fu-FVT" firstAttribute="top" secondItem="xvL-eA-79d" secondAttribute="top" id="SaJ-ca-fdm"/>
+                                                        <constraint firstItem="5i5-mw-KYT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xvL-eA-79d" secondAttribute="leading" constant="20" symbolic="YES" id="b5r-KP-J2j"/>
                                                         <constraint firstItem="fGL-fu-FVT" firstAttribute="leading" secondItem="5i5-mw-KYT" secondAttribute="trailing" id="eK1-qu-cgS"/>
                                                         <constraint firstAttribute="height" constant="41" id="lJQ-nF-m0e"/>
                                                     </constraints>
