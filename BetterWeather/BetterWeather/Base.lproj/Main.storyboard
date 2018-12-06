@@ -110,14 +110,6 @@
                                         <constraint firstAttribute="trailing" secondItem="kJZ-SB-unw" secondAttribute="trailing" constant="6" id="dye-gb-7y7"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="startColor">
-                                        <color key="value" cocoaTouchSystemColor="darkTextColor"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="endColor">
-                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="mainView" destination="kJZ-SB-unw" id="G2p-lX-9ZF"/>
                                     <outlet property="temperatureLabel" destination="Aje-ku-ook" id="FCG-x8-ELf"/>
@@ -449,12 +441,12 @@
                                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" indentationWidth="10" reuseIdentifier="LocationCell" id="HDT-wx-VWf" customClass="SearchResultTableViewCell" customModule="BetterWeather" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="28" width="441" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HDT-wx-VWf" id="1I9-P6-Urw">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HDT-wx-VWf" id="1I9-P6-Urw">
+                                        <rect key="frame" x="0.0" y="0.0" width="441" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pA0-A8-Rhs">
-                                                <rect key="frame" x="20" y="55.5" width="374" height="20.5"/>
+                                                <rect key="frame" x="15" y="31" width="411" height="2"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
