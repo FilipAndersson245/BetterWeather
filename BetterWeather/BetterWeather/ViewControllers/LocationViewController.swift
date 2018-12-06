@@ -50,6 +50,10 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
         addLocationButton.titleLabel?.textColor = self.view.tintColor
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        addSearchView()
+    }
+    
     override func viewDidLayoutSubviews() {
         mapSearchSubView.frame = self.view.frame
     }
@@ -88,6 +92,8 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
     }
     
     func addSearchView () {
+        self.filteredMapItems.removeAll()
+        self.searchBar.text = ""
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.view.addSubview(mapSearchSubView)
         self.searchBar.becomeFirstResponder()
