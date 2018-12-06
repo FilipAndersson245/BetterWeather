@@ -8,20 +8,29 @@
 
 import Foundation
 
+//Struct for expressing favorite locations in local storage
 struct DbFavorite {
+    
+    // MARK: - Properties
+    
     let longitude: Float
+    
     let latitude: Float
+    
     let name: String
+    
     let lastUpdate : Date
+    
+    // MARK: - Methods
     
     init(name: String
         , longitude: Float
         , latitude: Float
-        , lastUpdate: Date)
+        , lastUpdate: Date? = nil)
     {
         self.name = name
         self.longitude = longitude
         self.latitude = latitude
-        self.lastUpdate = lastUpdate
+        self.lastUpdate = lastUpdate ?? Date()
     }
 }

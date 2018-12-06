@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: - Weather Enum
+
 enum WeatherTypes: Int {
     case ClearSky = 1
     case NearlyClearSky = 2
@@ -39,8 +41,11 @@ enum WeatherTypes: Int {
     
 }
 
+// MARK: - APIHandler Class
 
 class ApiHandler {
+    
+    // MARK: - Properties
     
     public enum ApiHandlerErrors: Error {
         case NonHandledDataTypeError
@@ -49,6 +54,9 @@ class ApiHandler {
         case MissingData(String)
     }
     
+    // MARK: - Methods
+    
+    // Fetches data from the SMHI API
     private static func fetch(lon: Float, lat: Float, completionBlock: @escaping (WeatherData) -> Void)  {
         let template = "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/%.4f/lat/%.4f/data.json"
         let urlsString = String(format: template, lon, lat)
@@ -62,43 +70,24 @@ class ApiHandler {
             (data, response, error)	in
             guard let _ = data,
                     error == nil else {
-                        print(error?.localizedDescription ?? "Response Error")
+                            print(error?.localizedDescription ?? "Response Error")
+                            return
+                    }
+                    do {
+                        //here dataResponse received from a network request
+                        let weather = try JSONDecoder().decode(WeatherData.self, from: data!)
+                        completionBlock(weather)
+                    } catch let parsingError {
+                        print("Error", parsingError)
                         return
                     }
-                do {
-                    //here dataResponse received from a network request
-                    let weather = try JSONDecoder().decode(WeatherData.self, from: data!)
-                    completionBlock(weather)
-                } catch let parsingError {
-                    print("Error", parsingError)
-                    return
-                }
         }
         task.resume()
     }
     
-    private static func jsonToDB() {
-        
-    }
-    
-    private static func dbToObject() {
-        
-    }
-    
-    private static func overviewObject() {
-        
-    }
-    
-    private static func dayObject() {
-    
-    }
-    
-    private static func hourObject() {
-        
-    }
-    
-    //Maybe rename foo?
-    public static func foo(_ lon: Float, _ lat: Float,completionBlock: @escaping (Location) -> Void)  {
+    // Gets weather data for a specified location
+    public static func getLocationData(_ name: String, _ lon: Float, _ lat: Float, completionBlock: @escaping (Array<DbWeather>) -> Void)
+    {
         let dateFormatter : DateFormatter = {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
@@ -109,24 +98,44 @@ class ApiHandler {
         fetch(lon: lon, lat: lat) {(data) in
             var day: Array<Weather> = []
             for hourWeather in data.timeSeries {
-                
-                // Default init values for weather if api misses data in a request.
                 var type: WeatherTypes = WeatherTypes.ClearSky
                 var t: Float = 10
+                var windDir = 0
+                var windSpeed: Float = 0
+                var relativeHumidity = 0
+                var airPressure: Float = 0
+                var horizontalVis: Float = 0
                 for hourWeatherParameter in hourWeather.parameters {
                     switch hourWeatherParameter.name {
                     case .t:
                         t = hourWeatherParameter.values[0]
                     case .Wsymb2, .Wsymb:
                         type = WeatherTypes(rawValue: Int(hourWeatherParameter.values[0]))!
+                    case .wd:
+                        windDir = Int(hourWeatherParameter.values[0])
+                    case .ws:
+                        windSpeed = hourWeatherParameter.values[0]
+                    case .r:
+                        relativeHumidity = Int(hourWeatherParameter.values[0])
+                    case .msl:
+                        airPressure = hourWeatherParameter.values[0]
+                    case .vis:
+                        horizontalVis = hourWeatherParameter.values[0]
                     default:
                         break
                     }
                 }
                 let date = dateFormatter.date(from: hourWeather.validTime)
-                let hour = Weather(weatherType: type, temperatur: t, time: date!);
+                let hour = Weather(weatherType: type,
+                                   temperatur: t,
+                                   time: date!,
+                                   windDirection: windDir,
+                                   windSpeed: windSpeed,
+                                   relativHumidity: relativeHumidity,
+                                   airPressure: airPressure,
+                                   HorizontalVisibility: horizontalVis
+                                   );
                 day.append(hour)
-                
             }
             
             let avgTemp = day.reduce(0, { rest,item in
@@ -146,34 +155,13 @@ class ApiHandler {
             let avgWeather = Weather(weatherType: avgType, temperatur: avgTemp, time: Date())
             
             let myDay = Day(date: date!, averageWeather: avgWeather, hours: day)
-            
-            
-            
-            
             var dbWeathers = [DbWeather]()
-            for hour in myDay.hours{ //TODO: Generalize lon and lat and get correct cityname
-                dbWeathers.append(DbWeather(name: "cityName", weatherType: hour.weatherType, temperatur: hour.temperatur, time: hour.time, windDirection: hour.windDirection, windSpeed: hour.windSpeed, relativeHumidity: hour.relativHumidity, airPressure: hour.airPressure, HorizontalVisibility: hour.HorizontalVisibility, longitude: lon, latitude: lat))
+            
+            for hour in myDay.hours{
+                dbWeathers.append(DbWeather(name: name, weatherType: hour.weatherType, temperatur: hour.temperatur, time: hour.time, windDirection: hour.windDirection, windSpeed: hour.windSpeed, relativeHumidity: hour.relativHumidity, airPressure: hour.airPressure, HorizontalVisibility: hour.HorizontalVisibility, longitude: lon, latitude: lat))
             }
             
-            let dbHandler = DatabaseHandler()
-            dbHandler.insertData(dbWeathers)
-            var readLocations = dbHandler.readData()
-            
-            
-            //favorite location test
-            let testDate = NSDate()
-            var favorite = DbFavorite(name: "TEST", longitude: 12, latitude: 12, lastUpdate: testDate as Date)
-            dbHandler.addFavoriteLocation(favorite)
-            var favorites = dbHandler.readFavoriteLocations()
-            //end test
-            
-            completionBlock(Location(name: "faeiaföoguguödv", latitude: 1, longitude: 1, days: [myDay]))
-//                switch type {
-//                case is String.Type: //This should be our model that is yet to be implemented
-//                    return "" as! T
-//                default:
-//                    throw ApiHandlerErrors.NonHandledDataTypeError
-//                }
+            completionBlock(dbWeathers)
         }
     }
 }

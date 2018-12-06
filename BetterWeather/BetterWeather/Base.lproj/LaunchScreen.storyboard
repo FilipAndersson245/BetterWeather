@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,17 +15,17 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="taq-Fj-MOI">
-                                <rect key="frame" x="75" y="221" width="225" height="225"/>
+                                <rect key="frame" x="82.666666666666671" y="323.66666666666669" width="248.66666666666663" height="248.66666666666669"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="taq-Fj-MOI" secondAttribute="height" multiplier="1:1" id="BqL-Gy-n4N"/>
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="taq-Fj-MOI" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="ISF-LU-vtb"/>
                             <constraint firstItem="taq-Fj-MOI" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" multiplier="60%" id="XT5-hi-AaQ"/>
@@ -40,6 +40,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="logo" width="200" height="200"/>
+        <image name="logo" width="1000" height="1000"/>
     </resources>
 </document>

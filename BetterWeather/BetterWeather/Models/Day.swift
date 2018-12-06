@@ -10,16 +10,20 @@ import Foundation
 
 class Day {
     
-    init(date: Date, averageWeather: Weather, hours: [ Weather ]) {
-        self.date = date
-        self.averageWeather = averageWeather
-        self.hours = hours
-    }
+    // MARK: - Properties
     
     var date: Date
     
     var averageWeather: Weather
     
     var hours: [ Weather ]
+    
+    // MARK: - Methods
+    
+    init(date: Date, averageWeather: Weather, hours: [ Weather ]) {
+        self.date = date
+        self.averageWeather = averageWeather
+        self.hours = hours
+    }
     
 }

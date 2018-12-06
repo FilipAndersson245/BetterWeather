@@ -9,10 +9,18 @@
 import Foundation
 
 struct WeatherData: Codable {
+    
+    // MARK: - Properties
+    
     let approvedTime: String
+    
     let referenceTime: String
+    
     let geometry: Geometry
+    
     let timeSeries: [DataPoint]
+    
+    // MARK: - Methods
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)

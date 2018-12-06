@@ -8,11 +8,24 @@
 
 import UIKit
 
+@IBDesignable
 class WeatherTableViewCell: UITableViewCell {
 
+    // MARK: - Outlets
+    
+    @IBOutlet weak var mainView: UIView!
+    
     @IBOutlet weak var title: UILabel!
+    
     @IBOutlet weak var weatherImage: UIImageView!
+    
     @IBOutlet weak var temperatureLabel: UILabel!
+    
+    // MARK: - Properties
+    
+    var isRotating = false
+    
+    // MARK: - General methods
     
     func setImage(_ weatherType: WeatherTypes)
     {
@@ -36,15 +49,25 @@ class WeatherTableViewCell: UITableViewCell {
         temperatureLabel.text = String(Int(round(temperature)))
     }
     
+    func animate() {
+        weatherImage.rotate()
+    }
+    
+    // MARK: - Overridden methods
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.backgroundColor = UIColor.clear
+        let backGroundSelected = UIView()
+        backGroundSelected.backgroundColor = UIColor.clear
+        self.selectedBackgroundView = backGroundSelected
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        if(selected) {
+            animate()
+        }
     }
 
 }
