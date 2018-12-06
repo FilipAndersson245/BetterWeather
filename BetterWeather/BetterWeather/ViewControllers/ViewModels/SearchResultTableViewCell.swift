@@ -10,11 +10,11 @@ import UIKit
 
 class SearchResultTableViewCell: UITableViewCell {
 
-    // MARK: - Properties
+    // MARK: - Outlets
     
     @IBOutlet weak var title: UILabel!
     
-    // MARK: - Methods
+    // MARK: - Overridden methods
     
     override func awakeFromNib() {
         super.awakeFromNib()

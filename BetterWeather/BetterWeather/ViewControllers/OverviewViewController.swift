@@ -10,7 +10,7 @@ import UIKit
 
 class OverviewViewController: UITableViewController {
     
-    // MARK: - Methods
+    // MARK: - View status methods
     
     override func viewDidLoad() {
         tableView.tableFooterView = UIView()
@@ -30,6 +30,8 @@ class OverviewViewController: UITableViewController {
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
     }
+    
+    // MARK: - Data update methods
     
     @objc func refresh(sender:AnyObject)
     {
@@ -52,7 +54,7 @@ class OverviewViewController: UITableViewController {
         }
     }
 
-    // MARK: - Table view data source
+    // MARK: - Table view data source methods
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -97,7 +99,7 @@ class OverviewViewController: UITableViewController {
         }
     }
     
-    // MARK: - Navigation
+    // MARK: - Navigation methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "daysSegue", sender: indexPath)

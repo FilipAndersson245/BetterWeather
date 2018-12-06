@@ -25,6 +25,8 @@ class DatabaseHandler{
         createFavoriteTable()
     }
     
+    // MARK: - Favorite location methods
+    
     public func createFavoriteTable(){
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(fileName)
         if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
@@ -80,6 +82,39 @@ class DatabaseHandler{
         return favoriteLocations
     }
     
+    public func doesFavoriteLocationExist(dbFavorite: DbFavorite) -> Bool{
+        guard let favoriteLocations = readFavoriteLocations() else {
+            return false
+        }
+        for favorite in favoriteLocations{
+            if (Int(favorite.latitude) == Int(dbFavorite.latitude) && Int(favorite.longitude) == Int(dbFavorite.longitude)){
+                return true
+            }
+        }
+        return false
+    }
+    
+    // Removes a location in local storage from the favorite table
+    public func removeFavoriteLocation(dbFavorite: DbFavorite){
+        var stmt: OpaquePointer?
+        let queryString = "DELETE FROM FavoriteLocations WHERE (Latitude = ? AND Longitude = ?)"
+        if sqlite3_prepare(db, queryString, -1, &stmt, nil) !=  SQLITE_OK{
+            let errormessage = String(cString: sqlite3_errmsg(db)!)
+            print ("error removing favorite location:\(errormessage)")
+            return
+        }
+        sqlite3_bind_double(stmt, 1, Double(dbFavorite.latitude))
+        sqlite3_bind_double(stmt, 2, Double(dbFavorite.longitude))
+        if sqlite3_step(stmt) != SQLITE_DONE {
+            let errormessage = String(cString: sqlite3_errmsg(db)!)
+            print("Failed to remove favoriteData: \(errormessage)")
+            return
+        }
+        sqlite3_finalize(stmt)
+    }
+    
+    // MARK: - Weather data methods
+    
     public func createDataTable() {
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(fileName)
         if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
@@ -120,37 +155,6 @@ class DatabaseHandler{
             return
         }
         sqlite3_bind_double(stmt, 1, Double(Date().timeIntervalSince1970))
-        if sqlite3_step(stmt) != SQLITE_DONE {
-            let errormessage = String(cString: sqlite3_errmsg(db)!)
-            print("Failed to remove favoriteData: \(errormessage)")
-            return
-        }
-        sqlite3_finalize(stmt)
-    }
-    
-    public func doesFavoriteLocationExist(dbFavorite: DbFavorite) -> Bool{
-        guard let favoriteLocations = readFavoriteLocations() else {
-            return false
-        }
-        for favorite in favoriteLocations{
-            if (Int(favorite.latitude) == Int(dbFavorite.latitude) && Int(favorite.longitude) == Int(dbFavorite.longitude)){
-                return true
-            }
-        }
-        return false
-    }
-    
-    // Removes a location in local storage from the favorite table
-    public func removeFavoriteLocation(dbFavorite: DbFavorite){
-        var stmt: OpaquePointer?
-        let queryString = "DELETE FROM FavoriteLocations WHERE (Latitude = ? AND Longitude = ?)"
-        if sqlite3_prepare(db, queryString, -1, &stmt, nil) !=  SQLITE_OK{
-            let errormessage = String(cString: sqlite3_errmsg(db)!)
-            print ("error removing favorite location:\(errormessage)")
-            return
-        }
-        sqlite3_bind_double(stmt, 1, Double(dbFavorite.latitude))
-        sqlite3_bind_double(stmt, 2, Double(dbFavorite.longitude))
         if sqlite3_step(stmt) != SQLITE_DONE {
             let errormessage = String(cString: sqlite3_errmsg(db)!)
             print("Failed to remove favoriteData: \(errormessage)")
@@ -218,6 +222,4 @@ class DatabaseHandler{
         }
         return readHours
     }
-    
-    
 }

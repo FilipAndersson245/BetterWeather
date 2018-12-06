@@ -26,7 +26,7 @@ class HoursTableViewController: UITableViewController {
         return formatter
     }()
 
-    // MARK: - Methods
+    // MARK: - View status methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +42,8 @@ class HoursTableViewController: UITableViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
+    // MARK: - Data update methods
+    
     @objc func checkAndReloadAllLocations()
     {
         CentralManager.shared.checkWhetherToUpdateWeather()
@@ -55,7 +57,7 @@ class HoursTableViewController: UITableViewController {
         }
     }
 
-    // MARK: - Table view data source
+    // MARK: - Table view data source methods
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections

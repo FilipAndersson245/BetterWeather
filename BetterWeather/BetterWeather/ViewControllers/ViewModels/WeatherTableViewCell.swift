@@ -11,7 +11,7 @@ import UIKit
 @IBDesignable
 class WeatherTableViewCell: UITableViewCell {
 
-    // MARK: - Properties
+    // MARK: - Outlets
     
     @IBOutlet weak var mainView: UIView!
     
@@ -21,9 +21,11 @@ class WeatherTableViewCell: UITableViewCell {
     
     @IBOutlet weak var temperatureLabel: UILabel!
     
+    // MARK: - Properties
+    
     var isRotating = false
     
-    // MARK: - Methods
+    // MARK: - General methods
     
     func setImage(_ weatherType: WeatherTypes)
     {
@@ -50,6 +52,8 @@ class WeatherTableViewCell: UITableViewCell {
     func animate() {
         weatherImage.rotate()
     }
+    
+    // MARK: - Overridden methods
     
     override func awakeFromNib() {
         super.awakeFromNib()

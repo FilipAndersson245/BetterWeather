@@ -43,7 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func registerForPushNotifications() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge] ) {
             (granted, error) in
-            print("Notification permission granted: \(granted)")
             DispatchQueue.main.async {
                 PositionManager.shared.updatePositionAndData()
             }

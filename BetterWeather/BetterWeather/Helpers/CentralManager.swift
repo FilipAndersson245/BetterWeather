@@ -24,13 +24,8 @@ class CentralManager{
     
     private let refreshInterval: Double = 1800
     
-    // MARK: - Methods
-    
-    init() {
-        populateFavoriteLocations()
-    }
-    
     private var fetchingQueueGroup = DispatchGroup()
+    
     private var isFetching = false {
         didSet {
             if isFetching {
@@ -39,6 +34,12 @@ class CentralManager{
                 fetchingQueueGroup.leave()
             }
         }
+    }
+    
+    // MARK: - Methods
+    
+    init() {
+        populateFavoriteLocations()
     }
     
     // Adds a specified favorite location to view and local storage

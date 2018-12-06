@@ -12,7 +12,7 @@ import MapKit
 
 class LocationViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    // MARK: - Properties
+    // MARK: - Outlets
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -26,6 +26,8 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
     
     @IBOutlet weak var searchTable: UITableView!
     
+    // MARK: - Properties
+    
     var lon: CLLocationDegrees = 0.0
     
     var lat: CLLocationDegrees = 0.0
@@ -36,7 +38,7 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
     
     var filteredMapItems: [MKMapItem]  = []
     
-    // MARK: - Methods
+    // MARK: - View status methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,9 +56,40 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
         mapSearchSubView.frame = self.view.frame
     }
     
+    // MARK: - Action methods
+    
     @IBAction func searchButton(_ sender: Any) {
         addSearchView()
     }
+    
+    @IBAction func addLocationButtonClicked(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+        CentralManager.shared.addFavoriteLocation(name: self.locationName, longitude: Float(self.lon), latitude: Float(self.lat))
+    }
+    
+    // MARK: - Table view delegate data source methods
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filteredMapItems.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: SearchResultTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath) as! SearchResultTableViewCell
+        cell.title.text = filteredMapItems[indexPath.row].placemark.title
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let searchRequest = MKLocalSearch.Request()
+        searchRequest.naturalLanguageQuery = filteredMapItems[indexPath.row].placemark.title
+        completeSearch(searchRequest: searchRequest)
+    }
+    
+    // MARK: - Search bar delegate methods
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
@@ -87,6 +120,8 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
         removeSearchView()
     }
     
+    // MARK: - Helper methods
+    
     func addSearchView () {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.view.addSubview(mapSearchSubView)
@@ -99,33 +134,6 @@ class LocationViewController: UIViewController, UISearchBarDelegate, UITableView
         filteredMapItems.removeAll()
         searchBar.text?.removeAll()
         self.searchTable.reloadData()
-    }
-    
-    // MARK: - Table Functions
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredMapItems.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: SearchResultTableViewCell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath) as! SearchResultTableViewCell
-        cell.title.text = filteredMapItems[indexPath.row].placemark.title
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let searchRequest = MKLocalSearch.Request()
-        searchRequest.naturalLanguageQuery = filteredMapItems[indexPath.row].placemark.title
-        completeSearch(searchRequest: searchRequest)
-    }
-    
-    @IBAction func addLocationButtonClicked(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
-        CentralManager.shared.addFavoriteLocation(name: self.locationName, longitude: Float(self.lon), latitude: Float(self.lat))
     }
     
     func completeSearch (searchRequest: MKLocalSearch.Request) {

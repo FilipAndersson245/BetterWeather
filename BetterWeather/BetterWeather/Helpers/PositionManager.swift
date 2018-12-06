@@ -60,7 +60,6 @@ class PositionManager {
         let coords = internalLocationManager.location?.coordinate
         if(coords != nil)
         {
-            print("Updating location")
             latitude = Float(Double(coords!.latitude))
             longitude = Float(Double(coords!.longitude))
         }

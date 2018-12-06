@@ -23,7 +23,7 @@ class DaysTableViewController: UITableViewController {
         return formatter
     }()
 
-    // MARK: - Methods
+    // MARK: - View status methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +39,8 @@ class DaysTableViewController: UITableViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
+    // MARK: - Data update methods
+    
     @objc func checkAndReloadAllLocations()
     {
         CentralManager.shared.checkWhetherToUpdateWeather()
@@ -52,7 +54,7 @@ class DaysTableViewController: UITableViewController {
         }
     }
 
-    // MARK: - Table view data source
+    // MARK: - Table view data source methods
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -73,7 +75,6 @@ class DaysTableViewController: UITableViewController {
         return rowsCount
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "dayCell", for: indexPath) as? WeatherTableViewCell
         var days: [Day] = []
@@ -94,7 +95,7 @@ class DaysTableViewController: UITableViewController {
         return cell!
     }
 
-    // MARK: - Navigation
+    // MARK: - Navigation methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "hoursSegue", sender: indexPath)
